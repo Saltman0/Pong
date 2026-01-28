@@ -13,12 +13,12 @@ public partial class Paddle : Area2D
 	{
 		if (Input.IsActionPressed("move_up"))
 		{
-			Position += new Vector2(0.0f, -5.0f);
+			Position += new Vector2(0.0f, -500.0f) * (float)delta;
 		}
 		
 		if (Input.IsActionPressed("move_down"))
 		{
-			Position += new Vector2(0.0f, 5.0f);
+			Position += new Vector2(0.0f, 500.0f) * (float)delta;
 		}
 	}
 }
