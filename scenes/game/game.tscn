@@ -1,6 +1,27 @@
 [gd_scene format=3 uid="uid://60ooi3281jwr"]
 
 [ext_resource type="Script" uid="uid://x8gx40aw2kps" path="res://scenes/game/Game.cs" id="1_sul5r"]
+[ext_resource type="PackedScene" uid="uid://c7oqcxfmhw1ua" path="res://scenes/paddle/paddle.tscn" id="2_7h61r"]
+[ext_resource type="PackedScene" uid="uid://db27khuarbhe8" path="res://scenes/ball/ball.tscn" id="3_0sr1o"]
+[ext_resource type="PackedScene" uid="uid://bc8rrsyaiybc4" path="res://scenes/wall/wall.tscn" id="4_kelw5"]
 
 [node name="Game" type="Node2D" unique_id=1564959362]
 script = ExtResource("1_sul5r")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1729928314]
+position = Vector2(683, 384)
+
+[node name="Paddle" parent="." unique_id=1469242346 instance=ExtResource("2_7h61r")]
+position = Vector2(60, 384)
+
+[node name="Paddle2" parent="." unique_id=1991710194 instance=ExtResource("2_7h61r")]
+position = Vector2(1300, 384)
+
+[node name="Ball" parent="." unique_id=339829503 instance=ExtResource("3_0sr1o")]
+position = Vector2(683, 384)
+
+[node name="WallTop" parent="." unique_id=1240128499 instance=ExtResource("4_kelw5")]
+position = Vector2(683, 16)
+
+[node name="WallBottom" parent="." unique_id=1884373035 instance=ExtResource("4_kelw5")]
+position = Vector2(683, 752)
