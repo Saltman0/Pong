@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c7oqcxfmhw1ua" path="res://scenes/paddle/paddle.tscn" id="2_7h61r"]
 [ext_resource type="PackedScene" uid="uid://db27khuarbhe8" path="res://scenes/ball/ball.tscn" id="3_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://bc8rrsyaiybc4" path="res://scenes/wall/wall.tscn" id="4_kelw5"]
+[ext_resource type="PackedScene" uid="uid://f8wxjbof2lyu" path="res://scenes/goal/goal.tscn" id="5_lfrn8"]
 
 [node name="Game" type="Node2D" unique_id=1564959362]
 script = ExtResource("1_sul5r")
@@ -25,3 +26,9 @@ position = Vector2(683, 16)
 
 [node name="WallBottom" parent="." unique_id=1884373035 instance=ExtResource("4_kelw5")]
 position = Vector2(683, 752)
+
+[node name="GoalLeft" parent="." unique_id=364692427 instance=ExtResource("5_lfrn8")]
+position = Vector2(-10, 384)
+
+[node name="GoalRight" parent="." unique_id=1068722802 instance=ExtResource("5_lfrn8")]
+position = Vector2(1376, 384)
