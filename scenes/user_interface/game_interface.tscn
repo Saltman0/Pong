@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://4q1orckask1d"]
+
+[ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_yqwyh"]
+
+[node name="GameInterface" type="Control" unique_id=750577209]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="MarginContainer" parent="." unique_id=275743190]
+layout_mode = 0
+offset_right = 1366.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Header" unique_id=1436825125]
+layout_mode = 2
+alignment = 1
+
+[node name="ScoreLeft" type="RichTextLabel" parent="Header/HBoxContainer" unique_id=1708064333]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_yqwyh")
+text = "0"
+vertical_alignment = 1
+
+[node name="Timer" type="RichTextLabel" parent="Header/HBoxContainer" unique_id=318065974]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_yqwyh")
+text = "60"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreRight" type="RichTextLabel" parent="Header/HBoxContainer" unique_id=851959756]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_yqwyh")
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
