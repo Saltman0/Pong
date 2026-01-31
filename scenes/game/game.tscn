@@ -34,4 +34,8 @@ position = Vector2(-10, 384)
 [node name="GoalRight" parent="." unique_id=1068722802 instance=ExtResource("5_lfrn8")]
 position = Vector2(1376, 384)
 
-[node name="UserInterface" parent="." unique_id=750577209 instance=ExtResource("6_5i0tg")]
+[node name="GameInterface" parent="." unique_id=750577209 instance=ExtResource("6_5i0tg")]
+
+[node name="Timer" type="Timer" parent="." unique_id=637497745]
+wait_time = 60.0
+one_shot = true
