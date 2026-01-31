@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://f8wxjbof2lyu" path="res://scenes/goal/goal.tscn" id="5_lfrn8"]
 [ext_resource type="PackedScene" uid="uid://4q1orckask1d" path="res://scenes/game_interface/game_interface.tscn" id="6_5i0tg"]
 
-[node name="Game" type="Node2D" unique_id=1564959362]
+[node name="Game" type="Node" unique_id=578417335]
 script = ExtResource("1_sul5r")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1729928314]

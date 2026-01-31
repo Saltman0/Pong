@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Game : Node2D
+public partial class Game : Node
 {
 	private Goal _goalLeft;
 	private Goal _goalRight;
