@@ -39,13 +39,14 @@ public partial class Game : Node
 		if (goal.Name.Equals("GoalLeft"))
 		{
 			_rightScore++;
-			EmitSignalScoreUpdated(_leftScore, "right");
+			EmitSignalScoreUpdated(_rightScore, "right");
 		} else if (goal.Name.Equals("GoalRight"))
 		{
 			_leftScore++;
 			EmitSignalScoreUpdated(_leftScore, "left");
 		}
 		
+		ResetRound();
 	}
 
 	private void OnTimerTimeout()
@@ -63,5 +64,15 @@ public partial class Game : Node
 				EmitSignalGameOver("none");
 			}
 		}
+	}
+
+	private void ResetRound()
+	{
+		Ball ball = GetNode<Ball>("Ball");
+		ball.Position = GetNode<Marker2D>("MarkerBall").Position;
+		ball.Launch();
+		
+		GetNode<Paddle>("PaddleLeft").Position = GetNode<Marker2D>("MarkerPaddleLeft").Position;
+		GetNode<Paddle>("PaddleRight").Position = GetNode<Marker2D>("MarkerPaddleRight").Position;
 	}
 }

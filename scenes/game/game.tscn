@@ -20,6 +20,15 @@ position = Vector2(60, 384)
 [node name="PaddleRight" parent="." unique_id=1991710194 instance=ExtResource("2_7h61r")]
 position = Vector2(1300, 384)
 
+[node name="MarkerPaddleLeft" type="Marker2D" parent="." unique_id=254739520]
+position = Vector2(60, 384)
+
+[node name="MarkerBall" type="Marker2D" parent="." unique_id=838364457]
+position = Vector2(683, 384)
+
+[node name="MarkerPaddleRight" type="Marker2D" parent="." unique_id=1673953597]
+position = Vector2(1300, 384)
+
 [node name="Ball" parent="." unique_id=339829503 instance=ExtResource("3_0sr1o")]
 position = Vector2(683, 384)
 
