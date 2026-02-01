@@ -1,28 +1,78 @@
 using Godot;
 using System;
 
-public partial class Game : Node2D
+public partial class Game : Node
 {
-	private Goal _goalLeft;
-	private Goal _goalRight;
+	[Signal]
+	public delegate void ScoreUpdatedEventHandler(int newScore, string side);
+	
+	[Signal]
+	public delegate void TimeUpdatedEventHandler(int seconds);
+	
+	[Signal]
+	public delegate void GameOverEventHandler(string winner);
+
+	[Export]
+	private int _timeLeft;
+	[Export]
+	private int _leftScore;
+	[Export]
+	private int _rightScore;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_goalLeft = GetNode<Goal>("GoalLeft");
-		_goalRight = GetNode<Goal>("GoalRight");
+		GetNode<Goal>("GoalLeft").GoalScored += OnGoalScored;
+		GetNode<Goal>("GoalRight").GoalScored += OnGoalScored;
+		GetNode<Timer>("Timer").Timeout += OnTimerTimeout;
+		ScoreUpdated += GetNode<GameInterface>("GameInterface").OnScoreUpdated;
+		TimeUpdated += GetNode<GameInterface>("GameInterface").OnTimeUpdated;
+		GameOver += GetNode<GameInterface>("GameInterface").OnGameOver;
 
-		_goalLeft.GoalScored += OnGoalScored;
-		_goalRight.GoalScored += OnGoalScored;
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		EmitSignalScoreUpdated(_leftScore, "left");
+		EmitSignalScoreUpdated(_rightScore, "right");
+		EmitSignalTimeUpdated(_timeLeft);
 	}
 	
 	private void OnGoalScored(Goal goal)
 	{
-		GD.Print($"Goal scored in: {goal.Name}");
+		if (goal.Name.Equals("GoalLeft"))
+		{
+			_rightScore++;
+			EmitSignalScoreUpdated(_rightScore, "right");
+		} else if (goal.Name.Equals("GoalRight"))
+		{
+			_leftScore++;
+			EmitSignalScoreUpdated(_leftScore, "left");
+		}
+		
+		ResetRound();
+	}
+
+	private void OnTimerTimeout()
+	{
+		_timeLeft--;
+		EmitSignalTimeUpdated(_timeLeft);
+		if (_timeLeft == 0)
+		{ 
+			if (_leftScore > _rightScore)
+			{
+				EmitSignalGameOver("left");
+			} else if (_rightScore > _leftScore) {
+				EmitSignalGameOver("right");
+			} else {
+				EmitSignalGameOver("none");
+			}
+		}
+	}
+
+	private void ResetRound()
+	{
+		Ball ball = GetNode<Ball>("Ball");
+		ball.Position = GetNode<Marker2D>("MarkerBall").Position;
+		ball.Launch();
+		
+		GetNode<Paddle>("PaddleLeft").Position = GetNode<Marker2D>("MarkerPaddleLeft").Position;
+		GetNode<Paddle>("PaddleRight").Position = GetNode<Marker2D>("MarkerPaddleRight").Position;
 	}
 }

@@ -7,16 +7,26 @@
 [ext_resource type="PackedScene" uid="uid://f8wxjbof2lyu" path="res://scenes/goal/goal.tscn" id="5_lfrn8"]
 [ext_resource type="PackedScene" uid="uid://4q1orckask1d" path="res://scenes/game_interface/game_interface.tscn" id="6_5i0tg"]
 
-[node name="Game" type="Node2D" unique_id=1564959362]
+[node name="Game" type="Node" unique_id=578417335]
 script = ExtResource("1_sul5r")
+_timeLeft = 60
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1729928314]
 position = Vector2(683, 384)
 
-[node name="Paddle" parent="." unique_id=1469242346 instance=ExtResource("2_7h61r")]
+[node name="PaddleLeft" parent="." unique_id=1469242346 instance=ExtResource("2_7h61r")]
 position = Vector2(60, 384)
 
-[node name="Paddle2" parent="." unique_id=1991710194 instance=ExtResource("2_7h61r")]
+[node name="PaddleRight" parent="." unique_id=1991710194 instance=ExtResource("2_7h61r")]
+position = Vector2(1300, 384)
+
+[node name="MarkerPaddleLeft" type="Marker2D" parent="." unique_id=254739520]
+position = Vector2(60, 384)
+
+[node name="MarkerBall" type="Marker2D" parent="." unique_id=838364457]
+position = Vector2(683, 384)
+
+[node name="MarkerPaddleRight" type="Marker2D" parent="." unique_id=1673953597]
 position = Vector2(1300, 384)
 
 [node name="Ball" parent="." unique_id=339829503 instance=ExtResource("3_0sr1o")]
@@ -34,4 +44,7 @@ position = Vector2(-10, 384)
 [node name="GoalRight" parent="." unique_id=1068722802 instance=ExtResource("5_lfrn8")]
 position = Vector2(1376, 384)
 
-[node name="UserInterface" parent="." unique_id=750577209 instance=ExtResource("6_5i0tg")]
+[node name="GameInterface" parent="." unique_id=750577209 instance=ExtResource("6_5i0tg")]
+
+[node name="Timer" type="Timer" parent="." unique_id=637497745]
+autostart = true
