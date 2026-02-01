@@ -8,10 +8,7 @@ public partial class Ball : CharacterBody2D
 	
 	public override void _Ready()
 	{
-		Random random = new Random();
-		float randomX = (float)(random.NextDouble() * 2.0 - 1.0);
-		float randomY = (float)(random.NextDouble() * 2.0 - 1.0);
-		Velocity = new Vector2(randomX, randomY);
+		Launch();
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -22,5 +19,13 @@ public partial class Ball : CharacterBody2D
 		{
 			Velocity = Velocity.Bounce(collision.GetNormal()) * 1.02f;
 		}
+	}
+
+	public void Launch()
+	{
+		Random random = new Random();
+		float randomX = (float)(random.NextDouble() * 2.0 - 1.0);
+		float randomY = (float)(random.NextDouble() * 2.0 - 1.0);
+		Velocity = new Vector2(randomX, randomY);
 	}
 }
