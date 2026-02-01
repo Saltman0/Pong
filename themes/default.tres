@@ -1,4 +1,17 @@
 [gd_resource type="Theme" format=3 uid="uid://lsy85n1nuhcx"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nkonk"]
+bg_color = Color(0.42670405, 0.5715372, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gnsgt"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2g1ym"]
+bg_color = Color(1, 0.33798295, 0.30938053, 1)
+
 [resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/styles/hover = SubResource("StyleBoxFlat_nkonk")
+Button/styles/normal = SubResource("StyleBoxFlat_gnsgt")
+Button/styles/pressed = SubResource("StyleBoxFlat_2g1ym")
 RichTextLabel/colors/default_color = Color(0, 0, 0, 1)
