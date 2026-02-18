@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://c2vydabr7qon4"]
 
+[ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_6f88p"]
+[ext_resource type="Script" uid="uid://dhd61df57m1ng" path="res://scenes/main_menu_interface/MainMenuInterface.cs" id="1_a4xm4"]
+
 [node name="MainMenuInterface" type="Control" unique_id=1026173754]
 layout_mode = 3
 anchors_preset = 15
@@ -7,37 +10,51 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_a4xm4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1110211322]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -207.0
-offset_top = -206.0
-offset_right = 207.0
-offset_bottom = 206.0
+anchors_preset = -1
+anchor_left = 0.34800002
+anchor_top = 0.23200001
+anchor_right = 0.652
+anchor_bottom = 0.768
+offset_left = 0.631958
+offset_top = -0.17601013
+offset_right = -0.63201904
+offset_bottom = 0.17602539
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer" unique_id=2014211859]
+[node name="TitleLabel" type="RichTextLabel" parent="VBoxContainer" unique_id=2014211859]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("1_6f88p")
 text = "PONG"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="SingleplayerButton" type="Button" parent="VBoxContainer" unique_id=293830624]
 layout_mode = 2
+theme = ExtResource("1_6f88p")
+text = "Singleplayer"
 
 [node name="MultiplayerLocalButton" type="Button" parent="VBoxContainer" unique_id=1098297239]
 layout_mode = 2
+theme = ExtResource("1_6f88p")
+text = "Multiplayer (Local)"
 
 [node name="MultiplayerOnlineButton" type="Button" parent="VBoxContainer" unique_id=1400903800]
 layout_mode = 2
+theme = ExtResource("1_6f88p")
+text = "Multiplayer (Online)"
 
 [node name="SettingsButton" type="Button" parent="VBoxContainer" unique_id=1645772139]
 layout_mode = 2
+theme = ExtResource("1_6f88p")
+text = "Settings"
 
-[node name="Quit" type="Button" parent="VBoxContainer" unique_id=1068017435]
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=1068017435]
 layout_mode = 2
+theme = ExtResource("1_6f88p")
+text = "Quit"
