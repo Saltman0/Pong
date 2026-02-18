@@ -2,18 +2,17 @@
 
 [ext_resource type="Script" uid="uid://c887n7426p6k3" path="res://scenes/ball/Ball.cs" id="1_oqv3d"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_5a6bx"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5a6bx"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_oqv3d"]
+radius = 16.0
 
 [node name="Ball" type="CharacterBody2D" unique_id=683535454]
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_oqv3d")
+_color = Color(1, 1, 0, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2106670967]
-scale = Vector2(20, 20)
-texture = SubResource("CanvasTexture_5a6bx")
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=2033077120]
+polygon = PackedVector2Array(0, -16, 6, -15, 12, -11, 14, -8, 15, -5, 16, 0, 15, 5, 14, 8, 12, 11, 6, 15, 0, 16, -6, 15, -12, 11, -14, 8, -15, 5, -16, 0, -15, -5, -14, -8, -12, -11, -6, -15)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=8071062]
-shape = SubResource("RectangleShape2D_5a6bx")
+shape = SubResource("CircleShape2D_oqv3d")
