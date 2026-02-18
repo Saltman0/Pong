@@ -30,26 +30,26 @@ public partial class MainMenuInterface : Control
 
 	public void OnSingleplayerButtonPressed()
 	{
-		EmitSignal(SignalName.SingleplayerButtonPressed, this);
+		EmitSignal(SignalName.SingleplayerButtonPressed);
 	}
 	
 	public void OnMultiplayerLocalButtonPressed()
 	{
-		EmitSignal(SignalName.MultiplayerLocalButtonPressed, this);
+		EmitSignal(SignalName.MultiplayerLocalButtonPressed);
 	}
 	
 	public void OnMultiplayerOnlineButtonPressed()
 	{
-		EmitSignal(SignalName.MultiplayerOnlineButtonPressed, this);
+		EmitSignal(SignalName.MultiplayerOnlineButtonPressed);
 	}
 	
 	public void OnSettingsButtonPressed()
 	{
-		EmitSignal(SignalName.SettingsButtonPressed, this);
+		EmitSignal(SignalName.SettingsButtonPressed);
 	}
 	
 	public void OnQuitButtonPressed()
 	{
-		EmitSignal(SignalName.QuitButtonPressed, this);
+		EmitSignal(SignalName.QuitButtonPressed);
 	}
 }
