@@ -16,9 +16,11 @@ position = Vector2(683, 384)
 
 [node name="PaddleLeft" parent="." unique_id=1469242346 instance=ExtResource("2_7h61r")]
 position = Vector2(60, 384)
+_color = Color(1, 0, 0, 1)
 
 [node name="PaddleRight" parent="." unique_id=1991710194 instance=ExtResource("2_7h61r")]
 position = Vector2(1300, 384)
+_color = Color(0, 0, 1, 1)
 
 [node name="MarkerPaddleLeft" type="Marker2D" parent="." unique_id=254739520]
 position = Vector2(60, 384)
@@ -45,6 +47,7 @@ position = Vector2(-10, 384)
 position = Vector2(1376, 384)
 
 [node name="GameInterface" parent="." unique_id=750577209 instance=ExtResource("6_5i0tg")]
+metadata/_edit_lock_ = true
 
 [node name="Timer" type="Timer" parent="." unique_id=637497745]
 autostart = true
