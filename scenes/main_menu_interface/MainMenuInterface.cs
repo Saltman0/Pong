@@ -31,30 +31,25 @@ public partial class MainMenuInterface : Control
 	public void OnSingleplayerButtonPressed()
 	{
 		EmitSignal(SignalName.SingleplayerButtonPressed, this);
-		GD.Print("Singleplayer button pressed");
 	}
 	
 	public void OnMultiplayerLocalButtonPressed()
 	{
 		EmitSignal(SignalName.MultiplayerLocalButtonPressed, this);
-		GD.Print("Multiplayer local button pressed");
 	}
 	
 	public void OnMultiplayerOnlineButtonPressed()
 	{
 		EmitSignal(SignalName.MultiplayerOnlineButtonPressed, this);
-		GD.Print("Multiplayer online button pressed");
 	}
 	
 	public void OnSettingsButtonPressed()
 	{
 		EmitSignal(SignalName.SettingsButtonPressed, this);
-		GD.Print("Settings button pressed");
 	}
 	
 	public void OnQuitButtonPressed()
 	{
 		EmitSignal(SignalName.QuitButtonPressed, this);
-		GD.Print("Quit button pressed");
 	}
 }
