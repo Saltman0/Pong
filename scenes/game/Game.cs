@@ -12,16 +12,31 @@ public partial class Game : Node
 	[Signal]
 	public delegate void GameOverEventHandler(string winner);
 
+	[Export] 
+	public bool IsMultiplayer;
+	
 	[Export]
-	private int _timeLeft;
+	public int TimeLeft;
+	
 	[Export]
-	private int _leftScore;
+	public int LeftScore;
+	
 	[Export]
-	private int _rightScore;
+	public int RightScore;
+	
+	private Paddle _paddleLeft;
+	
+	private Paddle _paddleRight;
+	
+	private Ball _ball;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_paddleLeft = GetNode<Paddle>("PaddleLeft");
+		_paddleRight = GetNode<Paddle>("PaddleRight");
+		_ball = GetNode<Ball>("Ball");
+		
 		GetNode<Goal>("GoalLeft").GoalScored += OnGoalScored;
 		GetNode<Goal>("GoalRight").GoalScored += OnGoalScored;
 		GetNode<Timer>("Timer").Timeout += OnTimerTimeout;
@@ -29,21 +44,38 @@ public partial class Game : Node
 		TimeUpdated += GetNode<GameInterface>("GameInterface").OnTimeUpdated;
 		GameOver += GetNode<GameInterface>("GameInterface").OnGameOver;
 
-		EmitSignalScoreUpdated(_leftScore, "left");
-		EmitSignalScoreUpdated(_rightScore, "right");
-		EmitSignalTimeUpdated(_timeLeft);
+		EmitSignalScoreUpdated(LeftScore, "left");
+		EmitSignalScoreUpdated(RightScore, "right");
+		EmitSignalTimeUpdated(TimeLeft);
 	}
-	
+
+	public override void _PhysicsProcess(double delta)
+	{
+		Paddle paddleLeft = GetNode<Paddle>("PaddleLeft");
+		Paddle paddleRight = GetNode<Paddle>("PaddleRight");
+		
+		paddleLeft.Direction = Input.GetAxis("move_up", "move_down");
+		
+		if (IsMultiplayer)
+		{
+			paddleRight.Direction = Input.GetAxis("move_up", "move_down");
+		}
+		else
+		{
+			FollowBall(paddleRight);
+		}
+	}
+
 	private void OnGoalScored(Goal goal)
 	{
 		if (goal.Name.Equals("GoalLeft"))
 		{
-			_rightScore++;
-			EmitSignalScoreUpdated(_rightScore, "right");
+			RightScore++;
+			EmitSignalScoreUpdated(RightScore, "right");
 		} else if (goal.Name.Equals("GoalRight"))
 		{
-			_leftScore++;
-			EmitSignalScoreUpdated(_leftScore, "left");
+			LeftScore++;
+			EmitSignalScoreUpdated(LeftScore, "left");
 		}
 		
 		ResetRound();
@@ -51,14 +83,14 @@ public partial class Game : Node
 
 	private void OnTimerTimeout()
 	{
-		_timeLeft--;
-		EmitSignalTimeUpdated(_timeLeft);
-		if (_timeLeft == 0)
+		TimeLeft--;
+		EmitSignalTimeUpdated(TimeLeft);
+		if (TimeLeft == 0)
 		{ 
-			if (_leftScore > _rightScore)
+			if (LeftScore > RightScore)
 			{
 				EmitSignalGameOver("left");
-			} else if (_rightScore > _leftScore) {
+			} else if (RightScore > LeftScore) {
 				EmitSignalGameOver("right");
 			} else {
 				EmitSignalGameOver("none");
@@ -68,11 +100,17 @@ public partial class Game : Node
 
 	private void ResetRound()
 	{
-		Ball ball = GetNode<Ball>("Ball");
-		ball.Position = GetNode<Marker2D>("MarkerBall").Position;
-		ball.Launch();
-		
-		GetNode<Paddle>("PaddleLeft").Position = GetNode<Marker2D>("MarkerPaddleLeft").Position;
-		GetNode<Paddle>("PaddleRight").Position = GetNode<Marker2D>("MarkerPaddleRight").Position;
+		_paddleLeft.Position = GetNode<Marker2D>("MarkerPaddleLeft").Position;
+		_paddleRight.Position = GetNode<Marker2D>("MarkerPaddleRight").Position;
+		_ball.Position = GetNode<Marker2D>("MarkerBall").Position;
+		_ball.Launch();
+	}
+
+	private void FollowBall(Paddle paddle)
+	{
+		float diff = _ball.Position.Y - paddle.Position.Y;
+		float deadzone = 5.0f;
+
+		paddle.Direction = Math.Abs(diff) > deadzone ? Math.Sign(diff) : 0.0f;
 	}
 }
