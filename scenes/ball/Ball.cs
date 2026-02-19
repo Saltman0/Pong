@@ -23,9 +23,6 @@ public partial class Ball : CharacterBody2D
 
 	public void Launch()
 	{
-		Random random = new Random();
-		float randomX = (float)(random.NextDouble() * 2.0 - 1.0);
-		float randomY = (float)(random.NextDouble() * 2.0 - 1.0);
-		Velocity = new Vector2(randomX, randomY);
+		Velocity = new Vector2(1.0f, 0.0f);
 	}
 }
