@@ -9,7 +9,7 @@
 
 [node name="Game" type="Node" unique_id=578417335]
 script = ExtResource("1_sul5r")
-_timeLeft = 60
+TimeLeft = 10
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1729928314]
 position = Vector2(683, 384)
