@@ -34,12 +34,16 @@ public partial class Root : Node
 	{
 		RemoveChild(GetNode<MainMenu>("MainMenu"));
 		AddChild(GD.Load<PackedScene>("res://scenes/game/game.tscn").Instantiate());
+		GetNode<Game>("Game").IsMultiplayer = false;
 	}
 	
 	public void OnMultiplayerLocalButtonPressed()
 	{
 		RemoveChild(GetNode<MainMenu>("MainMenu"));
-		GD.Print("Multiplayer local button pressed");
+		AddChild(
+			GD.Load<PackedScene>("res://scenes/game/game.tscn").Instantiate()
+		);
+		GetNode<Game>("Game").IsMultiplayer = true;
 	}
 	
 	public void OnMultiplayerOnlineButtonPressed()
