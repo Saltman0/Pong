@@ -1,65 +1,75 @@
 using Godot;
-using System;
 
 public partial class Root : Node
 {
+	private MainMenu _mainMenu;
+	
+	private Game _game;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		MainMenu mainMenu = GetNode<MainMenu>("MainMenu");
+		_mainMenu = GetNode<MainMenu>("MainMenu");
 		
-		mainMenu.Connect(
-			MainMenu.SignalName.SingleplayerButtonPressed, 
-			Callable.From(OnSingleplayerButtonPressed)
-		);
-		mainMenu.Connect(
-			MainMenu.SignalName.MultiplayerLocalButtonPressed, 
-			Callable.From(OnMultiplayerLocalButtonPressed)
-		);
-		mainMenu.Connect(
-			MainMenu.SignalName.MultiplayerOnlineButtonPressed, 
-			Callable.From(OnMultiplayerOnlineButtonPressed)
-		);
-		mainMenu.Connect(
-			MainMenu.SignalName.SettingsButtonPressed, 
-			Callable.From(OnSettingsButtonPressed)
-		);
-		mainMenu.Connect(
-			MainMenu.SignalName.QuitButtonPressed, 
-			Callable.From(OnQuitButtonPressed)
-		);
+		ConnectToMainMenu();
 	}
 	
-	public void OnSingleplayerButtonPressed()
+	public void OnSingleplayerSelected()
 	{
-		RemoveChild(GetNode<MainMenu>("MainMenu"));
+		RemoveChild(_mainMenu);
+		
 		AddChild(GD.Load<PackedScene>("res://scenes/game/game.tscn").Instantiate());
-		GetNode<Game>("Game").IsMultiplayer = false;
+		_game = GetNode<Game>("Game");
+		_game.IsMultiplayer = false;
+		_game.ReturnToMainMenu += OnReturnToMainMenuRequested;
 	}
 	
-	public void OnMultiplayerLocalButtonPressed()
+	public void OnMultiplayerLocalSelected()
 	{
-		RemoveChild(GetNode<MainMenu>("MainMenu"));
-		AddChild(
-			GD.Load<PackedScene>("res://scenes/game/game.tscn").Instantiate()
-		);
-		GetNode<Game>("Game").IsMultiplayer = true;
+		RemoveChild(_mainMenu);
+		
+		AddChild(GD.Load<PackedScene>("res://scenes/game/game.tscn").Instantiate());
+		_game = GetNode<Game>("Game");
+		_game.IsMultiplayer = true;
+		_game.ReturnToMainMenu += OnReturnToMainMenuRequested;
 	}
 	
-	public void OnMultiplayerOnlineButtonPressed()
+	public void OnMultiplayerOnlineSelected()
 	{
-		RemoveChild(GetNode<MainMenu>("MainMenu"));
-		GD.Print("Multiplayer online button pressed");
+		RemoveChild(_mainMenu);
+		
+		AddChild(GD.Load<PackedScene>("res://scenes/game/game.tscn").Instantiate());
+		_game = GetNode<Game>("Game");
+		_game.IsMultiplayer = true;
+		_game.ReturnToMainMenu += OnReturnToMainMenuRequested;
 	}
 	
-	public void OnSettingsButtonPressed()
+	public void OnSettingsSelected()
 	{
 		RemoveChild(GetNode<MainMenu>("MainMenu"));
 		GD.Print("Settings button pressed");
 	}
 	
-	public void OnQuitButtonPressed()
+	public void OnQuitSelected()
 	{
 		GetTree().Quit();
+	}
+	
+	private void OnReturnToMainMenuRequested()
+	{
+		RemoveChild(_game);
+		
+		AddChild(GD.Load<PackedScene>("res://scenes/main_menu/main_menu.tscn").Instantiate());
+		_mainMenu = GetNode<MainMenu>("MainMenu");
+		ConnectToMainMenu();
+	}
+
+	private void ConnectToMainMenu()
+	{
+		_mainMenu.SingleplayerSelected += OnSingleplayerSelected;
+		_mainMenu.MultiplayerLocalSelected += OnMultiplayerLocalSelected;
+		_mainMenu.MultiplayerOnlineSelected += OnMultiplayerOnlineSelected;
+		_mainMenu.SettingsSelected += OnSettingsSelected;
+		_mainMenu.QuitSelected += OnQuitSelected;
 	}
 }
