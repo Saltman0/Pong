@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class MainMenuInterface : Control
 {
@@ -18,7 +17,6 @@ public partial class MainMenuInterface : Control
 	[Signal]
 	public delegate void QuitButtonPressedEventHandler();
 	
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		GetNode<Button>("VBoxContainer/SingleplayerButton").Pressed += OnSingleplayerButtonPressed;
@@ -30,26 +28,26 @@ public partial class MainMenuInterface : Control
 
 	public void OnSingleplayerButtonPressed()
 	{
-		EmitSignal(SignalName.SingleplayerButtonPressed);
+		EmitSignalSingleplayerButtonPressed();
 	}
 	
 	public void OnMultiplayerLocalButtonPressed()
 	{
-		EmitSignal(SignalName.MultiplayerLocalButtonPressed);
+		EmitSignalMultiplayerLocalButtonPressed();
 	}
 	
 	public void OnMultiplayerOnlineButtonPressed()
 	{
-		EmitSignal(SignalName.MultiplayerOnlineButtonPressed);
+		EmitSignalMultiplayerOnlineButtonPressed();
 	}
 	
 	public void OnSettingsButtonPressed()
 	{
-		EmitSignal(SignalName.SettingsButtonPressed);
+		EmitSignalSettingsButtonPressed();
 	}
 	
 	public void OnQuitButtonPressed()
 	{
-		EmitSignal(SignalName.QuitButtonPressed);
+		EmitSignalQuitButtonPressed();
 	}
 }
