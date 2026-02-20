@@ -10,19 +10,22 @@ public partial class Game : Node
 	public delegate void TimeUpdatedEventHandler(int seconds);
 	
 	[Signal]
-	public delegate void GameOverEventHandler(string winner);
+	public delegate void GameIsOverEventHandler(string winner);
+	
+	[Signal]
+	public delegate void ReturnToMainMenuEventHandler();
+	
+	private const int DefaultScore = 0;
 
-	[Export] 
-	public bool IsMultiplayer;
+	private const int DefaultTimeLeft = 5;
+
+	public bool IsMultiplayer = false;
 	
-	[Export]
-	public int TimeLeft;
+	private int _timeLeft = DefaultTimeLeft;
 	
-	[Export]
-	public int LeftScore;
+	private int _leftScore = DefaultScore;
 	
-	[Export]
-	public int RightScore;
+	private int _rightScore = DefaultScore;
 	
 	private Paddle _paddleLeft;
 	
@@ -40,13 +43,17 @@ public partial class Game : Node
 		GetNode<Goal>("GoalLeft").GoalScored += OnGoalScored;
 		GetNode<Goal>("GoalRight").GoalScored += OnGoalScored;
 		GetNode<Timer>("Timer").Timeout += OnTimerTimeout;
-		ScoreUpdated += GetNode<GameInterface>("GameInterface").OnScoreUpdated;
-		TimeUpdated += GetNode<GameInterface>("GameInterface").OnTimeUpdated;
-		GameOver += GetNode<GameInterface>("GameInterface").OnGameOver;
-
-		EmitSignalScoreUpdated(LeftScore, "left");
-		EmitSignalScoreUpdated(RightScore, "right");
-		EmitSignalTimeUpdated(TimeLeft);
+		
+		GameInterface gameInterface = GetNode<GameInterface>("GameInterface");
+		ScoreUpdated += gameInterface.OnScoreUpdated;
+		TimeUpdated += gameInterface.OnTimeUpdated;
+		GameIsOver += gameInterface.OnGameOver;
+		gameInterface.ReplayMatch += () => { ResetRound(); };
+		gameInterface.ReturnToMainMenu += () => { EmitSignalReturnToMainMenu(); };
+		
+		EmitSignalScoreUpdated(_leftScore, "left");
+		EmitSignalScoreUpdated(_rightScore, "right");
+		EmitSignalTimeUpdated(_timeLeft);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -66,40 +73,55 @@ public partial class Game : Node
 		}
 	}
 
-	private void OnGoalScored(Goal goal)
+	private void OnGoalScored(string side)
 	{
-		if (goal.Name.Equals("GoalLeft"))
+		if (side == "left")
 		{
-			RightScore++;
-			EmitSignalScoreUpdated(RightScore, "right");
-		} else if (goal.Name.Equals("GoalRight"))
+			_rightScore++;
+			EmitSignalScoreUpdated(_rightScore, "right");
+		} 
+		
+		if (side == "right")
 		{
-			LeftScore++;
-			EmitSignalScoreUpdated(LeftScore, "left");
+			_leftScore++;
+			EmitSignalScoreUpdated(_leftScore, "left");
 		}
 		
-		ResetRound();
+		ResetPositions();
 	}
 
 	private void OnTimerTimeout()
 	{
-		TimeLeft--;
-		EmitSignalTimeUpdated(TimeLeft);
-		if (TimeLeft == 0)
+		_timeLeft--;
+		
+		EmitSignalTimeUpdated(_timeLeft);
+		
+		if (_timeLeft == 0)
 		{ 
-			if (LeftScore > RightScore)
+			if (_leftScore > _rightScore)
 			{
-				EmitSignalGameOver("left");
-			} else if (RightScore > LeftScore) {
-				EmitSignalGameOver("right");
+				EmitSignalGameIsOver("left");
+			} else if (_rightScore > _leftScore) {
+				EmitSignalGameIsOver("right");
 			} else {
-				EmitSignalGameOver("none");
+				EmitSignalGameIsOver("none");
 			}
 		}
+	}
+	
+	private void ResetPositions()
+	{
+		_paddleLeft.Position = GetNode<Marker2D>("MarkerPaddleLeft").Position;
+		_paddleRight.Position = GetNode<Marker2D>("MarkerPaddleRight").Position;
+		_ball.Position = GetNode<Marker2D>("MarkerBall").Position;
+		_ball.Launch();
 	}
 
 	private void ResetRound()
 	{
+		_timeLeft = DefaultTimeLeft;
+		_leftScore = DefaultScore;
+		_rightScore = DefaultScore;
 		_paddleLeft.Position = GetNode<Marker2D>("MarkerPaddleLeft").Position;
 		_paddleRight.Position = GetNode<Marker2D>("MarkerPaddleRight").Position;
 		_ball.Position = GetNode<Marker2D>("MarkerBall").Position;
