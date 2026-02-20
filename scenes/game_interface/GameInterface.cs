@@ -3,6 +3,18 @@ using System;
 
 public partial class GameInterface : Control
 {
+	[Signal]
+	public delegate void ReplayMatchEventHandler();
+	
+	[Signal]
+	public delegate void ReturnToMainMenuEventHandler();
+	
+	public override void _Ready()
+	{
+		GetNode<Button>("Main/ReplayButton").Pressed += OnReplayButtonPressed;
+		GetNode<Button>("Main/ReturnToMainMenuButton").Pressed += OnReturnToMainMenuButtonPressed;
+	}
+	
 	public void OnScoreUpdated(int newScore, string side)
 	{
 		if (side == "left")
@@ -28,5 +40,24 @@ public partial class GameInterface : Control
 		} else {
 			GetNode<RichTextLabel>("Main/WinnerLabel").Text = "It's a draw !";
 		}
+	}
+
+	public void OnReplayButtonPressed()
+	{
+		ResetUi();
+		EmitSignalReplayMatch();
+	}
+	
+	public void OnReturnToMainMenuButtonPressed()
+	{
+		EmitSignalReturnToMainMenu();
+	}
+
+	private void ResetUi()
+	{
+		GetNode<VBoxContainer>("Main").Visible = false;
+		GetNode<RichTextLabel>("Header/HBoxContainer/ScoreLeftLabel").Text = "0";
+		GetNode<RichTextLabel>("Header/HBoxContainer/ScoreRightLabel").Text = "0";
+		GetNode<RichTextLabel>("Header/HBoxContainer/TimerLabel").Text = "0";
 	}
 }
