@@ -1,22 +1,21 @@
 using Godot;
-using System;
 
 public partial class MainMenu : Node
 {
 	[Signal]
-	public delegate void SingleplayerButtonPressedEventHandler();
+	public delegate void SingleplayerSelectedEventHandler();
 	
 	[Signal]
-	public delegate void MultiplayerLocalButtonPressedEventHandler();
+	public delegate void MultiplayerLocalSelectedEventHandler();
 	
 	[Signal]
-	public delegate void MultiplayerOnlineButtonPressedEventHandler();
+	public delegate void MultiplayerOnlineSelectedEventHandler();
 	
 	[Signal]
-	public delegate void SettingsButtonPressedEventHandler();
+	public delegate void SettingsSelectedEventHandler();
 	
 	[Signal]
-	public delegate void QuitButtonPressedEventHandler();
+	public delegate void QuitSelectedEventHandler();
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -25,48 +24,48 @@ public partial class MainMenu : Node
 		
 		mainMenuInterface.Connect(
 			MainMenuInterface.SignalName.SingleplayerButtonPressed, 
-			Callable.From(OnSingleplayerButtonPressed)
+			Callable.From(OnSingleplayerSelected)
 		);
 		mainMenuInterface.Connect(
 			MainMenuInterface.SignalName.MultiplayerLocalButtonPressed, 
-			Callable.From(OnMultiplayerLocalButtonPressed)
+			Callable.From(OnMultiplayerLocalSelected)
 		);
 		mainMenuInterface.Connect(
 			MainMenuInterface.SignalName.MultiplayerOnlineButtonPressed, 
-			Callable.From(OnMultiplayerOnlineButtonPressed)
+			Callable.From(OnMultiplayerOnlineSelected)
 		);
 		mainMenuInterface.Connect(
 			MainMenuInterface.SignalName.SettingsButtonPressed, 
-			Callable.From(OnSettingsButtonPressed)
+			Callable.From(OnSettingsSelected)
 		);
 		mainMenuInterface.Connect(
 			MainMenuInterface.SignalName.QuitButtonPressed, 
-			Callable.From(OnQuitButtonPressed)
+			Callable.From(OnQuitSelected)
 		);
 	}
 
-	public void OnSingleplayerButtonPressed()
+	public void OnSingleplayerSelected()
 	{
-		EmitSignal(SignalName.SingleplayerButtonPressed);
+		EmitSignalSingleplayerSelected();
 	}
 	
-	public void OnMultiplayerLocalButtonPressed()
+	public void OnMultiplayerLocalSelected()
 	{
-		EmitSignal(SignalName.MultiplayerLocalButtonPressed);
+		EmitSignalMultiplayerLocalSelected();
 	}
 	
-	public void OnMultiplayerOnlineButtonPressed()
+	public void OnMultiplayerOnlineSelected()
 	{
-		EmitSignal(SignalName.MultiplayerOnlineButtonPressed);
+		EmitSignalMultiplayerOnlineSelected();
 	}
 	
-	public void OnSettingsButtonPressed()
+	public void OnSettingsSelected()
 	{
-		EmitSignal(SignalName.SettingsButtonPressed);
+		EmitSignalSettingsSelected();
 	}
 	
-	public void OnQuitButtonPressed()
+	public void OnQuitSelected()
 	{
-		EmitSignal(SignalName.QuitButtonPressed);
+		EmitSignalQuitSelected();
 	}
 }
