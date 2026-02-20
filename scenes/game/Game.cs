@@ -17,7 +17,7 @@ public partial class Game : Node
 	
 	private const int DefaultScore = 0;
 
-	private const int DefaultTimeLeft = 5;
+	private const int DefaultTimeLeft = 60;
 
 	public bool IsMultiplayer = false;
 	
@@ -65,7 +65,7 @@ public partial class Game : Node
 		
 		if (IsMultiplayer)
 		{
-			paddleRight.Direction = Input.GetAxis("move_up", "move_down");
+			paddleRight.Direction = Input.GetAxis("move_up_2", "move_down_2");
 		}
 		else
 		{
