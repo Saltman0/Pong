@@ -1,63 +1,108 @@
 using Godot;
-using System;
 
 public partial class GameInterface : Control
 {
+	[Signal]
+	public delegate void UnpauseGameEventHandler();
+	
 	[Signal]
 	public delegate void ReplayMatchEventHandler();
 	
 	[Signal]
 	public delegate void ReturnToMainMenuEventHandler();
+
+	private VBoxContainer _gameOverContainer;
+	
+	private VBoxContainer _pauseContainer;
+
+	private RichTextLabel _scoreLeftLabel;
+	
+	private RichTextLabel _scoreRightLabel;
+
+	private RichTextLabel _timerLabel;
+	
+	private RichTextLabel _winnerLabel;
 	
 	public override void _Ready()
 	{
-		GetNode<Button>("Main/ReplayButton").Pressed += OnReplayButtonPressed;
-		GetNode<Button>("Main/ReturnToMainMenuButton").Pressed += OnReturnToMainMenuButtonPressed;
+		_pauseContainer = GetNode<VBoxContainer>("PauseContainer");
+		_gameOverContainer = GetNode<VBoxContainer>("GameOverContainer");
+		_scoreLeftLabel = GetNode<RichTextLabel>("HeaderContainer/HBoxContainer/ScoreLeftLabel");
+		_scoreRightLabel = GetNode<RichTextLabel>("HeaderContainer/HBoxContainer/ScoreRightLabel");
+		_timerLabel = GetNode<RichTextLabel>("HeaderContainer/HBoxContainer/TimerLabel");
+		_winnerLabel = GetNode<RichTextLabel>("GameOverContainer/WinnerLabel");
+		
+		_pauseContainer.GetNode<Button>("ContinueButton").Pressed += OnContinueButtonPressed;
+		_pauseContainer.GetNode<Button>("RestartButton").Pressed += OnRestartButtonPressed;
+		_pauseContainer.GetNode<Button>("ReturnToMainMenuButton").Pressed += OnReturnToMainMenuButtonPressed;
+		_gameOverContainer.GetNode<Button>("ReplayButton").Pressed += OnReplayButtonPressed;
+		_gameOverContainer.GetNode<Button>("ReturnToMainMenuButton").Pressed += OnReturnToMainMenuButtonPressed;
 	}
 	
 	public void OnScoreUpdated(int newScore, string side)
 	{
 		if (side == "left")
 		{
-			GetNode<RichTextLabel>("Header/HBoxContainer/ScoreLeftLabel").Text = newScore.ToString();
+			_scoreLeftLabel.Text = newScore.ToString();
 		} else if (side == "right")
 		{
-			GetNode<RichTextLabel>("Header/HBoxContainer/ScoreRightLabel").Text = newScore.ToString();
+			_scoreRightLabel.Text = newScore.ToString();
 		}
 	}
 
 	public void OnTimeUpdated(int seconds)
 	{
-		GetNode<RichTextLabel>("Header/HBoxContainer/TimerLabel").Text = seconds.ToString();
+		_timerLabel.Text = seconds.ToString();
 	}
 
 	public void OnGameOver(string winner)
 	{
-		GetNode<VBoxContainer>("Main").Visible = true;
+		_gameOverContainer.Visible = true;
 		if (winner != "none")
 		{
-			GetNode<RichTextLabel>("Main/WinnerLabel").Text = winner.ToUpper() + " paddle won !";
+			_winnerLabel.Text = winner.ToUpper() + " paddle won !";
 		} else {
-			GetNode<RichTextLabel>("Main/WinnerLabel").Text = "It's a draw !";
+			_winnerLabel.Text = "It's a draw !";
 		}
+	}
+
+	public void OnGamePaused()
+	{
+		_pauseContainer.Visible = true;
+	}
+	
+	public void OnContinueButtonPressed()
+	{
+		_pauseContainer.Visible = false;
+		EmitSignalUnpauseGame();
+	}
+	
+	public void OnRestartButtonPressed()
+	{
+		ResetUi();
+		EmitSignalUnpauseGame();
+		EmitSignalReplayMatch();
 	}
 
 	public void OnReplayButtonPressed()
 	{
 		ResetUi();
+		EmitSignalUnpauseGame();
 		EmitSignalReplayMatch();
 	}
 	
 	public void OnReturnToMainMenuButtonPressed()
 	{
+		EmitSignalUnpauseGame();
 		EmitSignalReturnToMainMenu();
 	}
 
 	private void ResetUi()
 	{
-		GetNode<VBoxContainer>("Main").Visible = false;
-		GetNode<RichTextLabel>("Header/HBoxContainer/ScoreLeftLabel").Text = "0";
-		GetNode<RichTextLabel>("Header/HBoxContainer/ScoreRightLabel").Text = "0";
-		GetNode<RichTextLabel>("Header/HBoxContainer/TimerLabel").Text = "0";
+		_pauseContainer.Visible = false;
+		_gameOverContainer.Visible = false;
+		_scoreLeftLabel.Text = "0";
+		_scoreRightLabel.Text = "0";
+		_timerLabel.Text = "0";
 	}
 }

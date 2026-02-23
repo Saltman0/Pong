@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_yqwyh"]
 
 [node name="GameInterface" type="Control" unique_id=750577209]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,18 +13,18 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6tuv")
 
-[node name="Header" type="MarginContainer" parent="." unique_id=275743190]
+[node name="HeaderContainer" type="MarginContainer" parent="." unique_id=275743190]
 layout_mode = 0
 offset_right = 1366.0
 offset_bottom = 40.0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_right = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Header" unique_id=1436825125]
+[node name="HBoxContainer" type="HBoxContainer" parent="HeaderContainer" unique_id=1436825125]
 layout_mode = 2
 alignment = 1
 
-[node name="ScoreLeftLabel" type="RichTextLabel" parent="Header/HBoxContainer" unique_id=1708064333]
+[node name="ScoreLeftLabel" type="RichTextLabel" parent="HeaderContainer/HBoxContainer" unique_id=1708064333]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_yqwyh")
@@ -31,7 +32,7 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "0"
 vertical_alignment = 1
 
-[node name="TimerLabel" type="RichTextLabel" parent="Header/HBoxContainer" unique_id=318065974]
+[node name="TimerLabel" type="RichTextLabel" parent="HeaderContainer/HBoxContainer" unique_id=318065974]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_yqwyh")
@@ -40,7 +41,7 @@ text = "X"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScoreRightLabel" type="RichTextLabel" parent="Header/HBoxContainer" unique_id=851959756]
+[node name="ScoreRightLabel" type="RichTextLabel" parent="HeaderContainer/HBoxContainer" unique_id=851959756]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_yqwyh")
@@ -49,7 +50,7 @@ text = "0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Main" type="VBoxContainer" parent="." unique_id=1844850828]
+[node name="GameOverContainer" type="VBoxContainer" parent="." unique_id=1844850828]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -64,7 +65,7 @@ offset_bottom = 0.11199951
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GameOverLabel" type="RichTextLabel" parent="Main" unique_id=1264767224]
+[node name="GameOverLabel" type="RichTextLabel" parent="GameOverContainer" unique_id=1264767224]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_yqwyh")
@@ -72,7 +73,7 @@ text = "Game over !"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="WinnerLabel" type="RichTextLabel" parent="Main" unique_id=1411252032]
+[node name="WinnerLabel" type="RichTextLabel" parent="GameOverContainer" unique_id=1411252032]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_yqwyh")
@@ -81,12 +82,50 @@ text = "X paddle is the winner.
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ReplayButton" type="Button" parent="Main" unique_id=1533782552]
+[node name="ReplayButton" type="Button" parent="GameOverContainer" unique_id=1533782552]
 layout_mode = 2
 theme = ExtResource("1_yqwyh")
 text = "Replay"
 
-[node name="ReturnToMainMenuButton" type="Button" parent="Main" unique_id=1749772969]
+[node name="ReturnToMainMenuButton" type="Button" parent="GameOverContainer" unique_id=1749772969]
+layout_mode = 2
+theme = ExtResource("1_yqwyh")
+text = "Return to main menu"
+
+[node name="PauseContainer" type="VBoxContainer" parent="." unique_id=1875944171]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.38000003
+anchor_top = 0.284
+anchor_right = 0.62
+anchor_bottom = 0.716
+offset_left = -0.08001709
+offset_top = -0.11199951
+offset_right = 0.08001709
+offset_bottom = 0.11199951
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseLabel" type="RichTextLabel" parent="PauseContainer" unique_id=1800525950]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_yqwyh")
+text = "Game is paused."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="PauseContainer" unique_id=360151019]
+layout_mode = 2
+theme = ExtResource("1_yqwyh")
+text = "Continue"
+
+[node name="RestartButton" type="Button" parent="PauseContainer" unique_id=413629822]
+layout_mode = 2
+theme = ExtResource("1_yqwyh")
+text = "Restart"
+
+[node name="ReturnToMainMenuButton" type="Button" parent="PauseContainer" unique_id=1937525763]
 layout_mode = 2
 theme = ExtResource("1_yqwyh")
 text = "Return to main menu"
