@@ -13,6 +13,9 @@ public partial class Game : Node
 	public delegate void GameIsOverEventHandler(string winner);
 	
 	[Signal]
+	public delegate void GameIsPausedEventHandler();
+	
+	[Signal]
 	public delegate void ReturnToMainMenuEventHandler();
 	
 	private const int DefaultScore = 0;
@@ -33,7 +36,6 @@ public partial class Game : Node
 	
 	private Ball _ball;
 	
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_paddleLeft = GetNode<Paddle>("PaddleLeft");
@@ -48,12 +50,25 @@ public partial class Game : Node
 		ScoreUpdated += gameInterface.OnScoreUpdated;
 		TimeUpdated += gameInterface.OnTimeUpdated;
 		GameIsOver += gameInterface.OnGameOver;
+		GameIsPaused += gameInterface.OnGamePaused;
+		gameInterface.UnpauseGame += () => { GetTree().Paused = false; };
 		gameInterface.ReplayMatch += () => { ResetRound(); };
+		
+		// We send a signal to the main scene (Root) in the goal to intercept the signal
+		// so we can return in the main menu of the game
 		gameInterface.ReturnToMainMenu += () => { EmitSignalReturnToMainMenu(); };
 		
 		EmitSignalScoreUpdated(_leftScore, "left");
 		EmitSignalScoreUpdated(_rightScore, "right");
 		EmitSignalTimeUpdated(_timeLeft);
+	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("pause"))
+		{
+			PauseGame();
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -134,5 +149,11 @@ public partial class Game : Node
 		float deadzone = 5.0f;
 
 		paddle.Direction = Math.Abs(diff) > deadzone ? Math.Sign(diff) : 0.0f;
+	}
+	
+	private void PauseGame()
+	{
+		EmitSignalGameIsPaused();
+		GetTree().Paused = true;
 	}
 }
