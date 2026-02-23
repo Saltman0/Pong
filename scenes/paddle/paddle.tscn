@@ -2,11 +2,34 @@
 
 [ext_resource type="Script" uid="uid://ufi3ry3wq2y8" path="res://scenes/paddle/Paddle.cs" id="1_q5rgx"]
 
+[sub_resource type="Gradient" id="Gradient_q5rgx"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
 [node name="Paddle" type="CharacterBody2D" unique_id=331370048]
 collision_mask = 10
 motion_mode = 1
 script = ExtResource("1_q5rgx")
-_color = Color(1, 1, 1, 1)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1578340993]
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=923859636]
+polygon = PackedVector2Array(0, -71, 4, -70, 6, -69, 8, -67, 10, -63, 12, -57, 14, -47, 16, -35, 17, -24, 18, -8, 18, 8, 15, 37, 11, 53, 9, 58, 7, 61, 5, 63, 0, 65, -5, 63, -7, 61, -9, 58, -11, 53, -15, 37, -17, 18, -18, 7, -18, -8, -17, -24, -16, -35, -14, -47, -12, -57, -10, -63, -8, -67, -6, -69, -4, -70)
+
+[node name="CpuParticles2D" type="CPUParticles2D" parent="." unique_id=892306946]
+position = Vector2(0, -3)
+emitting = false
+amount = 100
+lifetime = 0.5
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(5, 60)
+gravity = Vector2(0, 0)
+scale_amount_min = 25.0
+scale_amount_max = 25.0
+color_ramp = SubResource("Gradient_q5rgx")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1036708460]
 polygon = PackedVector2Array(0, -71, 3, -70, 5, -69, 7, -67, 9, -63, 11, -57, 13, -47, 15, -35, 16, -24, 17, -8, 17, 8, 14, 37, 10, 53, 8, 58, 6, 61, 4, 63, 0, 65, -4, 63, -6, 61, -8, 58, -10, 53, -14, 37, -16, 18, -17, 7, -17, -8, -16, -24, -15, -35, -13, -47, -11, -57, -9, -63, -7, -67, -5, -69, -3, -70)
