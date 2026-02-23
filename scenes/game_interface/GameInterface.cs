@@ -10,6 +10,10 @@ public partial class GameInterface : Control
 	
 	[Signal]
 	public delegate void ReturnToMainMenuEventHandler();
+	
+	private const int DefaultScore = 0;
+
+	private const int DefaultTimeLeft = 60;
 
 	private VBoxContainer _gameOverContainer;
 	
@@ -101,8 +105,8 @@ public partial class GameInterface : Control
 	{
 		_pauseContainer.Visible = false;
 		_gameOverContainer.Visible = false;
-		_scoreLeftLabel.Text = "0";
-		_scoreRightLabel.Text = "0";
-		_timerLabel.Text = "0";
+		_scoreLeftLabel.Text = DefaultScore.ToString();
+		_scoreRightLabel.Text = DefaultScore.ToString();
+		_timerLabel.Text = DefaultTimeLeft.ToString();
 	}
 }
