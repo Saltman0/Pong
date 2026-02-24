@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Goal : Area2D
 {
@@ -13,11 +12,6 @@ public partial class Goal : Area2D
 	public override void _Ready()
 	{
 		BodyEntered += OnBallEntered;
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
 	}
 
 	public void OnBallEntered(Node2D body)
