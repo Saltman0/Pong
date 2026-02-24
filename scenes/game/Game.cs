@@ -4,18 +4,6 @@ using System;
 public partial class Game : Node
 {
 	[Signal]
-	public delegate void ScoreUpdatedEventHandler(int newScore, string side);
-	
-	[Signal]
-	public delegate void TimeUpdatedEventHandler(int seconds);
-	
-	[Signal]
-	public delegate void GameIsOverEventHandler(string winner);
-	
-	[Signal]
-	public delegate void GameIsPausedEventHandler();
-	
-	[Signal]
 	public delegate void ReturnToMainMenuEventHandler();
 	
 	private const int DefaultScore = 0;
@@ -30,37 +18,44 @@ public partial class Game : Node
 	
 	private int _rightScore = DefaultScore;
 	
+	private GameInterface _gameInterface;
+	
 	private Paddle _paddleLeft;
 	
 	private Paddle _paddleRight;
 	
 	private Ball _ball;
+
+	private Marker2D _markerPaddleLeft;
+	
+	private Marker2D _markerPaddleRight;
+	
+	private Marker2D _markerBall;
 	
 	public override void _Ready()
 	{
+		_gameInterface = GetNode<GameInterface>("GameInterface");
 		_paddleLeft = GetNode<Paddle>("PaddleLeft");
 		_paddleRight = GetNode<Paddle>("PaddleRight");
 		_ball = GetNode<Ball>("Ball");
+		_markerPaddleLeft = GetNode<Marker2D>("MarkerPaddleLeft");
+		_markerPaddleRight = GetNode<Marker2D>("MarkerPaddleRight");
+		_markerBall = GetNode<Marker2D>("MarkerBall");
 		
 		GetNode<Goal>("GoalLeft").GoalScored += OnGoalScored;
 		GetNode<Goal>("GoalRight").GoalScored += OnGoalScored;
 		GetNode<Timer>("Timer").Timeout += OnTimerTimeout;
 		
-		GameInterface gameInterface = GetNode<GameInterface>("GameInterface");
-		ScoreUpdated += gameInterface.OnScoreUpdated;
-		TimeUpdated += gameInterface.OnTimeUpdated;
-		GameIsOver += gameInterface.OnGameOver;
-		GameIsPaused += gameInterface.OnGamePaused;
-		gameInterface.UnpauseGame += () => { GetTree().Paused = false; };
-		gameInterface.ReplayMatch += () => { ResetRound(); };
+		_gameInterface.UpdateScore(_leftScore, "left");
+		_gameInterface.UpdateScore(_rightScore, "right");
+		_gameInterface.UpdateTimeLeft(_timeLeft);
+		
+		_gameInterface.GameUnpaused += () => { GetTree().Paused = false; };
+		_gameInterface.MatchReplayed += OnMatchReplayed;
 		
 		// We send a signal to the main scene (Root) in the goal to intercept the signal
 		// so we can return in the main menu of the game
-		gameInterface.ReturnToMainMenu += () => { EmitSignalReturnToMainMenu(); };
-		
-		EmitSignalScoreUpdated(_leftScore, "left");
-		EmitSignalScoreUpdated(_rightScore, "right");
-		EmitSignalTimeUpdated(_timeLeft);
+		_gameInterface.ReturnToMainMenuRequested += () => { EmitSignalReturnToMainMenu(); };
 	}
 
 	public override void _Input(InputEvent @event)
@@ -73,18 +68,15 @@ public partial class Game : Node
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Paddle paddleLeft = GetNode<Paddle>("PaddleLeft");
-		Paddle paddleRight = GetNode<Paddle>("PaddleRight");
-		
-		paddleLeft.Direction = Input.GetAxis("move_up", "move_down");
+		_paddleLeft.Direction = Input.GetAxis("move_up", "move_down");
 		
 		if (IsMultiplayer)
 		{
-			paddleRight.Direction = Input.GetAxis("move_up_2", "move_down_2");
+			_paddleRight.Direction = Input.GetAxis("move_up_2", "move_down_2");
 		}
 		else
 		{
-			FollowBall(paddleRight);
+			FollowBall(_paddleRight);
 		}
 	}
 
@@ -93,13 +85,13 @@ public partial class Game : Node
 		if (side == "left")
 		{
 			_rightScore++;
-			EmitSignalScoreUpdated(_rightScore, "right");
-		} 
+			_gameInterface.UpdateScore(_rightScore, "right");
+		}
 		
 		if (side == "right")
 		{
 			_leftScore++;
-			EmitSignalScoreUpdated(_leftScore, "left");
+			_gameInterface.UpdateScore(_leftScore, "left");
 		}
 		
 		ResetPositions();
@@ -108,19 +100,21 @@ public partial class Game : Node
 	private void OnTimerTimeout()
 	{
 		_timeLeft--;
-		
-		EmitSignalTimeUpdated(_timeLeft);
-		
+
+		string winner;
 		if (_timeLeft == 0)
 		{ 
 			if (_leftScore > _rightScore)
 			{
-				EmitSignalGameIsOver("left");
+				winner = "left";
 			} else if (_rightScore > _leftScore) {
-				EmitSignalGameIsOver("right");
+				winner = "right";
 			} else {
-				EmitSignalGameIsOver("none");
+				winner = "none";
 			}
+			_gameInterface.DisplayGameOverContainer(winner);
+		} else {
+			_gameInterface.UpdateTimeLeft(_timeLeft);
 		}
 	}
 	
@@ -132,7 +126,7 @@ public partial class Game : Node
 		_ball.Launch();
 	}
 
-	private void ResetRound()
+	private void OnMatchReplayed()
 	{
 		_timeLeft = DefaultTimeLeft;
 		_leftScore = DefaultScore;
@@ -153,7 +147,7 @@ public partial class Game : Node
 	
 	private void PauseGame()
 	{
-		EmitSignalGameIsPaused();
+		_gameInterface.DisplayPauseContainer();
 		GetTree().Paused = true;
 	}
 }

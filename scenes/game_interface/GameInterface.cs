@@ -3,13 +3,13 @@ using Godot;
 public partial class GameInterface : Control
 {
 	[Signal]
-	public delegate void UnpauseGameEventHandler();
+	public delegate void GameUnpausedEventHandler();
 	
 	[Signal]
-	public delegate void ReplayMatchEventHandler();
+	public delegate void MatchReplayedEventHandler();
 	
 	[Signal]
-	public delegate void ReturnToMainMenuEventHandler();
+	public delegate void ReturnToMainMenuRequestedEventHandler();
 	
 	private const int DefaultScore = 0;
 
@@ -43,7 +43,7 @@ public partial class GameInterface : Control
 		_gameOverContainer.GetNode<Button>("ReturnToMainMenuButton").Pressed += OnReturnToMainMenuButtonPressed;
 	}
 	
-	public void OnScoreUpdated(int newScore, string side)
+	public void UpdateScore(int newScore, string side)
 	{
 		if (side == "left")
 		{
@@ -53,13 +53,13 @@ public partial class GameInterface : Control
 			_scoreRightLabel.Text = newScore.ToString();
 		}
 	}
-
-	public void OnTimeUpdated(int seconds)
+	
+	public void UpdateTimeLeft(int seconds)
 	{
 		_timerLabel.Text = seconds.ToString();
 	}
-
-	public void OnGameOver(string winner)
+	
+	public void DisplayGameOverContainer(string winner)
 	{
 		_gameOverContainer.Visible = true;
 		if (winner != "none")
@@ -69,36 +69,41 @@ public partial class GameInterface : Control
 			_winnerLabel.Text = "It's a draw !";
 		}
 	}
-
-	public void OnGamePaused()
+	
+	public void DisplayPauseContainer()
 	{
 		_pauseContainer.Visible = true;
 	}
 	
-	public void OnContinueButtonPressed()
+	public void HidePauseContainer()
 	{
 		_pauseContainer.Visible = false;
-		EmitSignalUnpauseGame();
 	}
 	
-	public void OnRestartButtonPressed()
+	private void OnContinueButtonPressed()
+	{
+		_pauseContainer.Visible = false;
+		EmitSignalGameUnpaused();
+	}
+	
+	private void OnRestartButtonPressed()
 	{
 		ResetUi();
-		EmitSignalUnpauseGame();
-		EmitSignalReplayMatch();
+		EmitSignalGameUnpaused();
+		EmitSignalMatchReplayed();
 	}
 
-	public void OnReplayButtonPressed()
+	private void OnReplayButtonPressed()
 	{
 		ResetUi();
-		EmitSignalUnpauseGame();
-		EmitSignalReplayMatch();
+		EmitSignalGameUnpaused();
+		EmitSignalMatchReplayed();
 	}
 	
-	public void OnReturnToMainMenuButtonPressed()
+	private void OnReturnToMainMenuButtonPressed()
 	{
-		EmitSignalUnpauseGame();
-		EmitSignalReturnToMainMenu();
+		EmitSignalGameUnpaused();
+		EmitSignalReturnToMainMenuRequested();
 	}
 
 	private void ResetUi()
