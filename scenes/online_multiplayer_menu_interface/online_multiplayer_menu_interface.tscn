@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://dfpnucx3d1xe7"]
+
+[ext_resource type="Script" uid="uid://b6c3d58aicwg8" path="res://scenes/online_multiplayer_menu_interface/OnlineMultiplayerMenuInterface.cs" id="1_3mjnq"]
+[ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="2_qngot"]
+
+[node name="OnlineMultiplayerMenuInterface" type="Control" unique_id=1026173754]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3mjnq")
+
+[node name="MainContainer" type="VBoxContainer" parent="." unique_id=1110211322]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.34800002
+anchor_top = 0.23200001
+anchor_right = 0.652
+anchor_bottom = 0.768
+offset_left = 0.631958
+offset_top = -0.17601013
+offset_right = -0.63201904
+offset_bottom = 0.17602539
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OnlineMultiplayerLabel" type="RichTextLabel" parent="MainContainer" unique_id=2014211859]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_qngot")
+text = "Multiplayer (Online)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HostGameButton" type="Button" parent="MainContainer" unique_id=1098297239]
+layout_mode = 2
+theme = ExtResource("2_qngot")
+text = "Host game"
+
+[node name="JoinGameContainer" type="HBoxContainer" parent="MainContainer" unique_id=523487843]
+layout_mode = 2
+theme = ExtResource("2_qngot")
+
+[node name="IpAddressInput" type="LineEdit" parent="MainContainer/JoinGameContainer" unique_id=868959928]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+placeholder_text = "IP address"
+alignment = 1
+
+[node name="JoinGameButton" type="Button" parent="MainContainer/JoinGameContainer" unique_id=1645772139]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+theme = ExtResource("2_qngot")
+disabled = true
+text = "Join game"
+
+[node name="ReturnToMainMenuButton" type="Button" parent="MainContainer" unique_id=1068017435]
+layout_mode = 2
+theme = ExtResource("2_qngot")
+text = "Return to main menu"
