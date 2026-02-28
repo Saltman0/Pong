@@ -2,57 +2,45 @@ using Godot;
 
 public partial class GameInterface : Control
 {
-	[Signal]
-	public delegate void GameUnpausedEventHandler();
-	
-	[Signal]
-	public delegate void MatchReplayedEventHandler();
-	
-	[Signal]
-	public delegate void ReturnToMainMenuRequestedEventHandler();
+	[Signal] public delegate void GameUnpausedEventHandler();
+	[Signal] public delegate void MatchReplayedEventHandler();
+	[Signal] public delegate void ReturnToMainMenuRequestedEventHandler();
 	
 	private const int DefaultScore = 0;
 
 	private const int DefaultTimeLeft = 60;
 
-	private VBoxContainer _gameOverContainer;
-	
-	private VBoxContainer _pauseContainer;
-
-	private RichTextLabel _scoreLeftLabel;
-	
-	private RichTextLabel _scoreRightLabel;
-
-	private RichTextLabel _timerLabel;
-	
-	private RichTextLabel _winnerLabel;
+	[Export] private VBoxContainer _gameOverContainer;
+	[Export] private VBoxContainer _pauseContainer;
+	[Export] private RichTextLabel _scoreLeftLabel;
+	[Export] private RichTextLabel _scoreRightLabel;
+	[Export] private RichTextLabel _timerLabel;
+	[Export] private RichTextLabel _winnerLabel;
+	[Export] private Button _continueButton;
+	[Export] private Button _restartButton;
+	[Export] private Button _pauseReturnToMainMenuButton;
+	[Export] private Button _replayButton;
+	[Export] private Button _gameOverReturnToMainMenuButton;
 	
 	public override void _Ready()
 	{
-		_pauseContainer = GetNode<VBoxContainer>("PauseContainer");
-		_gameOverContainer = GetNode<VBoxContainer>("GameOverContainer");
-		_scoreLeftLabel = GetNode<RichTextLabel>("HeaderContainer/HBoxContainer/ScoreLeftLabel");
-		_scoreRightLabel = GetNode<RichTextLabel>("HeaderContainer/HBoxContainer/ScoreRightLabel");
-		_timerLabel = GetNode<RichTextLabel>("HeaderContainer/HBoxContainer/TimerLabel");
-		_winnerLabel = GetNode<RichTextLabel>("GameOverContainer/WinnerLabel");
-		
-		_pauseContainer.GetNode<Button>("ContinueButton").Pressed += () =>
+		_continueButton.Pressed += () =>
 		{
 			Rpc(nameof(OnContinueButtonPressed));
 		};
-		_pauseContainer.GetNode<Button>("RestartButton").Pressed += () =>
+		_restartButton.Pressed += () =>
 		{
 			Rpc(nameof(OnRestartButtonPressed));
 		};
-		_pauseContainer.GetNode<Button>("ReturnToMainMenuButton").Pressed += () =>
+		_pauseReturnToMainMenuButton.Pressed += () =>
 		{
 			Rpc(nameof(OnReturnToMainMenuButtonPressed));
 		};
-		_gameOverContainer.GetNode<Button>("ReplayButton").Pressed += () =>
+		_replayButton.Pressed += () =>
 		{
 			Rpc(nameof(OnReplayButtonPressed));
 		};
-		_gameOverContainer.GetNode<Button>("ReturnToMainMenuButton").Pressed += () =>
+		_gameOverReturnToMainMenuButton.Pressed += () =>
 		{
 			Rpc(nameof(OnReturnToMainMenuButtonPressed));
 		};
@@ -62,11 +50,9 @@ public partial class GameInterface : Control
 	{
 		if (side == "left")
 		{
-			GD.PushWarning("UpdateLeftScore: " + newScore);
 			_scoreLeftLabel.Text = newScore.ToString();
 		} else if (side == "right")
 		{
-			GD.PushWarning("UpdateRightScore: " + newScore);
 			_scoreRightLabel.Text = newScore.ToString();
 		}
 	}
