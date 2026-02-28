@@ -5,35 +5,39 @@ public partial class Paddle : CharacterBody2D
 {
 	public enum ControllerType { LeftPlayer, RightPlayer, AI, OnlinePeer }
 	
-	[Export]
-	public ControllerType Controller = ControllerType.LeftPlayer;
-	
-	[Export] 
-	public float Speed = 400.0f;
-	
-	[Export] 
-	public Color Color = Colors.White;
-	
-	[Export] 
-	public long Id { get; set; }
-
-	[Export]
-	public Ball TrackedBall;
+	[Export] public Vector2 SyncPosition { get; set; }
+	[Export] public ControllerType Controller = ControllerType.LeftPlayer;
+	[Export] public float Speed = 400.0f;
+	[Export] public Color Color = Colors.White;
+	[Export] public long Id { get; set; }
+	[Export] public Ball TrackedBall;
 	
 	public override void _Ready()
 	{
-		GetNode<Area2D>("Area2D").BodyEntered += OnBodyEntered;
-		GetNode<CpuParticles2D>("CpuParticles2D").Color = Color;
 		GetNode<Polygon2D>("Polygon2D").Color = Color;
 	}
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		if (Controller == ControllerType.OnlinePeer && !IsMultiplayerAuthority()) 
-			return;
-		
-		Velocity = new Vector2(Velocity.X, GetInputDirection() * Speed);
-		MoveAndSlide();
+		if (Controller == ControllerType.OnlinePeer)
+		{
+			if (IsMultiplayerAuthority())
+			{
+				Velocity = new Vector2(Velocity.X, GetInputDirection() * Speed);
+				MoveAndSlide();
+        
+				SyncPosition = GlobalPosition;
+			}
+			else
+			{
+				GlobalPosition = GlobalPosition.Lerp(SyncPosition, (float)delta * 25.0f);
+			}
+		}
+		else
+		{
+			Velocity = new Vector2(Velocity.X, GetInputDirection() * Speed);
+			MoveAndSlide();
+		}
 	}
 
 	public void SetProperties(string name, long id, ControllerType controllerType)
@@ -48,14 +52,6 @@ public partial class Paddle : CharacterBody2D
 		}
 		
 		GD.PushError("SetProperties Paddle : " + Name + " - " + Id + " - " + Controller);
-	}
-	
-	private void OnBodyEntered(Node2D body)
-	{
-		if (body is Ball)
-		{
-			GetNode<CpuParticles2D>("CpuParticles2D").Emitting = true;
-		}
 	}
 	
 	private float GetInputDirection()
