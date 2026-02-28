@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://xyki8ypl8kl4"]
+
+[ext_resource type="Script" uid="uid://b738ccc8q2835" path="res://scenes/main/Main.cs" id="1_iuonh"]
+[ext_resource type="PackedScene" uid="uid://c2vydabr7qon4" path="res://scenes/main_menu_interface/main_menu_interface.tscn" id="2_k2fmo"]
+
+[sub_resource type="Environment" id="Environment_f1tf0"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 3.0
+glow_bloom = 0.2
+
+[node name="Main" type="Node" unique_id=1273327175]
+script = ExtResource("1_iuonh")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1547483207]
+environment = SubResource("Environment_f1tf0")
+
+[node name="MainMenuInterface" parent="." unique_id=1026173754 instance=ExtResource("2_k2fmo")]
