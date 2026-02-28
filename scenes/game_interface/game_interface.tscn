@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d2dejf8fvpqo4" path="res://scenes/game_interface/GameInterface.cs" id="1_l6tuv"]
 [ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_yqwyh"]
 
-[node name="GameInterface" type="Control" unique_id=750577209]
+[node name="GameInterface" type="Control" unique_id=750577209 node_paths=PackedStringArray("_gameOverContainer", "_pauseContainer", "_scoreLeftLabel", "_scoreRightLabel", "_timerLabel", "_winnerLabel", "_continueButton", "_restartButton", "_pauseReturnToMainMenuButton", "_replayButton", "_gameOverReturnToMainMenuButton")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -12,6 +12,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6tuv")
+_gameOverContainer = NodePath("GameOverContainer")
+_pauseContainer = NodePath("PauseContainer")
+_scoreLeftLabel = NodePath("HeaderContainer/HBoxContainer/ScoreLeftLabel")
+_scoreRightLabel = NodePath("HeaderContainer/HBoxContainer/ScoreRightLabel")
+_timerLabel = NodePath("HeaderContainer/HBoxContainer/TimerLabel")
+_winnerLabel = NodePath("GameOverContainer/WinnerLabel")
+_continueButton = NodePath("PauseContainer/ContinueButton")
+_restartButton = NodePath("PauseContainer/RestartButton")
+_pauseReturnToMainMenuButton = NodePath("PauseContainer/ReturnToMainMenuButton")
+_replayButton = NodePath("GameOverContainer/ReplayButton")
+_gameOverReturnToMainMenuButton = NodePath("GameOverContainer/ReturnToMainMenuButton")
 
 [node name="HeaderContainer" type="MarginContainer" parent="." unique_id=275743190]
 layout_mode = 0
