@@ -1,21 +1,34 @@
 using Godot;
-using System;
 
 public partial class Game : Node
 {
+	public enum GameMode: byte
+	{
+		Singleplayer,
+		LocalMultiplayer,
+		OnlineMultiplayer
+	}
+	
 	[Signal]
 	public delegate void ReturnToMainMenuEventHandler();
 	
 	private const int DefaultScore = 0;
 
 	private const int DefaultTimeLeft = 60;
-
-	public bool IsMultiplayer = false;
 	
+	public GameMode CurrentMode = GameMode.Singleplayer;
+	
+	public long LeftPlayerId = 1;
+	
+	public long RightPlayerId = 2;
+	
+	[Export]
 	private int _timeLeft = DefaultTimeLeft;
 	
+	[Export]
 	private int _leftScore = DefaultScore;
 	
+	[Export]
 	private int _rightScore = DefaultScore;
 	
 	private GameInterface _gameInterface;
@@ -35,12 +48,16 @@ public partial class Game : Node
 	public override void _Ready()
 	{
 		_gameInterface = GetNode<GameInterface>("GameInterface");
-		_paddleLeft = GetNode<Paddle>("PaddleLeft");
-		_paddleRight = GetNode<Paddle>("PaddleRight");
-		_ball = GetNode<Ball>("Ball");
+		
 		_markerPaddleLeft = GetNode<Marker2D>("MarkerPaddleLeft");
 		_markerPaddleRight = GetNode<Marker2D>("MarkerPaddleRight");
 		_markerBall = GetNode<Marker2D>("MarkerBall");
+		
+		_ball = GetNode<Ball>("Ball");
+		_paddleLeft = GetNode<Paddle>("PaddleLeft");
+		_paddleRight = GetNode<Paddle>("PaddleRight");
+		
+		SetPaddleProperties();
 		
 		GetNode<Goal>("GoalLeft").GoalScored += OnGoalScored;
 		GetNode<Goal>("GoalRight").GoalScored += OnGoalScored;
@@ -52,9 +69,6 @@ public partial class Game : Node
 		
 		_gameInterface.GameUnpaused += () => { GetTree().Paused = false; };
 		_gameInterface.MatchReplayed += OnMatchReplayed;
-		
-		// We send a signal to the main scene (Root) in the goal to intercept the signal
-		// so we can return in the main menu of the game
 		_gameInterface.ReturnToMainMenuRequested += () => { EmitSignalReturnToMainMenu(); };
 	}
 
@@ -62,22 +76,37 @@ public partial class Game : Node
 	{
 		if (@event.IsActionPressed("pause"))
 		{
-			PauseGame();
+			Rpc(nameof(PauseGame));
 		}
 	}
-
-	public override void _PhysicsProcess(double delta)
+	
+	private void SetPaddleProperties()
 	{
-		_paddleLeft.Direction = Input.GetAxis("move_up", "move_down");
+		Paddle.ControllerType leftControllerType;
+		Paddle.ControllerType rightControllerType;
 		
-		if (IsMultiplayer)
+		switch (CurrentMode)
 		{
-			_paddleRight.Direction = Input.GetAxis("move_up_2", "move_down_2");
+			case GameMode.Singleplayer:
+				leftControllerType = Paddle.ControllerType.LeftPlayer;
+				rightControllerType = Paddle.ControllerType.AI;
+				break;
+			case GameMode.LocalMultiplayer:
+				leftControllerType = Paddle.ControllerType.LeftPlayer;
+				rightControllerType = Paddle.ControllerType.RightPlayer;
+				break;
+			case GameMode.OnlineMultiplayer:
+				leftControllerType = Paddle.ControllerType.OnlinePeer;
+				rightControllerType = Paddle.ControllerType.OnlinePeer;
+				break;
+			default:
+				leftControllerType = Paddle.ControllerType.LeftPlayer;
+				rightControllerType = Paddle.ControllerType.AI;
+				break;
 		}
-		else
-		{
-			FollowBall(_paddleRight);
-		}
+		
+		_paddleLeft.SetProperties("Paddle" + LeftPlayerId, LeftPlayerId, leftControllerType);
+		_paddleRight.SetProperties("Paddle" + RightPlayerId, RightPlayerId, rightControllerType);
 	}
 
 	private void OnGoalScored(string side)
@@ -120,9 +149,9 @@ public partial class Game : Node
 	
 	private void ResetPositions()
 	{
-		_paddleLeft.Position = GetNode<Marker2D>("MarkerPaddleLeft").Position;
-		_paddleRight.Position = GetNode<Marker2D>("MarkerPaddleRight").Position;
-		_ball.Position = GetNode<Marker2D>("MarkerBall").Position;
+		_paddleLeft.Position = _markerPaddleLeft.Position;
+		_paddleRight.Position = _markerPaddleRight.Position;
+		_ball.Position = _markerBall.Position;
 		_ball.Launch();
 	}
 
@@ -131,20 +160,18 @@ public partial class Game : Node
 		_timeLeft = DefaultTimeLeft;
 		_leftScore = DefaultScore;
 		_rightScore = DefaultScore;
-		_paddleLeft.Position = GetNode<Marker2D>("MarkerPaddleLeft").Position;
-		_paddleRight.Position = GetNode<Marker2D>("MarkerPaddleRight").Position;
-		_ball.Position = GetNode<Marker2D>("MarkerBall").Position;
+		_paddleLeft.Position = _markerPaddleLeft.Position;
+		_paddleRight.Position = _markerPaddleRight.Position;
+		_ball.Position = _markerBall.Position;
 		_ball.Launch();
 	}
 
-	private void FollowBall(Paddle paddle)
-	{
-		float diff = _ball.Position.Y - paddle.Position.Y;
-		float deadzone = 5.0f;
-
-		paddle.Direction = Math.Abs(diff) > deadzone ? Math.Sign(diff) : 0.0f;
-	}
-	
+	[Rpc(
+		MultiplayerApi.RpcMode.AnyPeer, 
+		CallLocal = true, 
+		TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, 
+		TransferChannel = 0
+	)]
 	private void PauseGame()
 	{
 		_gameInterface.DisplayPauseContainer();
