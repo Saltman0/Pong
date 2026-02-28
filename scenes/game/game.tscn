@@ -1,11 +1,22 @@
 [gd_scene format=3 uid="uid://60ooi3281jwr"]
 
 [ext_resource type="Script" uid="uid://x8gx40aw2kps" path="res://scenes/game/Game.cs" id="1_sul5r"]
-[ext_resource type="PackedScene" uid="uid://c7oqcxfmhw1ua" path="res://scenes/paddle/paddle.tscn" id="2_7h61r"]
+[ext_resource type="PackedScene" uid="uid://c7oqcxfmhw1ua" path="res://scenes/paddle/paddle.tscn" id="2_5i0tg"]
 [ext_resource type="PackedScene" uid="uid://db27khuarbhe8" path="res://scenes/ball/ball.tscn" id="3_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://bc8rrsyaiybc4" path="res://scenes/wall/wall.tscn" id="4_kelw5"]
 [ext_resource type="PackedScene" uid="uid://f8wxjbof2lyu" path="res://scenes/goal/goal.tscn" id="5_lfrn8"]
 [ext_resource type="PackedScene" uid="uid://4q1orckask1d" path="res://scenes/game_interface/game_interface.tscn" id="6_5i0tg"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5i0tg"]
+properties/0/path = NodePath(".:_timeLeft")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:_leftScore")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:_rightScore")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [node name="Game" type="Node" unique_id=578417335]
 script = ExtResource("1_sul5r")
@@ -13,13 +24,15 @@ script = ExtResource("1_sul5r")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1729928314]
 position = Vector2(683, 384)
 
-[node name="PaddleLeft" parent="." unique_id=1469242346 instance=ExtResource("2_7h61r")]
+[node name="PaddleLeft" parent="." unique_id=331370048 node_paths=PackedStringArray("TrackedBall") instance=ExtResource("2_5i0tg")]
 position = Vector2(60, 384)
 Color = Color(1, 0, 0, 1)
+TrackedBall = NodePath("../Ball")
 
-[node name="PaddleRight" parent="." unique_id=1991710194 instance=ExtResource("2_7h61r")]
+[node name="PaddleRight" parent="." unique_id=1471836971 node_paths=PackedStringArray("TrackedBall") instance=ExtResource("2_5i0tg")]
 position = Vector2(1300, 384)
 Color = Color(0, 0, 1, 1)
+TrackedBall = NodePath("../Ball")
 
 [node name="MarkerPaddleLeft" type="Marker2D" parent="." unique_id=254739520]
 position = Vector2(60, 384)
@@ -52,3 +65,6 @@ metadata/_edit_lock_ = true
 
 [node name="Timer" type="Timer" parent="." unique_id=637497745]
 autostart = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=666278208]
+replication_config = SubResource("SceneReplicationConfig_5i0tg")
