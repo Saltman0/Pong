@@ -44,6 +44,7 @@ public partial class NetworkManager : Node
         {
             Multiplayer.MultiplayerPeer = peer;
             GD.PushWarning("Server started on port " + DefaultPort);
+            // To simulate lag : peer.Host.BandwidthLimit(128, 128);
             EmitSignalConnectedToServer();
         }
         else
