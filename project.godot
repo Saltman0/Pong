@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 NetworkManager="*uid://lt8crsj7dic4"
 SceneManager="*uid://doeg6vjy0npjf"
 
+[debug]
+
+file_logging/enable_file_logging=true
+
 [display]
 
 window/size/viewport_width=1366
