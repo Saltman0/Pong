@@ -9,67 +9,43 @@ public partial class Game : Node
 		OnlineMultiplayer
 	}
 	
+	private const int DefaultScore = 0;
+	private const int DefaultTimeLeft = 60;
+	private int _timeLeft = DefaultTimeLeft;
+	private int _leftScore = DefaultScore;
+	private int _rightScore = DefaultScore;
+	
 	[Signal]
 	public delegate void ReturnToMainMenuEventHandler();
 	
-	private const int DefaultScore = 0;
-
-	private const int DefaultTimeLeft = 60;
-	
-	public GameMode CurrentMode = GameMode.Singleplayer;
-	
-	public long LeftPlayerId = 1;
-	
-	public long RightPlayerId = 2;
-	
-	[Export]
-	private int _timeLeft = DefaultTimeLeft;
-	
-	[Export]
-	private int _leftScore = DefaultScore;
-	
-	[Export]
-	private int _rightScore = DefaultScore;
-	
-	private GameInterface _gameInterface;
-	
-	private Paddle _paddleLeft;
-	
-	private Paddle _paddleRight;
-	
-	private Ball _ball;
-
-	private Marker2D _markerPaddleLeft;
-	
-	private Marker2D _markerPaddleRight;
-	
-	private Marker2D _markerBall;
+	[Export] public GameMode CurrentMode;
+	[Export] public long LeftPlayerId;
+	[Export] public long RightPlayerId;
+	[Export] private GameInterface _gameInterface;
+	[Export] private Paddle _paddleLeft;
+	[Export] private Paddle _paddleRight;
+	[Export] private Ball _ball;
+	[Export] private Goal _goalLeft;
+	[Export] private Goal _goalRight;
+	[Export] private Marker2D _markerPaddleLeft;
+	[Export] private Marker2D _markerPaddleRight;
+	[Export] private Marker2D _markerBall;
+	[Export] private Timer _timer;
 	
 	public override void _Ready()
 	{
-		_gameInterface = GetNode<GameInterface>("GameInterface");
-		
-		_markerPaddleLeft = GetNode<Marker2D>("MarkerPaddleLeft");
-		_markerPaddleRight = GetNode<Marker2D>("MarkerPaddleRight");
-		_markerBall = GetNode<Marker2D>("MarkerBall");
-		
-		_ball = GetNode<Ball>("Ball");
-		_paddleLeft = GetNode<Paddle>("PaddleLeft");
-		_paddleRight = GetNode<Paddle>("PaddleRight");
-		
 		SetPaddleProperties();
-		
-		GetNode<Goal>("GoalLeft").GoalScored += OnGoalScored;
-		GetNode<Goal>("GoalRight").GoalScored += OnGoalScored;
-		GetNode<Timer>("Timer").Timeout += OnTimerTimeout;
 		
 		_gameInterface.UpdateScore(_leftScore, "left");
 		_gameInterface.UpdateScore(_rightScore, "right");
 		_gameInterface.UpdateTimeLeft(_timeLeft);
-		
 		_gameInterface.GameUnpaused += () => { GetTree().Paused = false; };
 		_gameInterface.MatchReplayed += OnMatchReplayed;
 		_gameInterface.ReturnToMainMenuRequested += () => { EmitSignalReturnToMainMenu(); };
+		
+		_goalLeft.GoalScored += OnGoalScored;
+		_goalRight.GoalScored += OnGoalScored;
+		_timer.Timeout += OnTimerTimeout;
 	}
 
 	public override void _Input(InputEvent @event)
@@ -123,7 +99,7 @@ public partial class Game : Node
 			_gameInterface.UpdateScore(_leftScore, "left");
 		}
 		
-		ResetPositions();
+		Rpc(nameof(ResetPositions));
 	}
 
 	private void OnTimerTimeout()
@@ -147,6 +123,7 @@ public partial class Game : Node
 		}
 	}
 	
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void ResetPositions()
 	{
 		_paddleLeft.Position = _markerPaddleLeft.Position;

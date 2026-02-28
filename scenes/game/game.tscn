@@ -18,8 +18,20 @@ properties/2/path = NodePath(".:_rightScore")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Game" type="Node" unique_id=578417335]
+[node name="Game" type="Node" unique_id=578417335 node_paths=PackedStringArray("_gameInterface", "_paddleLeft", "_paddleRight", "_ball", "_goalLeft", "_goalRight", "_markerPaddleLeft", "_markerPaddleRight", "_markerBall", "_timer")]
 script = ExtResource("1_sul5r")
+LeftPlayerId = 1
+RightPlayerId = 2
+_gameInterface = NodePath("GameInterface")
+_paddleLeft = NodePath("PaddleLeft")
+_paddleRight = NodePath("PaddleRight")
+_ball = NodePath("Ball")
+_goalLeft = NodePath("GoalLeft")
+_goalRight = NodePath("GoalRight")
+_markerPaddleLeft = NodePath("MarkerPaddleLeft")
+_markerPaddleRight = NodePath("MarkerPaddleRight")
+_markerBall = NodePath("MarkerBall")
+_timer = NodePath("Timer")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1729928314]
 position = Vector2(683, 384)
@@ -67,4 +79,5 @@ metadata/_edit_lock_ = true
 autostart = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=666278208]
+replication_interval = 1.0
 replication_config = SubResource("SceneReplicationConfig_5i0tg")
