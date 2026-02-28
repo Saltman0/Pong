@@ -1,12 +1,7 @@
 [gd_scene format=3 uid="uid://bc8rrsyaiybc4"]
 
-[ext_resource type="Script" uid="uid://c2ogmenfmelf6" path="res://scenes/wall/Wall.cs" id="1_t8knd"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_toau8"]
 size = Vector2(1366, 34)
-
-[sub_resource type="Gradient" id="Gradient_e7ofw"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t8knd"]
 size = Vector2(1366, 32)
@@ -14,7 +9,6 @@ size = Vector2(1366, 32)
 [node name="Wall" type="StaticBody2D" unique_id=1240128499]
 collision_layer = 8
 collision_mask = 3
-script = ExtResource("1_t8knd")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=638496741]
 collision_layer = 8
@@ -23,20 +17,6 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=314335111]
 shape = SubResource("RectangleShape2D_toau8")
 debug_color = Color(1, 0.0018888913, 0.0965096, 0.41960785)
-
-[node name="CpuParticles2D" type="CPUParticles2D" parent="." unique_id=1430796299]
-emitting = false
-amount = 2000
-lifetime = 0.5
-one_shot = true
-speed_scale = 2.0
-explosiveness = 1.0
-emission_shape = 3
-emission_rect_extents = Vector2(675, 10)
-gravity = Vector2(0, 0)
-scale_amount_min = 25.0
-scale_amount_max = 25.0
-color_ramp = SubResource("Gradient_e7ofw")
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=375733427]
 polygon = PackedVector2Array(-683, -16, 683, -16, 683, 16, -683, 16)
