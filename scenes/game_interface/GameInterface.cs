@@ -36,20 +36,37 @@ public partial class GameInterface : Control
 		_timerLabel = GetNode<RichTextLabel>("HeaderContainer/HBoxContainer/TimerLabel");
 		_winnerLabel = GetNode<RichTextLabel>("GameOverContainer/WinnerLabel");
 		
-		_pauseContainer.GetNode<Button>("ContinueButton").Pressed += OnContinueButtonPressed;
-		_pauseContainer.GetNode<Button>("RestartButton").Pressed += OnRestartButtonPressed;
-		_pauseContainer.GetNode<Button>("ReturnToMainMenuButton").Pressed += OnReturnToMainMenuButtonPressed;
-		_gameOverContainer.GetNode<Button>("ReplayButton").Pressed += OnReplayButtonPressed;
-		_gameOverContainer.GetNode<Button>("ReturnToMainMenuButton").Pressed += OnReturnToMainMenuButtonPressed;
+		_pauseContainer.GetNode<Button>("ContinueButton").Pressed += () =>
+		{
+			Rpc(nameof(OnContinueButtonPressed));
+		};
+		_pauseContainer.GetNode<Button>("RestartButton").Pressed += () =>
+		{
+			Rpc(nameof(OnRestartButtonPressed));
+		};
+		_pauseContainer.GetNode<Button>("ReturnToMainMenuButton").Pressed += () =>
+		{
+			Rpc(nameof(OnReturnToMainMenuButtonPressed));
+		};
+		_gameOverContainer.GetNode<Button>("ReplayButton").Pressed += () =>
+		{
+			Rpc(nameof(OnReplayButtonPressed));
+		};
+		_gameOverContainer.GetNode<Button>("ReturnToMainMenuButton").Pressed += () =>
+		{
+			Rpc(nameof(OnReturnToMainMenuButtonPressed));
+		};
 	}
 	
 	public void UpdateScore(int newScore, string side)
 	{
 		if (side == "left")
 		{
+			GD.PushWarning("UpdateLeftScore: " + newScore);
 			_scoreLeftLabel.Text = newScore.ToString();
 		} else if (side == "right")
 		{
+			GD.PushWarning("UpdateRightScore: " + newScore);
 			_scoreRightLabel.Text = newScore.ToString();
 		}
 	}
@@ -75,17 +92,24 @@ public partial class GameInterface : Control
 		_pauseContainer.Visible = true;
 	}
 	
-	public void HidePauseContainer()
-	{
-		_pauseContainer.Visible = false;
-	}
-	
+	[Rpc(
+		MultiplayerApi.RpcMode.AnyPeer, 
+		CallLocal = true, 
+		TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, 
+		TransferChannel = 0
+	)]
 	private void OnContinueButtonPressed()
 	{
 		_pauseContainer.Visible = false;
 		EmitSignalGameUnpaused();
 	}
 	
+	[Rpc(
+		MultiplayerApi.RpcMode.AnyPeer, 
+		CallLocal = true, 
+		TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, 
+		TransferChannel = 0
+	)]
 	private void OnRestartButtonPressed()
 	{
 		ResetUi();
@@ -93,6 +117,12 @@ public partial class GameInterface : Control
 		EmitSignalMatchReplayed();
 	}
 
+	[Rpc(
+		MultiplayerApi.RpcMode.AnyPeer, 
+		CallLocal = true, 
+		TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, 
+		TransferChannel = 0
+	)]
 	private void OnReplayButtonPressed()
 	{
 		ResetUi();
@@ -100,6 +130,12 @@ public partial class GameInterface : Control
 		EmitSignalMatchReplayed();
 	}
 	
+	[Rpc(
+		MultiplayerApi.RpcMode.AnyPeer, 
+		CallLocal = true, 
+		TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, 
+		TransferChannel = 0
+	)]
 	private void OnReturnToMainMenuButtonPressed()
 	{
 		EmitSignalGameUnpaused();
