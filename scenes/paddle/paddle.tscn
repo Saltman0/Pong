@@ -5,6 +5,14 @@
 [sub_resource type="Gradient" id="Gradient_q5rgx"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_q5rgx"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:Id")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="Paddle" type="CharacterBody2D" unique_id=331370048]
 collision_mask = 10
 motion_mode = 1
@@ -36,3 +44,6 @@ polygon = PackedVector2Array(0, -71, 3, -70, 5, -69, 7, -67, 9, -63, 11, -57, 13
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=1457208189]
 polygon = PackedVector2Array(0, -71, 3, -70, 5, -69, 7, -67, 9, -63, 11, -57, 13, -47, 15, -35, 16, -24, 17, -8, 17, 0, 17, 8, 16, 18, 15, 28, 14, 37, 12, 45, 10, 53, 8, 58, 6, 61, 4, 63, 0, 65, -4, 63, -6, 61, -8, 58, -10, 53, -12, 45, -14, 37, -15, 28, -16, 18, -17, 7, -17, 0, -17, -8, -16, -24, -15, -35, -13, -47, -11, -57, -9, -63, -7, -67, -5, -69, -3, -70)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1282578364]
+replication_config = SubResource("SceneReplicationConfig_q5rgx")
