@@ -32,7 +32,7 @@ anchor_bottom = 0.96944445
 current_tab = 0
 tab_0/title = "Video"
 tab_1/title = "Audio"
-tab_2/title = "Keyboard"
+tab_2/title = "Controls"
 metadata/_edit_use_anchors_ = true
 
 [node name="VideoSettingsTab" type="TabBar" parent="TabContainer" unique_id=454353036]
@@ -215,11 +215,11 @@ size_flags_stretch_ratio = 0.25
 max_value = 1.0
 step = 0.001
 
-[node name="KeyboardSettingsTab" type="TabBar" parent="TabContainer" unique_id=1904687965]
+[node name="ControlsSettingsTab" type="TabBar" parent="TabContainer" unique_id=1904687965]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
-metadata/_tab_name = "Keyboard"
+metadata/_tab_name = "Controls"
 
 [node name="ButtonsContainer" type="HBoxContainer" parent="." unique_id=664791715]
 layout_mode = 0
