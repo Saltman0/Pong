@@ -17,8 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-NetworkManager="*uid://lt8crsj7dic4"
 SceneManager="*uid://doeg6vjy0npjf"
+DisplayManager="*uid://ccf435rx88pbd"
+AudioManager="*uid://clx4hq37qa82s"
+NetworkManager="*uid://lt8crsj7dic4"
 
 [debug]
 
@@ -26,9 +28,11 @@ file_logging/enable_file_logging=true
 
 [display]
 
-window/size/viewport_width=1366
-window/size/viewport_height=768
+window/size/viewport_width=2560
+window/size/viewport_height=1440
+window/size/mode=3
 window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [dotnet]
 
@@ -95,6 +99,7 @@ pause={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
