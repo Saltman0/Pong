@@ -1,25 +1,20 @@
+namespace Pong.managers;
+
 using Godot;
 
-public partial class VideoManager : Node
+public static class VideoManager
 {
-    public static VideoManager Instance { get; private set; }
-    
-    public override void _Ready()
-    {
-        Instance = this;
-    }
-
-    public void SetWindowScale(int multiplier)
+    public static void SetWindowScale(int multiplier)
     {
         DisplayServer.WindowSetSize(new Vector2I(640, 360) * multiplier);
     }
 
-    public void SetWindowMode(DisplayServer.WindowMode windowMode)
+    public static void SetWindowMode(DisplayServer.WindowMode windowMode)
     {
         DisplayServer.WindowSetMode(windowMode);
     }
     
-    public void SetVsync(DisplayServer.VSyncMode vsyncMode)
+    public static void SetVsync(DisplayServer.VSyncMode vsyncMode)
     {
         DisplayServer.WindowSetVsyncMode(vsyncMode);
     }

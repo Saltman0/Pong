@@ -1,4 +1,5 @@
 using Godot;
+using Pong.managers;
 
 public partial class SettingsInterface : Control
 {
@@ -38,9 +39,9 @@ public partial class SettingsInterface : Control
 		DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.MaximizeDisabled, false);
 		DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.ResizeDisabled, false);
 		
-		VideoManager.Instance.SetWindowMode((DisplayServer.WindowMode)_windowModeOptionButton.GetSelectedId());
-		VideoManager.Instance.SetWindowScale(_resolutionOptionButton.GetSelectedId());
-		VideoManager.Instance.SetVsync((DisplayServer.VSyncMode)_vsyncOptionButton.GetSelectedId());
+		VideoManager.SetWindowMode((DisplayServer.WindowMode)_windowModeOptionButton.GetSelectedId());
+		VideoManager.SetWindowScale(_resolutionOptionButton.GetSelectedId());
+		VideoManager.SetVsync((DisplayServer.VSyncMode)_vsyncOptionButton.GetSelectedId());
 		
 		DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.MaximizeDisabled, true);
 		DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.ResizeDisabled, true);
