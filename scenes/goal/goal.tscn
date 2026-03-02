@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://citgev4afpoo4" path="res://scenes/goal/Goal.cs" id="1_c37cn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gmldq"]
-size = Vector2(20, 768)
+size = Vector2(44, 1440)
 
 [node name="Goal" type="Area2D" unique_id=364692427]
 collision_layer = 4
