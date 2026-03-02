@@ -41,7 +41,11 @@ public partial class Game : Node
 		_gameInterface.UpdateTimeLeft(_timeLeft);
 		_gameInterface.GameUnpaused += () => { GetTree().Paused = false; };
 		_gameInterface.MatchReplayed += OnMatchReplayed;
-		_gameInterface.ReturnToMainMenuRequested += () => { EmitSignalReturnToMainMenu(); };
+		_gameInterface.ReturnToMainMenuRequested += () =>
+		{
+			AudioManager.MusicStreamPlayer.PitchScale = 1.0f;
+			EmitSignalReturnToMainMenu();
+		};
 		
 		_goalLeft.GoalScored += OnGoalScored;
 		_goalRight.GoalScored += OnGoalScored;
@@ -107,7 +111,7 @@ public partial class Game : Node
 		_timeLeft--;
 
 		string winner;
-		if (_timeLeft == 0)
+		if (_timeLeft <= 0)
 		{ 
 			if (_leftScore > _rightScore)
 			{
@@ -118,8 +122,10 @@ public partial class Game : Node
 				winner = "none";
 			}
 			_gameInterface.DisplayGameOverContainer(winner);
+			AudioManager.MusicStreamPlayer.PitchScale = 1.0f;
 		} else {
 			_gameInterface.UpdateTimeLeft(_timeLeft);
+			AudioManager.MusicStreamPlayer.PitchScale += 0.01f;
 		}
 	}
 	
