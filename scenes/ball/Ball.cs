@@ -2,7 +2,7 @@ using Godot;
 
 public partial class Ball : CharacterBody2D
 {
-	[Export] private float _speed = 500.0f;
+	[Export] private float _speed;
 	[Export] public Vector2 SyncPosition { get; set; }
 	[Export] public Vector2 SyncVelocity { get; set; }
 	

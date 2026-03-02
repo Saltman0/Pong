@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c887n7426p6k3" path="res://scenes/ball/Ball.cs" id="1_oqv3d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oqv3d"]
-radius = 16.0
+radius = 30.016663
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oqv3d"]
 properties/0/path = NodePath(".:SyncPosition")
@@ -17,9 +17,10 @@ properties/1/replication_mode = 1
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_oqv3d")
+_speed = 1000.0
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=2033077120]
-polygon = PackedVector2Array(0, -16, 6, -15, 12, -11, 14, -8, 15, -5, 16, 0, 15, 5, 14, 8, 12, 11, 6, 15, 0, 16, -6, 15, -12, 11, -14, 8, -15, 5, -16, 0, -15, -5, -14, -8, -12, -11, -6, -15)
+polygon = PackedVector2Array(26, -15, 29, -8, 30, 0, 29, 8, 26, 15, 23, 19, 21, 21, 15, 26, 8, 29, 0, 30, -8, 29, -15, 26, -20, 22, -22, 20, -26, 15, -29, 8, -30, 0, -29, -8, -26, -15, -21, -21, -19, -23, -15, -26, -8, -29, 0, -30, 8, -29, 15, -26, 20, -22, 22, -20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=8071062]
 shape = SubResource("CircleShape2D_oqv3d")
