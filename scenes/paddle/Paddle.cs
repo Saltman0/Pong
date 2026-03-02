@@ -7,14 +7,14 @@ public partial class Paddle : CharacterBody2D
 	
 	[Export] public Vector2 SyncPosition { get; set; }
 	[Export] public ControllerType Controller = ControllerType.LeftPlayer;
-	[Export] public float Speed = 400.0f;
+	[Export] public float Speed;
 	[Export] public Color Color = Colors.White;
 	[Export] public long Id { get; set; }
 	[Export] public Ball TrackedBall;
 	
 	public override void _Ready()
 	{
-		GetNode<Polygon2D>("Polygon2D").Color = Color;
+		GetNode<Sprite2D>("Sprite2D").SelfModulate = Color;
 	}
 	
 	public override void _PhysicsProcess(double delta)
