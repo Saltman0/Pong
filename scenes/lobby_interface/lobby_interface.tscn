@@ -32,20 +32,21 @@ script = ExtResource("1_5emb5")
 [node name="MainContainer" type="VBoxContainer" parent="." unique_id=1110211322]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.34800002
-anchor_top = 0.23200001
-anchor_right = 0.652
-anchor_bottom = 0.768
-offset_left = 0.631958
-offset_top = -0.17601013
-offset_right = -0.63201904
-offset_bottom = 0.17602539
+anchor_left = 0.136
+anchor_top = 0.086
+anchor_right = 0.864
+anchor_bottom = 0.91400003
+offset_left = -0.040008545
+offset_top = 0.03999901
+offset_right = 0.039916992
+offset_bottom = -0.039978027
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="LobbyLabel" type="RichTextLabel" parent="MainContainer" unique_id=2014211859]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
 theme = ExtResource("2_bgnfb")
 text = "Lobby"
 horizontal_alignment = 1
@@ -54,6 +55,7 @@ vertical_alignment = 1
 [node name="PlayersContainer" type="HBoxContainer" parent="MainContainer" unique_id=1339910416]
 layout_mode = 2
 size_flags_vertical = 6
+size_flags_stretch_ratio = 0.6
 theme = ExtResource("2_bgnfb")
 
 [node name="PlayerLeftButton" type="Button" parent="MainContainer/PlayersContainer" unique_id=1098297239]
@@ -82,7 +84,7 @@ text = "Player 0"
 [node name="ActionsContainer" type="HBoxContainer" parent="MainContainer" unique_id=523487843]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.25
+size_flags_stretch_ratio = 0.15
 theme = ExtResource("2_bgnfb")
 
 [node name="StartButton" type="Button" parent="MainContainer/ActionsContainer" unique_id=452196672]
