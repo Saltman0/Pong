@@ -9,6 +9,8 @@ public partial class Main : Node
 	public override void _Ready()
 	{
 		SceneManager.Instance.CurrentScene = GetNode<MainMenuInterface>("MainMenuInterface");
+
+		AudioManager.Instance.PlayMusic(GD.Load<AudioStreamOggVorbis>("res://assets/audio/Main.ogg"));
 		
 		Instance = this;
 	}
