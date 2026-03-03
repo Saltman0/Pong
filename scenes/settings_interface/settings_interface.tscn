@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_3jmfp"]
 [ext_resource type="Script" uid="uid://boy8ofs1mx4gr" path="res://scenes/settings_interface/SettingsInterface.cs" id="2_3jmfp"]
 
-[node name="SettingsInterface" type="Control" unique_id=631919379 node_paths=PackedStringArray("_windowModeOptionButton", "_resolutionOptionButton", "_vsyncOptionButton", "_saveButton", "_returnButton", "_masterSlider", "_musicSlider", "_sfxSlider", "_uiSlider", "_moveUpP1Button", "_moveDownP1Button", "_moveUpP2Button", "_moveDownP2Button")]
+[node name="SettingsInterface" type="Control" unique_id=631919379 node_paths=PackedStringArray("_windowModeOptionButton", "_resolutionOptionButton", "_vsyncOptionButton", "_saveButton", "_returnButton", "_masterSlider", "_musicSlider", "_sfxSlider", "_uiSlider", "_moveUpP1Button", "_moveDownP1Button", "_moveUpP2Button", "_moveDownP2Button", "_inputMaps")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,6 +25,12 @@ _moveUpP1Button = NodePath("TabContainer/ControlsSettingsTab/ControlsContainer/M
 _moveDownP1Button = NodePath("TabContainer/ControlsSettingsTab/ControlsContainer/MoveDownP1Container/MoveDownP1Button")
 _moveUpP2Button = NodePath("TabContainer/ControlsSettingsTab/ControlsContainer/MoveUpP2Container/MoveUpP2Button")
 _moveDownP2Button = NodePath("TabContainer/ControlsSettingsTab/ControlsContainer/MoveDownP2Container/MoveDownP2Button")
+_inputMaps = {
+"move_down": NodePath("TabContainer/ControlsSettingsTab/ControlsContainer/MoveDownP1Container/MoveDownP1Button"),
+"move_down_2": NodePath("TabContainer/ControlsSettingsTab/ControlsContainer/MoveDownP2Container/MoveDownP2Button"),
+"move_up": NodePath("TabContainer/ControlsSettingsTab/ControlsContainer/MoveUpP1Container/MoveUpP1Button"),
+"move_up_2": NodePath("TabContainer/ControlsSettingsTab/ControlsContainer/MoveUpP2Container/MoveUpP2Button")
+}
 
 [node name="TabContainer" type="TabContainer" parent="." unique_id=1985958558]
 layout_mode = 1
