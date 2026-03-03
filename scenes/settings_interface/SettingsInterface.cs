@@ -23,11 +23,17 @@ public partial class SettingsInterface : Control
 	[Export] private Button _moveDownP1Button;
 	[Export] private Button _moveUpP2Button;
 	[Export] private Button _moveDownP2Button;
-	[Export] private Dictionary<string, Button> _inputMaps;
 	private Button _selectedControlsButton;
+	private Dictionary<Button, string> _inputMaps;
 	
 	public override void _Ready()
 	{
+		_inputMaps = new Dictionary<Button, string>();
+		_inputMaps.Add(_moveUpP1Button, "move_up");
+		_inputMaps.Add(_moveDownP1Button, "move_down");
+		_inputMaps.Add(_moveUpP2Button, "move_up_2");
+		_inputMaps.Add(_moveDownP2Button, "move_down_2");
+		
 		_moveUpP1Button.Pressed += () => OnControlsButtonPressed(_moveUpP1Button);
 		_moveDownP1Button.Pressed += () => OnControlsButtonPressed(_moveDownP1Button);
 		_moveUpP2Button.Pressed += () => OnControlsButtonPressed(_moveUpP2Button);
@@ -35,25 +41,52 @@ public partial class SettingsInterface : Control
 		_saveButton.Pressed += OnSaveButtonPressed;
 		_returnButton.Pressed += OnReturnButtonPressed;
 		
-		LoadControlsButtons();
+		UpdateControlSettings();
+		UpdateAudioSettings();
+		UpdateVideoSettings();
 	}
 
 	public override void _Input(InputEvent @event)
 	{
-		if (_selectedControlsButton != null)
+		if (_selectedControlsButton == null || @event is not InputEventKey)
 		{
-			GD.Print(@event.AsText());
-			//ControlsManager.SaveControl();
-
-			_selectedControlsButton = null;
+			return;
 		}
 		
-		base._Input(@event);
+		string actionName = _inputMaps.First(x => x.Key == _selectedControlsButton).Value;
+		
+		InputMap.ActionEraseEvents(actionName);
+		InputMap.ActionAddEvent(actionName, @event);
+			
+		_selectedControlsButton.Text = @event.AsText();
+		
+		_selectedControlsButton = null;
 	}
-
-	private void LoadControlsButtons()
+	
+	private void OnControlsButtonPressed(Button selectedControlsButton)
 	{
-		ControlsManager.LoadControls();
+		UpdateControlSettings();
+		selectedControlsButton.Text = "?";
+		_selectedControlsButton = selectedControlsButton;
+	}
+	
+	private void OnSaveButtonPressed()
+	{
+		SaveVideoSettings();
+		SaveAudioSettings();
+		SaveControlsSettings();
+	}
+	
+	private void OnReturnButtonPressed()
+	{
+		SceneManager.Instance.SwitchScene(
+			GD.Load<PackedScene>("res://scenes/main_menu_interface/main_menu_interface.tscn")
+				.Instantiate<MainMenuInterface>()
+		);
+	}
+	
+	private void UpdateControlSettings()
+	{
 		InputEvent moveUpP1InputEvent = InputMap.ActionGetEvents("move_up").First();
 		InputEvent moveDownP1InputEvent = InputMap.ActionGetEvents("move_down").First();
 		InputEvent moveUpP2InputEvent = InputMap.ActionGetEvents("move_up_2").First();
@@ -64,51 +97,80 @@ public partial class SettingsInterface : Control
 		_moveUpP2Button.Text = moveUpP2InputEvent.AsText();
 		_moveDownP2Button.Text = moveDownP2InputEvent.AsText();
 	}
-	
-	private void OnControlsButtonPressed(Button selectedControlsButton)
+	private void UpdateAudioSettings()
 	{
-		LoadControlsButtons();
-		selectedControlsButton.Text = "?";
-		_selectedControlsButton = selectedControlsButton;
+		_masterSlider.Value = AudioServer.GetBusVolumeLinear(AudioServer.GetBusIndex("Master"));
+		_musicSlider.Value = AudioServer.GetBusVolumeLinear(AudioServer.GetBusIndex("Music"));
+		_sfxSlider.Value = AudioServer.GetBusVolumeLinear(AudioServer.GetBusIndex("SFX"));
+		_uiSlider.Value = AudioServer.GetBusVolumeLinear(AudioServer.GetBusIndex("UI"));
 	}
 	
-	private void OnSaveButtonPressed()
+	private void UpdateVideoSettings()
 	{
-		SaveVideoSettings();
-		SaveAudioSettings();
-	}
-	
-	private void OnReturnButtonPressed()
-	{
-		SceneManager.Instance.SwitchScene(
-			GD.Load<PackedScene>("res://scenes/main_menu_interface/main_menu_interface.tscn")
-				.Instantiate<MainMenuInterface>()
+		SelectOption(
+			_windowModeOptionButton, 
+			"Video", 
+			"WindowMode", 
+			(int) DisplayServer.WindowMode.ExclusiveFullscreen
+		);
+		SelectOption(
+			_resolutionOptionButton, 
+			"Video", 
+			"Resolution", 
+			1
+		);
+		SelectOption(
+			_vsyncOptionButton, 
+			"Video", 
+			"Vsync", 
+			(int) DisplayServer.VSyncMode.Enabled
 		);
 	}
 
 	private void SaveVideoSettings()
 	{
-		DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.MaximizeDisabled, false);
-		DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.ResizeDisabled, false);
+		DisplayServer.WindowSetMode((DisplayServer.WindowMode)_windowModeOptionButton.GetSelectedId());
+		DisplayServer.WindowSetSize(new Vector2I(640, 360) * _resolutionOptionButton.GetSelectedId());
+		DisplayServer.WindowSetVsyncMode((DisplayServer.VSyncMode)_vsyncOptionButton.GetSelectedId());
 		
-		VideoManager.SetWindowMode((DisplayServer.WindowMode)_windowModeOptionButton.GetSelectedId());
-		VideoManager.SetWindowScale(_resolutionOptionButton.GetSelectedId());
-		VideoManager.SetVsync((DisplayServer.VSyncMode)_vsyncOptionButton.GetSelectedId());
+		SettingsManager.SaveValue("Video", "WindowMode", _windowModeOptionButton.GetSelectedId());
+		SettingsManager.SaveValue("Video", "Resolution", _resolutionOptionButton.GetSelectedId());
+		SettingsManager.SaveValue("Video", "Vsync", _vsyncOptionButton.GetSelectedId());
 		
-		DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.MaximizeDisabled, true);
-		DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.ResizeDisabled, true);
+		SettingsManager.LoadVideo();
 	}
 	
 	private void SaveAudioSettings()
 	{
-		AudioManager.Instance.SetVolume("Master", (float)_masterSlider.Value);
-		AudioManager.Instance.SetVolume("Music", (float)_musicSlider.Value);
-		AudioManager.Instance.SetVolume("SFX", (float)_sfxSlider.Value);
-		AudioManager.Instance.SetVolume("UI", (float)_uiSlider.Value);
+		SettingsManager.SaveValue("Audio", "Master", (float)_masterSlider.Value);
+		SettingsManager.SaveValue("Audio", "Music", (float)_musicSlider.Value);
+		SettingsManager.SaveValue("Audio", "SFX", (float)_sfxSlider.Value);
+		SettingsManager.SaveValue("Audio", "UI", (float)_uiSlider.Value);
+
+		SettingsManager.LoadAudio();
 	}
 	
 	private void SaveControlsSettings()
 	{
-		
+		SettingsManager.SaveValue("Controls", "move_up", InputMap.ActionGetEvents("move_up").First());
+		SettingsManager.SaveValue("Controls", "move_down", InputMap.ActionGetEvents("move_down").First());
+		SettingsManager.SaveValue("Controls", "move_up_2", InputMap.ActionGetEvents("move_up_2").First());
+		SettingsManager.SaveValue(
+			"Controls", "move_down_2", InputMap.ActionGetEvents("move_down_2").First()
+		);
+
+		SettingsManager.LoadControls();
+	}
+	
+	private void SelectOption(OptionButton optionButton, string section, string key, int defaultValue)
+	{
+		for (int i = 0; i < optionButton.ItemCount; i++)
+		{
+			int itemId = optionButton.GetItemId(i);
+			if (itemId == (int) SettingsManager.GetValue(section, key, defaultValue))
+			{
+				optionButton.Selected = optionButton.GetItemIndex(itemId);
+			}
+		}
 	}
 }
