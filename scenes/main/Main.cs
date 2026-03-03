@@ -13,6 +13,12 @@ public partial class Main : Node
 
 		AudioManager.Instance.PlayMusic(GD.Load<AudioStreamOggVorbis>("res://assets/audio/Main.ogg"));
 		
+		bool areControlsLoaded = ControlsManager.LoadControls();
+		if (!areControlsLoaded)
+		{
+			ControlsManager.SaveDefaultControls();
+		}
+		
 		Instance = this;
 	}
 	
