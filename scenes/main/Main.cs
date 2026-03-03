@@ -9,15 +9,16 @@ public partial class Main : Node
 	
 	public override void _Ready()
 	{
+		bool areControlsLoaded = SettingsManager.LoadControls();
+		bool areVolumesLoaded = SettingsManager.LoadAudio();
+		bool isVideoLoaded = SettingsManager.LoadVideo();
+		if (!areControlsLoaded) { SettingsManager.SaveDefaultControls(); }
+		if (!areVolumesLoaded) { SettingsManager.SaveDefaultAudio(); }
+		if (!isVideoLoaded) { SettingsManager.SaveDefaultVideo(); }
+		
 		SceneManager.Instance.CurrentScene = GetNode<MainMenuInterface>("MainMenuInterface");
 
 		AudioManager.Instance.PlayMusic(GD.Load<AudioStreamOggVorbis>("res://assets/audio/Main.ogg"));
-		
-		bool areControlsLoaded = ControlsManager.LoadControls();
-		if (!areControlsLoaded)
-		{
-			ControlsManager.SaveDefaultControls();
-		}
 		
 		Instance = this;
 	}
