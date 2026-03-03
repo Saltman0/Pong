@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_3jmfp"]
 [ext_resource type="Script" uid="uid://boy8ofs1mx4gr" path="res://scenes/settings_interface/SettingsInterface.cs" id="2_3jmfp"]
 
-[node name="SettingsInterface" type="Control" unique_id=631919379 node_paths=PackedStringArray("_windowModeOptionButton", "_resolutionOptionButton", "_vsyncOptionButton", "_saveButton", "_returnButton", "_masterSlider", "_musicSlider", "_sfxSlider", "_uiSlider")]
+[node name="SettingsInterface" type="Control" unique_id=631919379 node_paths=PackedStringArray("_windowModeOptionButton", "_resolutionOptionButton", "_vsyncOptionButton", "_saveButton", "_returnButton", "_masterSlider", "_musicSlider", "_sfxSlider", "_uiSlider", "_moveUpP1Button", "_moveDownP1Button", "_moveUpP2Button", "_moveDownP2Button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +21,10 @@ _masterSlider = NodePath("TabContainer/AudioSettingsTab/AudioContainer/MasterCon
 _musicSlider = NodePath("TabContainer/AudioSettingsTab/AudioContainer/MusicContainer/MusicSlider")
 _sfxSlider = NodePath("TabContainer/AudioSettingsTab/AudioContainer/SfxContainer/SfxSlider")
 _uiSlider = NodePath("TabContainer/AudioSettingsTab/AudioContainer/UiContainer/UiSlider")
+_moveUpP1Button = NodePath("TabContainer/ControlsSettingsTab/ControlsContainer/MoveUpP1Container/MoveUpP1Button")
+_moveDownP1Button = NodePath("TabContainer/ControlsSettingsTab/ControlsContainer/MoveDownP1Container/MoveDownP1Button")
+_moveUpP2Button = NodePath("TabContainer/ControlsSettingsTab/ControlsContainer/MoveUpP2Container/MoveUpP2Button")
+_moveDownP2Button = NodePath("TabContainer/ControlsSettingsTab/ControlsContainer/MoveDownP2Container/MoveDownP2Button")
 
 [node name="TabContainer" type="TabContainer" parent="." unique_id=1985958558]
 layout_mode = 1
@@ -29,13 +33,14 @@ anchor_left = 0.03046875
 anchor_top = 0.034722224
 anchor_right = 0.965191
 anchor_bottom = 0.96944445
-current_tab = 0
+current_tab = 2
 tab_0/title = "Video"
 tab_1/title = "Audio"
 tab_2/title = "Controls"
 metadata/_edit_use_anchors_ = true
 
 [node name="VideoSettingsTab" type="TabBar" parent="TabContainer" unique_id=454353036]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 metadata/_tab_name = "Video"
@@ -46,7 +51,7 @@ anchors_preset = -1
 anchor_left = 0.012892
 anchor_top = 0.045875195
 anchor_right = 0.98710805
-anchor_bottom = 0.9869736
+anchor_bottom = 0.87158906
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
@@ -134,7 +139,7 @@ anchors_preset = -1
 anchor_left = 0.012892
 anchor_top = 0.045875195
 anchor_right = 0.98710805
-anchor_bottom = 0.9869736
+anchor_bottom = 0.8788122
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
@@ -216,10 +221,105 @@ max_value = 1.0
 step = 0.001
 
 [node name="ControlsSettingsTab" type="TabBar" parent="TabContainer" unique_id=1904687965]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 metadata/_tab_name = "Controls"
+
+[node name="ControlsContainer" type="VBoxContainer" parent="TabContainer/ControlsSettingsTab" unique_id=1709617138]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16786046
+anchor_top = 0.045875195
+anchor_right = 0.8321396
+anchor_bottom = 0.8691814
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Player1Label" type="RichTextLabel" parent="TabContainer/ControlsSettingsTab/ControlsContainer" unique_id=1213045802]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+text = "Player 1 :"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MoveUpP1Container" type="HBoxContainer" parent="TabContainer/ControlsSettingsTab/ControlsContainer" unique_id=1558006931]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.15
+
+[node name="MoveUpP1Label" type="RichTextLabel" parent="TabContainer/ControlsSettingsTab/ControlsContainer/MoveUpP1Container" unique_id=1275885893]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "Move up :"
+
+[node name="MoveUpP1Button" type="Button" parent="TabContainer/ControlsSettingsTab/ControlsContainer/MoveUpP1Container" unique_id=706294581 groups=["ControlsButtons"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="MoveDownP1Container" type="HBoxContainer" parent="TabContainer/ControlsSettingsTab/ControlsContainer" unique_id=110093042]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.15
+
+[node name="MoveDownP1Label" type="RichTextLabel" parent="TabContainer/ControlsSettingsTab/ControlsContainer/MoveDownP1Container" unique_id=250669855]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "Move down :"
+
+[node name="MoveDownP1Button" type="Button" parent="TabContainer/ControlsSettingsTab/ControlsContainer/MoveDownP1Container" unique_id=320175701 groups=["ControlsButtons"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="Player2Label" type="RichTextLabel" parent="TabContainer/ControlsSettingsTab/ControlsContainer" unique_id=871072505]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+text = "Player 2 :"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MoveUpP2Container" type="HBoxContainer" parent="TabContainer/ControlsSettingsTab/ControlsContainer" unique_id=1201849158]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.15
+
+[node name="MoveUpP2Label" type="RichTextLabel" parent="TabContainer/ControlsSettingsTab/ControlsContainer/MoveUpP2Container" unique_id=987278825]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "Move up :"
+
+[node name="MoveUpP2Button" type="Button" parent="TabContainer/ControlsSettingsTab/ControlsContainer/MoveUpP2Container" unique_id=1281173311 groups=["ControlsButtons"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="MoveDownP2Container" type="HBoxContainer" parent="TabContainer/ControlsSettingsTab/ControlsContainer" unique_id=853537467]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.15
+
+[node name="MoveDownP2Label" type="RichTextLabel" parent="TabContainer/ControlsSettingsTab/ControlsContainer/MoveDownP2Container" unique_id=878344803]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "Move down :"
+
+[node name="MoveDownP2Button" type="Button" parent="TabContainer/ControlsSettingsTab/ControlsContainer/MoveDownP2Container" unique_id=1655494809 groups=["ControlsButtons"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
 
 [node name="ButtonsContainer" type="HBoxContainer" parent="." unique_id=664791715]
 layout_mode = 0
