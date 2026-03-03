@@ -36,6 +36,12 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_nkonk"]
+color = Color(1, 1, 1, 1)
+grow_begin = 25.0
+grow_end = 25.0
+thickness = 5
+
 [sub_resource type="CanvasTexture" id="CanvasTexture_nkonk"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_2g1ym"]
@@ -130,6 +136,7 @@ Button/styles/hover = SubResource("StyleBoxFlat_nkonk")
 Button/styles/normal = SubResource("StyleBoxFlat_gnsgt")
 Button/styles/pressed = SubResource("StyleBoxFlat_2g1ym")
 HBoxContainer/constants/separation = 20
+HSeparator/styles/separator = SubResource("StyleBoxLine_nkonk")
 HSlider/icons/grabber = SubResource("CanvasTexture_nkonk")
 HSlider/icons/grabber_disabled = SubResource("CanvasTexture_2g1ym")
 HSlider/icons/grabber_highlight = SubResource("CanvasTexture_gnsgt")
