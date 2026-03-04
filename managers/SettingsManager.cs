@@ -94,7 +94,6 @@ public static class SettingsManager
         Vector2I screenSize = DisplayServer.ScreenGetSize(DisplayServer.WindowGetCurrentScreen());
         
         int multiplier = screenSize.X / baseResolution.X;
-        GD.Print(multiplier);
         
         SaveValue("Video", "WindowMode", (int) DisplayServer.WindowMode.ExclusiveFullscreen);
         SaveValue("Video", "Resolution", multiplier);
