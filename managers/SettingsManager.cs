@@ -26,6 +26,9 @@ public static class SettingsManager
     public static readonly InputEvent DefaultMoveUpP2InputEvent = InputMap.ActionGetEvents("move_up_2").First();
     public static readonly InputEvent DefaultMoveDownP2InputEvent = InputMap.ActionGetEvents("move_down_2").First();
     
+    /** Default accessibility values **/
+    public static readonly int DefaultColorblindMode = 0;
+    
     public static bool LoadControls()
     {
         ConfigFile config = new ConfigFile();
@@ -118,6 +121,22 @@ public static class SettingsManager
         SaveValue("Video", "Resolution", GetMultiplierResolution());
         SaveValue("Video", "Vsync", (int) DefaultVsync);
         SaveValue("Video", "Framerate", DefaultFramerate);
+    }
+    
+    public static bool LoadAccessibility()
+    {
+        ConfigFile config = new ConfigFile();
+        if (config.Load(SavePath) != Error.Ok || !config.HasSection("Accessibility")) return false;
+		
+        int colorblindMode = (int) config.GetValue("Accessibility", "ColorblindMode");
+        // TODO Apply Shader with the colorblindMode variable
+
+        return true;
+    }
+    
+    public static void SaveDefaultAccessibility()
+    {
+        SaveValue("Accessibility", "ColorblindMode", DefaultColorblindMode);
     }
 
     public static void SaveValue(string section, string key, Variant value)
