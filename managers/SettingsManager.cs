@@ -5,11 +5,26 @@ namespace Pong.managers;
 
 public static class SettingsManager
 {
+    /** Default path **/
     private const string SavePath = "user://settings.cfg";
 
-    private const int DefaultMaxFps = 60;
+    /** Default video values **/
+    public static readonly DisplayServer.WindowMode DefaultWindowMode = DisplayServer.WindowMode.ExclusiveFullscreen;
+    public static readonly DisplayServer.VSyncMode DefaultVsync = DisplayServer.VSyncMode.Enabled;
+    public static readonly int DefaultFramerate = 0;
+    public static readonly Vector2I DefaultResolution = new Vector2I(640, 360);
     
-    private static readonly Vector2I DefaultResolution = new Vector2I(640, 360);
+    /** Default audio values **/
+    public static readonly float DefaultMasterVolume = 1.0f;
+    public static readonly float DefaultMusicVolume = 1.0f;
+    public static readonly float DefaultSfxVolume = 1.0f;
+    public static readonly float DefaultUiVolume = 1.0f;
+    
+    /** Default control values **/
+    public static readonly InputEvent DefaultMoveUpP1InputEvent = InputMap.ActionGetEvents("move_up").First();
+    public static readonly InputEvent DefaultMoveDownP1InputEvent = InputMap.ActionGetEvents("move_down").First();
+    public static readonly InputEvent DefaultMoveUpP2InputEvent = InputMap.ActionGetEvents("move_up_2").First();
+    public static readonly InputEvent DefaultMoveDownP2InputEvent = InputMap.ActionGetEvents("move_down_2").First();
     
     public static bool LoadControls()
     {
@@ -28,15 +43,10 @@ public static class SettingsManager
     
     public static void SaveDefaultControls()
     {
-        InputEvent moveUpP1InputEvent = InputMap.ActionGetEvents("move_up").First();
-        InputEvent moveDownP1InputEvent = InputMap.ActionGetEvents("move_down").First();
-        InputEvent moveUpP2InputEvent = InputMap.ActionGetEvents("move_up_2").First();
-        InputEvent moveDownP2InputEvent = InputMap.ActionGetEvents("move_down_2").First();
-		
-        SaveValue("Controls", "move_up", moveUpP1InputEvent);
-        SaveValue("Controls", "move_down", moveDownP1InputEvent);
-        SaveValue("Controls", "move_up_2", moveUpP2InputEvent);
-        SaveValue("Controls", "move_down_2", moveDownP2InputEvent);
+        SaveValue("Controls", "move_up", DefaultMoveUpP1InputEvent);
+        SaveValue("Controls", "move_down", DefaultMoveDownP1InputEvent);
+        SaveValue("Controls", "move_up_2", DefaultMoveUpP2InputEvent);
+        SaveValue("Controls", "move_down_2", DefaultMoveDownP2InputEvent);
     }
     
     public static bool LoadAudio()
@@ -55,10 +65,10 @@ public static class SettingsManager
     
     public static void SaveDefaultAudio()
     {
-        SaveValue("Audio", "Master", 1.0f);
-        SaveValue("Audio", "Music", 1.0f);
-        SaveValue("Audio", "SFX", 1.0f);
-        SaveValue("Audio", "UI", 1.0f);
+        SaveValue("Audio", "Master", DefaultMasterVolume);
+        SaveValue("Audio", "Music", DefaultMusicVolume);
+        SaveValue("Audio", "SFX", DefaultSfxVolume);
+        SaveValue("Audio", "UI", DefaultUiVolume);
     }
     
     public static bool LoadVideo()
@@ -94,17 +104,20 @@ public static class SettingsManager
 
         return true;
     }
-    
-    public static void SaveDefaultVideo()
+
+    public static int GetMultiplierResolution()
     {
         Vector2I screenSize = DisplayServer.ScreenGetSize(DisplayServer.WindowGetCurrentScreen());
         
-        int multiplier = screenSize.X / DefaultResolution.X;
-        
-        SaveValue("Video", "WindowMode", (int) DisplayServer.WindowMode.ExclusiveFullscreen);
-        SaveValue("Video", "Resolution", multiplier);
-        SaveValue("Video", "Vsync", (int) DisplayServer.VSyncMode.Enabled);
-        SaveValue("Video", "Framerate", DefaultMaxFps);
+        return screenSize.X / DefaultResolution.X;
+    }
+    
+    public static void SaveDefaultVideo()
+    {
+        SaveValue("Video", "WindowMode", (int) DefaultWindowMode);
+        SaveValue("Video", "Resolution", GetMultiplierResolution());
+        SaveValue("Video", "Vsync", (int) DefaultVsync);
+        SaveValue("Video", "Framerate", DefaultFramerate);
     }
 
     public static void SaveValue(string section, string key, Variant value)
