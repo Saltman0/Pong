@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://kbxecaogcu5g"]
+
+[ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_irmcv"]
+[ext_resource type="Script" uid="uid://cxsn76hwdsa0t" path="res://scenes/controls_settings_interface/ControlsSettingsInterface.cs" id="2_kklfn"]
+
+[node name="ControlsSettingsInterface" type="Control" unique_id=1643221142 node_paths=PackedStringArray("_moveUpP1Button", "_moveDownP1Button", "_moveUpP2Button", "_moveDownP2Button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_irmcv")
+script = ExtResource("2_kklfn")
+_moveUpP1Button = NodePath("ControlsContainer/MoveUpP1Container/MoveUpP1Button")
+_moveDownP1Button = NodePath("ControlsContainer/MoveDownP1Container/MoveDownP1Button")
+_moveUpP2Button = NodePath("ControlsContainer/MoveUpP2Container/MoveUpP2Button")
+_moveDownP2Button = NodePath("ControlsContainer/MoveDownP2Container/MoveDownP2Button")
+
+[node name="ControlsContainer" type="VBoxContainer" parent="." unique_id=1127143448]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Player1Label" type="RichTextLabel" parent="ControlsContainer" unique_id=1150890779]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+text = "Player 1 :"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MoveUpP1Container" type="HBoxContainer" parent="ControlsContainer" unique_id=1172845616]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.15
+
+[node name="MoveUpP1Label" type="RichTextLabel" parent="ControlsContainer/MoveUpP1Container" unique_id=504620325]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "Move up :"
+
+[node name="MoveUpP1Button" type="Button" parent="ControlsContainer/MoveUpP1Container" unique_id=895744398 groups=["ControlsButtons"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="MoveDownP1Container" type="HBoxContainer" parent="ControlsContainer" unique_id=988840611]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.15
+
+[node name="MoveDownP1Label" type="RichTextLabel" parent="ControlsContainer/MoveDownP1Container" unique_id=1396597869]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "Move down :"
+
+[node name="MoveDownP1Button" type="Button" parent="ControlsContainer/MoveDownP1Container" unique_id=242450768 groups=["ControlsButtons"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="Player2Label" type="RichTextLabel" parent="ControlsContainer" unique_id=1345243848]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+text = "Player 2 :"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MoveUpP2Container" type="HBoxContainer" parent="ControlsContainer" unique_id=490791751]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.15
+
+[node name="MoveUpP2Label" type="RichTextLabel" parent="ControlsContainer/MoveUpP2Container" unique_id=1881288051]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "Move up :"
+
+[node name="MoveUpP2Button" type="Button" parent="ControlsContainer/MoveUpP2Container" unique_id=1850410749 groups=["ControlsButtons"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="MoveDownP2Container" type="HBoxContainer" parent="ControlsContainer" unique_id=1949712570]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.15
+
+[node name="MoveDownP2Label" type="RichTextLabel" parent="ControlsContainer/MoveDownP2Container" unique_id=25364035]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "Move down :"
+
+[node name="MoveDownP2Button" type="Button" parent="ControlsContainer/MoveDownP2Container" unique_id=890883311 groups=["ControlsButtons"]]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
