@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://vgroqw35wsdv"]
+
+[ext_resource type="Script" uid="uid://ntwj7n0smh6b" path="res://scenes/audio_settings_interface/AudioSettingsInterface.cs" id="1_12il0"]
+[ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_onbtn"]
+
+[node name="AudioSettingsInterface" type="Control" unique_id=320330585 node_paths=PackedStringArray("_masterSlider", "_musicSlider", "_sfxSlider", "_uiSlider")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_onbtn")
+script = ExtResource("1_12il0")
+_masterSlider = NodePath("AudioContainer/MasterContainer/MasterSlider")
+_musicSlider = NodePath("AudioContainer/MusicContainer/MusicSlider")
+_sfxSlider = NodePath("AudioContainer/SfxContainer/SfxSlider")
+_uiSlider = NodePath("AudioContainer/UiContainer/UiSlider")
+
+[node name="AudioContainer" type="VBoxContainer" parent="." unique_id=625948683]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0125
+anchor_top = 0.022222223
+anchor_right = 0.9875
+anchor_bottom = 0.9777778
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="MasterContainer" type="HBoxContainer" parent="AudioContainer" unique_id=2090207903]
+layout_mode = 2
+size_flags_stretch_ratio = 0.25
+
+[node name="MasterLabel" type="RichTextLabel" parent="AudioContainer/MasterContainer" unique_id=390687349]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "Master :"
+vertical_alignment = 1
+
+[node name="MasterSlider" type="HSlider" parent="AudioContainer/MasterContainer" unique_id=1462764812]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.25
+max_value = 1.0
+step = 0.001
+
+[node name="MusicContainer" type="HBoxContainer" parent="AudioContainer" unique_id=1466859985]
+layout_mode = 2
+size_flags_stretch_ratio = 0.25
+
+[node name="MusicLabel" type="RichTextLabel" parent="AudioContainer/MusicContainer" unique_id=166772929]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "Music :"
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="AudioContainer/MusicContainer" unique_id=604607889]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.25
+max_value = 1.0
+step = 0.001
+
+[node name="SfxContainer" type="HBoxContainer" parent="AudioContainer" unique_id=1816939272]
+layout_mode = 2
+size_flags_stretch_ratio = 0.25
+
+[node name="SfxLabel" type="RichTextLabel" parent="AudioContainer/SfxContainer" unique_id=21731083]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "SFX :"
+vertical_alignment = 1
+
+[node name="SfxSlider" type="HSlider" parent="AudioContainer/SfxContainer" unique_id=503012299]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.25
+max_value = 1.0
+step = 0.001
+
+[node name="UiContainer" type="HBoxContainer" parent="AudioContainer" unique_id=1534044105]
+layout_mode = 2
+size_flags_stretch_ratio = 0.25
+
+[node name="UiLabel" type="RichTextLabel" parent="AudioContainer/UiContainer" unique_id=925232176]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "UI :"
+vertical_alignment = 1
+
+[node name="UiSlider" type="HSlider" parent="AudioContainer/UiContainer" unique_id=1812220104]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.25
+max_value = 1.0
+step = 0.001
