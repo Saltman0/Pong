@@ -50,7 +50,7 @@ public partial class VideoSettingsInterface : Control
 			_resolutionOptionButton, 
 			"Video", 
 			"Resolution", 
-			1
+			SettingsManager.GetMultiplierResolution()
 		);
 		
 		SelectOption(
