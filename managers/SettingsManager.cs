@@ -79,6 +79,9 @@ public static class SettingsManager
                 case "Vsync":
                     DisplayServer.WindowSetVsyncMode((DisplayServer.VSyncMode) value);
                     break;
+                case "Framerate":
+                    Engine.SetMaxFps(value);
+                    break;
             }
         }
         
@@ -98,6 +101,7 @@ public static class SettingsManager
         SaveValue("Video", "WindowMode", (int) DisplayServer.WindowMode.ExclusiveFullscreen);
         SaveValue("Video", "Resolution", multiplier);
         SaveValue("Video", "Vsync", (int) DisplayServer.VSyncMode.Enabled);
+        SaveValue("Video", "Framerate", 60);
     }
 
     public static void SaveValue(string section, string key, Variant value)
