@@ -6,6 +6,10 @@ namespace Pong.managers;
 public static class SettingsManager
 {
     private const string SavePath = "user://settings.cfg";
+
+    private const int DefaultMaxFps = 60;
+    
+    private static readonly Vector2I DefaultResolution = new Vector2I(640, 360);
     
     public static bool LoadControls()
     {
@@ -74,7 +78,7 @@ public static class SettingsManager
                     DisplayServer.WindowSetMode((DisplayServer.WindowMode) value);
                     break;
                 case "Resolution":
-                    DisplayServer.WindowSetSize(new Vector2I(640, 360) * value);
+                    DisplayServer.WindowSetSize(DefaultResolution * value);
                     break;
                 case "Vsync":
                     DisplayServer.WindowSetVsyncMode((DisplayServer.VSyncMode) value);
@@ -93,15 +97,14 @@ public static class SettingsManager
     
     public static void SaveDefaultVideo()
     {
-        Vector2I baseResolution = new Vector2I(640, 360);
         Vector2I screenSize = DisplayServer.ScreenGetSize(DisplayServer.WindowGetCurrentScreen());
         
-        int multiplier = screenSize.X / baseResolution.X;
+        int multiplier = screenSize.X / DefaultResolution.X;
         
         SaveValue("Video", "WindowMode", (int) DisplayServer.WindowMode.ExclusiveFullscreen);
         SaveValue("Video", "Resolution", multiplier);
         SaveValue("Video", "Vsync", (int) DisplayServer.VSyncMode.Enabled);
-        SaveValue("Video", "Framerate", 60);
+        SaveValue("Video", "Framerate", DefaultMaxFps);
     }
 
     public static void SaveValue(string section, string key, Variant value)
