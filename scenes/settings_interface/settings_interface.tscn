@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_3jmfp"]
 [ext_resource type="Script" uid="uid://boy8ofs1mx4gr" path="res://scenes/settings_interface/SettingsInterface.cs" id="2_3jmfp"]
 
-[node name="SettingsInterface" type="Control" unique_id=631919379 node_paths=PackedStringArray("_windowModeOptionButton", "_resolutionOptionButton", "_vsyncOptionButton", "_framerateInput", "_saveButton", "_returnButton", "_masterSlider", "_musicSlider", "_sfxSlider", "_uiSlider", "_moveUpP1Button", "_moveDownP1Button", "_moveUpP2Button", "_moveDownP2Button")]
+[node name="SettingsInterface" type="Control" unique_id=631919379 node_paths=PackedStringArray("_windowModeOptionButton", "_resolutionOptionButton", "_vsyncOptionButton", "_framerateSlider", "_nbFpsLabel", "_saveButton", "_returnButton", "_masterSlider", "_musicSlider", "_sfxSlider", "_uiSlider", "_moveUpP1Button", "_moveDownP1Button", "_moveUpP2Button", "_moveDownP2Button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +15,8 @@ script = ExtResource("2_3jmfp")
 _windowModeOptionButton = NodePath("TabContainer/VideoSettingsTab/VideoContainer/WindowModeContainer/WindowModeOptionButton")
 _resolutionOptionButton = NodePath("TabContainer/VideoSettingsTab/VideoContainer/ResolutionContainer/ResolutionOptionButton")
 _vsyncOptionButton = NodePath("TabContainer/VideoSettingsTab/VideoContainer/VsyncContainer/VsyncOptionButton")
-_framerateInput = NodePath("TabContainer/VideoSettingsTab/VideoContainer/FramerateContainer/FramerateInput")
+_framerateSlider = NodePath("TabContainer/VideoSettingsTab/VideoContainer/FramerateContainer/FramerateSlider")
+_nbFpsLabel = NodePath("TabContainer/VideoSettingsTab/VideoContainer/FramerateContainer/NbFpsLabel")
 _saveButton = NodePath("ButtonsContainer/SaveButton")
 _returnButton = NodePath("ButtonsContainer/ReturnButton")
 _masterSlider = NodePath("TabContainer/AudioSettingsTab/AudioContainer/MasterContainer/MasterSlider")
@@ -141,12 +142,20 @@ size_flags_stretch_ratio = 0.75
 text = "Framerate :"
 vertical_alignment = 1
 
-[node name="FramerateInput" type="LineEdit" parent="TabContainer/VideoSettingsTab/VideoContainer/FramerateContainer" unique_id=849550127]
+[node name="FramerateSlider" type="HSlider" parent="TabContainer/VideoSettingsTab/VideoContainer/FramerateContainer" unique_id=1813097961]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.25
-alignment = 1
-max_length = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.2
+max_value = 300.0
+
+[node name="NbFpsLabel" type="RichTextLabel" parent="TabContainer/VideoSettingsTab/VideoContainer/FramerateContainer" unique_id=1265842578]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+text = "60"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AudioSettingsTab" type="TabBar" parent="TabContainer" unique_id=1488762605]
 visible = false

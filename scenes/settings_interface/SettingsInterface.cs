@@ -5,21 +5,22 @@ using Pong.managers;
 
 public partial class SettingsInterface : Control
 {
-	// Video settings
+	/** Video settings **/
 	[Export] private OptionButton _windowModeOptionButton;
 	[Export] private OptionButton _resolutionOptionButton;
 	[Export] private OptionButton _vsyncOptionButton;
-	[Export] private LineEdit _framerateInput;
+	[Export] private HSlider _framerateSlider;
+	[Export] private RichTextLabel _nbFpsLabel;
 	[Export] private Button _saveButton;
 	[Export] private Button _returnButton;
 
-	// Audio settings
+	/** Audio settings **/
 	[Export] private HSlider _masterSlider;
 	[Export] private HSlider _musicSlider;
 	[Export] private HSlider _sfxSlider;
 	[Export] private HSlider _uiSlider;
 	
-	// Controls settings
+	/** Controls settings **/
 	[Export] private Button _moveUpP1Button;
 	[Export] private Button _moveDownP1Button;
 	[Export] private Button _moveUpP2Button;
@@ -35,7 +36,8 @@ public partial class SettingsInterface : Control
 		_inputMaps.Add(_moveUpP2Button, "move_up_2");
 		_inputMaps.Add(_moveDownP2Button, "move_down_2");
 
-		_vsyncOptionButton.ItemSelected += itemSelectedIndex => OnVsyncOptionButtonItemSelected(itemSelectedIndex);
+		_vsyncOptionButton.ItemSelected += OnVsyncOptionButtonItemSelected;
+		_framerateSlider.ValueChanged += OnFramerateValueChanged;
 		_moveUpP1Button.Pressed += () => OnControlsButtonPressed(_moveUpP1Button);
 		_moveDownP1Button.Pressed += () => OnControlsButtonPressed(_moveDownP1Button);
 		_moveUpP2Button.Pressed += () => OnControlsButtonPressed(_moveUpP2Button);
@@ -65,25 +67,33 @@ public partial class SettingsInterface : Control
 		_selectedControlsButton = null;
 	}
 	
-	private void OnControlsButtonPressed(Button selectedControlsButton)
-	{
-		UpdateControlSettings();
-		selectedControlsButton.Text = "?";
-		_selectedControlsButton = selectedControlsButton;
-	}
-
 	private void OnVsyncOptionButtonItemSelected(long itemSelectedIndex)
 	{
 		DisplayServer.VSyncMode vsyncMode = (DisplayServer.VSyncMode) itemSelectedIndex;
 		if (vsyncMode != DisplayServer.VSyncMode.Disabled)
 		{
-			_framerateInput.Text = "";
-			_framerateInput.MaxLength = 0;
+			_framerateSlider.Value = 0;
 		}
-		else
+	}
+	
+	private void OnFramerateValueChanged(double value)
+	{
+		int nbFps = (int) value;
+		
+		if (_vsyncOptionButton.GetSelectedId() != (int) DisplayServer.VSyncMode.Disabled)
 		{
-			_framerateInput.MaxLength = 3;
+			nbFps = 0;
+			_framerateSlider.Value = nbFps;
 		}
+		
+		_nbFpsLabel.Text = nbFps.ToString();
+	}
+	
+	private void OnControlsButtonPressed(Button selectedControlsButton)
+	{
+		UpdateControlSettings();
+		selectedControlsButton.Text = "?";
+		_selectedControlsButton = selectedControlsButton;
 	}
 	
 	private void OnSaveButtonPressed()
@@ -147,22 +157,24 @@ public partial class SettingsInterface : Control
 		int framerate = (int) SettingsManager.GetValue(
 			"Video", "Framerate", SettingsManager.DefaultFramerate
 		);
-		_framerateInput.Text = framerate == 0 ? "" : framerate.ToString();
+		_framerateSlider.Value = framerate;
+		_nbFpsLabel.Text = framerate.ToString();
 	}
 
 	private void SaveVideoSettings()
 	{
 		DisplayServer.WindowSetMode((DisplayServer.WindowMode)_windowModeOptionButton.GetSelectedId());
 		DisplayServer.WindowSetSize(new Vector2I(640, 360) * _resolutionOptionButton.GetSelectedId());
-		DisplayServer.WindowSetVsyncMode((DisplayServer.VSyncMode)_vsyncOptionButton.GetSelectedId());
 		
-		Engine.SetMaxFps(_framerateInput.Text.ToInt());
+		DisplayServer.VSyncMode vSyncMode = (DisplayServer.VSyncMode) _vsyncOptionButton.GetSelectedId();
+		DisplayServer.WindowSetVsyncMode(vSyncMode);
+		
+		int framerate = vSyncMode == DisplayServer.VSyncMode.Disabled ? (int) _framerateSlider.Value : 0;
+		Engine.SetMaxFps(framerate);
 		
 		SettingsManager.SaveValue("Video", "WindowMode", _windowModeOptionButton.GetSelectedId());
 		SettingsManager.SaveValue("Video", "Resolution", _resolutionOptionButton.GetSelectedId());
 		SettingsManager.SaveValue("Video", "Vsync", _vsyncOptionButton.GetSelectedId());
-		
-		int framerate = _framerateInput.Text != "" && _framerateInput.Text != "0" ? _framerateInput.Text.ToInt() : 0;
 		SettingsManager.SaveValue("Video", "Framerate", framerate);
 		
 		SettingsManager.LoadVideo();
