@@ -15,6 +15,10 @@ run/main_scene="uid://xyki8ypl8kl4"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout=""
+
 [autoload]
 
 NetworkManager="*uid://lt8crsj7dic4"
