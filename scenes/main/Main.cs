@@ -18,7 +18,7 @@ public partial class Main : Node
 		
 		SceneManager.Instance.CurrentScene = GetNode<MainMenuInterface>("MainMenuInterface");
 
-		//AudioManager.Instance.PlayMusic(GD.Load<AudioStreamOggVorbis>("res://assets/audio/Main.ogg"));
+		AudioManager.Instance.PlayMusic(GD.Load<AudioStreamOggVorbis>("res://assets/audio/Main.ogg"));
 		
 		Instance = this;
 	}
