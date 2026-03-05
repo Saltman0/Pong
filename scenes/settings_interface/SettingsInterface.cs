@@ -9,7 +9,7 @@ public partial class SettingsInterface : Control
 	[Export] private OptionButton _windowModeOptionButton;
 	[Export] private OptionButton _resolutionOptionButton;
 	[Export] private OptionButton _vsyncOptionButton;
-	[Export] private HSlider _framerateSlider;
+	[Export] private LineEdit _framerateInput;
 	[Export] private Button _saveButton;
 	[Export] private Button _returnButton;
 
@@ -126,7 +126,7 @@ public partial class SettingsInterface : Control
 			"Vsync", 
 			(int) DisplayServer.VSyncMode.Enabled
 		);
-		_framerateSlider.Value = (double) SettingsManager.GetValue("Video", "Framerate", 60);
+		_framerateInput.Text = SettingsManager.GetValue("Video", "Framerate", 60).ToString();
 	}
 
 	private void SaveVideoSettings()
@@ -134,12 +134,12 @@ public partial class SettingsInterface : Control
 		DisplayServer.WindowSetMode((DisplayServer.WindowMode)_windowModeOptionButton.GetSelectedId());
 		DisplayServer.WindowSetSize(new Vector2I(640, 360) * _resolutionOptionButton.GetSelectedId());
 		DisplayServer.WindowSetVsyncMode((DisplayServer.VSyncMode)_vsyncOptionButton.GetSelectedId());
-		Engine.SetMaxFps((int)_framerateSlider.Value);
+		Engine.SetMaxFps(_framerateInput.Text.ToInt());
 		
 		SettingsManager.SaveValue("Video", "WindowMode", _windowModeOptionButton.GetSelectedId());
 		SettingsManager.SaveValue("Video", "Resolution", _resolutionOptionButton.GetSelectedId());
 		SettingsManager.SaveValue("Video", "Vsync", _vsyncOptionButton.GetSelectedId());
-		SettingsManager.SaveValue("Video", "Framerate", (int)_framerateSlider.Value);
+		SettingsManager.SaveValue("Video", "Framerate", _framerateInput.Text.ToInt());
 		
 		SettingsManager.LoadVideo();
 	}
