@@ -129,23 +129,6 @@ popup/item_1/id = 1
 popup/item_2/text = "Adaptative"
 popup/item_2/id = 2
 
-[node name="EnableFramerateContainer" type="HBoxContainer" parent="TabContainer/VideoSettingsTab/VideoContainer" unique_id=24629929]
-layout_mode = 2
-size_flags_stretch_ratio = 0.25
-
-[node name="EnableFramerateLabel" type="RichTextLabel" parent="TabContainer/VideoSettingsTab/VideoContainer/EnableFramerateContainer" unique_id=949668215]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.75
-text = "Enable framerate :"
-vertical_alignment = 1
-
-[node name="EnableFramerateCheckBox" type="CheckBox" parent="TabContainer/VideoSettingsTab/VideoContainer/EnableFramerateContainer" unique_id=983342458]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.25
-
 [node name="FramerateContainer" type="HBoxContainer" parent="TabContainer/VideoSettingsTab/VideoContainer" unique_id=836512207]
 layout_mode = 2
 size_flags_stretch_ratio = 0.25

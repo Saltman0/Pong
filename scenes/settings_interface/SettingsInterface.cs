@@ -34,7 +34,8 @@ public partial class SettingsInterface : Control
 		_inputMaps.Add(_moveDownP1Button, "move_down");
 		_inputMaps.Add(_moveUpP2Button, "move_up_2");
 		_inputMaps.Add(_moveDownP2Button, "move_down_2");
-		
+
+		_vsyncOptionButton.ItemSelected += itemSelectedIndex => OnVsyncOptionButtonItemSelected(itemSelectedIndex);
 		_moveUpP1Button.Pressed += () => OnControlsButtonPressed(_moveUpP1Button);
 		_moveDownP1Button.Pressed += () => OnControlsButtonPressed(_moveDownP1Button);
 		_moveUpP2Button.Pressed += () => OnControlsButtonPressed(_moveUpP2Button);
@@ -69,6 +70,20 @@ public partial class SettingsInterface : Control
 		UpdateControlSettings();
 		selectedControlsButton.Text = "?";
 		_selectedControlsButton = selectedControlsButton;
+	}
+
+	private void OnVsyncOptionButtonItemSelected(long itemSelectedIndex)
+	{
+		DisplayServer.VSyncMode vsyncMode = (DisplayServer.VSyncMode) itemSelectedIndex;
+		if (vsyncMode != DisplayServer.VSyncMode.Disabled)
+		{
+			_framerateInput.Text = "";
+			_framerateInput.MaxLength = 0;
+		}
+		else
+		{
+			_framerateInput.MaxLength = 3;
+		}
 	}
 	
 	private void OnSaveButtonPressed()
@@ -112,21 +127,27 @@ public partial class SettingsInterface : Control
 			_windowModeOptionButton, 
 			"Video", 
 			"WindowMode", 
-			(int) DisplayServer.WindowMode.ExclusiveFullscreen
+			(int) SettingsManager.DefaultWindowMode
 		);
+		
 		SelectOption(
 			_resolutionOptionButton, 
 			"Video", 
 			"Resolution", 
 			1
 		);
+		
 		SelectOption(
 			_vsyncOptionButton, 
 			"Video", 
 			"Vsync", 
 			(int) DisplayServer.VSyncMode.Enabled
 		);
-		_framerateInput.Text = SettingsManager.GetValue("Video", "Framerate", 60).ToString();
+		
+		int framerate = (int) SettingsManager.GetValue(
+			"Video", "Framerate", SettingsManager.DefaultFramerate
+		);
+		_framerateInput.Text = framerate == 0 ? "" : framerate.ToString();
 	}
 
 	private void SaveVideoSettings()
@@ -134,12 +155,15 @@ public partial class SettingsInterface : Control
 		DisplayServer.WindowSetMode((DisplayServer.WindowMode)_windowModeOptionButton.GetSelectedId());
 		DisplayServer.WindowSetSize(new Vector2I(640, 360) * _resolutionOptionButton.GetSelectedId());
 		DisplayServer.WindowSetVsyncMode((DisplayServer.VSyncMode)_vsyncOptionButton.GetSelectedId());
+		
 		Engine.SetMaxFps(_framerateInput.Text.ToInt());
 		
 		SettingsManager.SaveValue("Video", "WindowMode", _windowModeOptionButton.GetSelectedId());
 		SettingsManager.SaveValue("Video", "Resolution", _resolutionOptionButton.GetSelectedId());
 		SettingsManager.SaveValue("Video", "Vsync", _vsyncOptionButton.GetSelectedId());
-		SettingsManager.SaveValue("Video", "Framerate", _framerateInput.Text.ToInt());
+		
+		int framerate = _framerateInput.Text != "" && _framerateInput.Text != "0" ? _framerateInput.Text.ToInt() : 0;
+		SettingsManager.SaveValue("Video", "Framerate", framerate);
 		
 		SettingsManager.LoadVideo();
 	}
@@ -156,12 +180,10 @@ public partial class SettingsInterface : Control
 	
 	private void SaveControlsSettings()
 	{
-		SettingsManager.SaveValue("Controls", "move_up", InputMap.ActionGetEvents("move_up").First());
-		SettingsManager.SaveValue("Controls", "move_down", InputMap.ActionGetEvents("move_down").First());
-		SettingsManager.SaveValue("Controls", "move_up_2", InputMap.ActionGetEvents("move_up_2").First());
-		SettingsManager.SaveValue(
-			"Controls", "move_down_2", InputMap.ActionGetEvents("move_down_2").First()
-		);
+		SettingsManager.SaveValue("Controls", "move_up", SettingsManager.DefaultMoveUpP1InputEvent);
+		SettingsManager.SaveValue("Controls", "move_down", SettingsManager.DefaultMoveDownP1InputEvent);
+		SettingsManager.SaveValue("Controls", "move_up_2", SettingsManager.DefaultMoveUpP2InputEvent);
+		SettingsManager.SaveValue("Controls", "move_down_2", SettingsManager.DefaultMoveDownP2InputEvent);
 
 		SettingsManager.LoadControls();
 	}
