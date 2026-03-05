@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b738ccc8q2835" path="res://scenes/main/Main.cs" id="1_iuonh"]
 [ext_resource type="PackedScene" uid="uid://c2vydabr7qon4" path="res://scenes/main_menu_interface/main_menu_interface.tscn" id="2_k2fmo"]
+[ext_resource type="AudioStream" uid="uid://dd1ek7bk5vtgd" path="res://assets/audio/Main.ogg" id="3_k2fmo"]
 
 [sub_resource type="Environment" id="Environment_f1tf0"]
 background_mode = 3
@@ -16,3 +17,8 @@ script = ExtResource("1_iuonh")
 environment = SubResource("Environment_f1tf0")
 
 [node name="MainMenuInterface" parent="." unique_id=1026173754 instance=ExtResource("2_k2fmo")]
+
+[node name="GlobalMusicPlayer" type="AudioStreamPlayer" parent="." unique_id=619076946]
+stream = ExtResource("3_k2fmo")
+autoplay = true
+bus = &"Music"
