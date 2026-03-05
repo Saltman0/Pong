@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://o2e40cgd6dhp" path="res://scenes/video_settings_interface/video_settings_interface.tscn" id="3_0drv3"]
 [ext_resource type="PackedScene" uid="uid://vgroqw35wsdv" path="res://scenes/audio_settings_interface/audio_settings_interface.tscn" id="4_7xqc8"]
 [ext_resource type="PackedScene" uid="uid://kbxecaogcu5g" path="res://scenes/controls_settings_interface/controls_settings_interface.tscn" id="5_fe1ki"]
+[ext_resource type="PackedScene" uid="uid://d0m7c4petdf5r" path="res://scenes/accessibility_settings_interface/accessibility_settings_interface.tscn" id="6_avr5g"]
 
 [node name="SettingsInterface" type="Control" unique_id=631919379 node_paths=PackedStringArray("_videoSettingsInterface", "_audioSettingsInterface", "_controlsSettingsInterface", "_saveButton", "_returnButton")]
 layout_mode = 3
@@ -28,14 +29,14 @@ anchor_left = 0.015625
 anchor_top = 0.027777778
 anchor_right = 0.984375
 anchor_bottom = 0.9722222
-current_tab = 2
+current_tab = 0
 tab_0/title = "Video"
 tab_1/title = "Audio"
 tab_2/title = "Controls"
+tab_3/title = "Accessibility"
 metadata/_edit_use_anchors_ = true
 
 [node name="VideoSettingsTab" type="TabBar" parent="TabContainer" unique_id=454353036]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 metadata/_tab_name = "Video"
@@ -53,6 +54,7 @@ metadata/_tab_name = "Audio"
 layout_mode = 1
 
 [node name="ControlsSettingsTab" type="TabBar" parent="TabContainer" unique_id=1904687965]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 metadata/_tab_name = "Controls"
@@ -60,6 +62,15 @@ metadata/_tab_name = "Controls"
 [node name="ControlsSettingsInterface" parent="TabContainer/ControlsSettingsTab" unique_id=1643221142 instance=ExtResource("5_fe1ki")]
 layout_mode = 1
 offset_bottom = -446.0
+
+[node name="AccessibilitySettingsTab" type="TabBar" parent="TabContainer" unique_id=28921559]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+metadata/_tab_name = "Accessibility"
+
+[node name="AccessibilitySettingsInterface" parent="TabContainer/AccessibilitySettingsTab" unique_id=1289949875 instance=ExtResource("6_avr5g")]
+layout_mode = 1
 
 [node name="ButtonsContainer" type="HBoxContainer" parent="." unique_id=664791715]
 layout_mode = 0
