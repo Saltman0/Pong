@@ -22,4 +22,11 @@ public partial class AccessibilitySettingsInterface : Control
 		
 		SettingsManager.Instance.LoadAccessibility();
 	}
+	
+	public void ResetAccesibilitySettings()
+	{
+		_colorblindModeOptionButton.Selected = (int) SettingsManager.Instance.GetValue(
+			"Accessibility", "ColorblindMode", SettingsManager.Instance.DefaultColorblindMode
+		);
+	}
 }
