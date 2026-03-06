@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://kbxecaogcu5g" path="res://scenes/controls_settings_interface/controls_settings_interface.tscn" id="5_fe1ki"]
 [ext_resource type="PackedScene" uid="uid://d0m7c4petdf5r" path="res://scenes/accessibility_settings_interface/accessibility_settings_interface.tscn" id="6_avr5g"]
 
-[node name="SettingsInterface" type="Control" unique_id=631919379 node_paths=PackedStringArray("_videoSettingsInterface", "_audioSettingsInterface", "_controlsSettingsInterface", "_accessibilitySettingsInterface", "_saveButton", "_returnButton")]
+[node name="SettingsInterface" type="Control" unique_id=631919379 node_paths=PackedStringArray("_videoSettingsInterface", "_audioSettingsInterface", "_controlsSettingsInterface", "_accessibilitySettingsInterface", "_returnButton", "_resetButton", "_saveButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,8 +20,9 @@ _videoSettingsInterface = NodePath("TabContainer/VideoSettingsTab/VideoSettingsI
 _audioSettingsInterface = NodePath("TabContainer/AudioSettingsTab/AudioSettingsInterface")
 _controlsSettingsInterface = NodePath("TabContainer/ControlsSettingsTab/ControlsSettingsInterface")
 _accessibilitySettingsInterface = NodePath("TabContainer/AccessibilitySettingsTab/AccessibilitySettingsInterface")
-_saveButton = NodePath("ButtonsContainer/SaveButton")
 _returnButton = NodePath("ButtonsContainer/ReturnButton")
+_resetButton = NodePath("ButtonsContainer/ResetButton")
+_saveButton = NodePath("ButtonsContainer/SaveButton")
 
 [node name="TabContainer" type="TabContainer" parent="." unique_id=1985958558]
 layout_mode = 1
@@ -90,6 +91,14 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 size_flags_stretch_ratio = 0.5
 text = "Return"
+
+[node name="ResetButton" type="Button" parent="ButtonsContainer" unique_id=421000015]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.5
+text = "Reset"
 
 [node name="SaveButton" type="Button" parent="ButtonsContainer" unique_id=1185654853]
 custom_minimum_size = Vector2(300, 0)
