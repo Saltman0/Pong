@@ -65,11 +65,11 @@ public partial class ControlsSettingsInterface : Control
 	
 	public void SaveControlsSettings()
 	{
-		SettingsManager.SaveValue("Controls", "move_up", SettingsManager.DefaultMoveUpP1InputEvent);
-		SettingsManager.SaveValue("Controls", "move_down", SettingsManager.DefaultMoveDownP1InputEvent);
-		SettingsManager.SaveValue("Controls", "move_up_2", SettingsManager.DefaultMoveUpP2InputEvent);
-		SettingsManager.SaveValue("Controls", "move_down_2", SettingsManager.DefaultMoveDownP2InputEvent);
+		SettingsManager.Instance.SaveValue("Controls", "move_up", SettingsManager.Instance.DefaultMoveUpP1InputEvent);
+		SettingsManager.Instance.SaveValue("Controls", "move_down", SettingsManager.Instance.DefaultMoveDownP1InputEvent);
+		SettingsManager.Instance.SaveValue("Controls", "move_up_2", SettingsManager.Instance.DefaultMoveUpP2InputEvent);
+		SettingsManager.Instance.SaveValue("Controls", "move_down_2", SettingsManager.Instance.DefaultMoveDownP2InputEvent);
 
-		SettingsManager.LoadControls();
+		SettingsManager.Instance.LoadControls();
 	}
 }

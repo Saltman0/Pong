@@ -27,7 +27,7 @@ public partial class SettingsInterface : Control
 		_videoSettingsInterface.SaveVideoSettings();
 		_audioSettingsInterface.SaveAudioSettings();
 		_controlsSettingsInterface.SaveControlsSettings();
-		_accessibilitySettingsInterface.UpdateAccessibilitySettings();
+		_accessibilitySettingsInterface.SaveAccessibilitySettings();
 	}
 	
 	private void OnReturnButtonPressed()

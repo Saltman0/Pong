@@ -43,14 +43,14 @@ public partial class VideoSettingsInterface : Control
 			_windowModeOptionButton, 
 			"Video", 
 			"WindowMode", 
-			(int) SettingsManager.DefaultWindowMode
+			(int) SettingsManager.Instance.DefaultWindowMode
 		);
 		
 		SelectOption(
 			_resolutionOptionButton, 
 			"Video", 
 			"Resolution", 
-			SettingsManager.GetMultiplierResolution()
+			SettingsManager.Instance.GetMultiplierResolution()
 		);
 		
 		SelectOption(
@@ -60,8 +60,8 @@ public partial class VideoSettingsInterface : Control
 			(int) DisplayServer.VSyncMode.Enabled
 		);
 		
-		int framerate = (int) SettingsManager.GetValue(
-			"Video", "Framerate", SettingsManager.DefaultFramerate
+		int framerate = (int) SettingsManager.Instance.GetValue(
+			"Video", "Framerate", SettingsManager.Instance.DefaultFramerate
 		);
 		_framerateSlider.Value = framerate;
 		_nbFpsLabel.Text = framerate.ToString();
@@ -78,12 +78,12 @@ public partial class VideoSettingsInterface : Control
 		int framerate = vSyncMode == DisplayServer.VSyncMode.Disabled ? (int) _framerateSlider.Value : 0;
 		Engine.SetMaxFps(framerate);
 		
-		SettingsManager.SaveValue("Video", "WindowMode", _windowModeOptionButton.GetSelectedId());
-		SettingsManager.SaveValue("Video", "Resolution", _resolutionOptionButton.GetSelectedId());
-		SettingsManager.SaveValue("Video", "Vsync", _vsyncOptionButton.GetSelectedId());
-		SettingsManager.SaveValue("Video", "Framerate", framerate);
+		SettingsManager.Instance.SaveValue("Video", "WindowMode", _windowModeOptionButton.GetSelectedId());
+		SettingsManager.Instance.SaveValue("Video", "Resolution", _resolutionOptionButton.GetSelectedId());
+		SettingsManager.Instance.SaveValue("Video", "Vsync", _vsyncOptionButton.GetSelectedId());
+		SettingsManager.Instance.SaveValue("Video", "Framerate", framerate);
 		
-		SettingsManager.LoadVideo();
+		SettingsManager.Instance.LoadVideo();
 	}
 	
 	private void SelectOption(OptionButton optionButton, string section, string key, int defaultValue)
@@ -91,7 +91,7 @@ public partial class VideoSettingsInterface : Control
 		for (int i = 0; i < optionButton.ItemCount; i++)
 		{
 			int itemId = optionButton.GetItemId(i);
-			if (itemId == (int) SettingsManager.GetValue(section, key, defaultValue))
+			if (itemId == (int) SettingsManager.Instance.GetValue(section, key, defaultValue))
 			{
 				optionButton.Selected = optionButton.GetItemIndex(itemId);
 			}

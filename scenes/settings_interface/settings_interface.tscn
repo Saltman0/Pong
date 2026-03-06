@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://kbxecaogcu5g" path="res://scenes/controls_settings_interface/controls_settings_interface.tscn" id="5_fe1ki"]
 [ext_resource type="PackedScene" uid="uid://d0m7c4petdf5r" path="res://scenes/accessibility_settings_interface/accessibility_settings_interface.tscn" id="6_avr5g"]
 
-[node name="SettingsInterface" type="Control" unique_id=631919379 node_paths=PackedStringArray("_videoSettingsInterface", "_audioSettingsInterface", "_controlsSettingsInterface", "_saveButton", "_returnButton")]
+[node name="SettingsInterface" type="Control" unique_id=631919379 node_paths=PackedStringArray("_videoSettingsInterface", "_audioSettingsInterface", "_controlsSettingsInterface", "_accessibilitySettingsInterface", "_saveButton", "_returnButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,6 +19,7 @@ script = ExtResource("2_3jmfp")
 _videoSettingsInterface = NodePath("TabContainer/VideoSettingsTab/VideoSettingsInterface")
 _audioSettingsInterface = NodePath("TabContainer/AudioSettingsTab/AudioSettingsInterface")
 _controlsSettingsInterface = NodePath("TabContainer/ControlsSettingsTab/ControlsSettingsInterface")
+_accessibilitySettingsInterface = NodePath("TabContainer/AccessibilitySettingsTab/AccessibilitySettingsInterface")
 _saveButton = NodePath("ButtonsContainer/SaveButton")
 _returnButton = NodePath("ButtonsContainer/ReturnButton")
 

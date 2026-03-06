@@ -7,34 +7,19 @@ public partial class AccessibilitySettingsInterface : Control
 	
 	public void UpdateAccessibilitySettings()
 	{
-		SelectOption(
-			_colorblindModeOptionButton, 
-			"Accessibility", 
-			"ColorblindMode", 
-			SettingsManager.DefaultColorblindMode
+		_colorblindModeOptionButton.Selected = (int) SettingsManager.Instance.GetValue(
+			"Accessibility", "ColorblindMode", SettingsManager.Instance.DefaultColorblindMode
 		);
 	}
 	
 	public void SaveAccessibilitySettings()
 	{
-		SettingsManager.SaveValue(
+		SettingsManager.Instance.SaveValue(
 			"Accessibility", 
 			"ColorblindMode", 
 			_colorblindModeOptionButton.GetSelectedId()
 		);
 		
-		SettingsManager.LoadAccessibility();
-	}
-	
-	private void SelectOption(OptionButton optionButton, string section, string key, int defaultValue)
-	{
-		for (int i = 0; i < optionButton.ItemCount; i++)
-		{
-			int itemId = optionButton.GetItemId(i);
-			if (itemId == (int) SettingsManager.GetValue(section, key, defaultValue))
-			{
-				optionButton.Selected = optionButton.GetItemIndex(itemId);
-			}
-		}
+		SettingsManager.Instance.LoadAccessibility();
 	}
 }
