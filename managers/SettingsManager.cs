@@ -129,7 +129,7 @@ public partial class SettingsManager : Node
         ConfigFile config = new ConfigFile();
         if (config.Load(SavePath) != Error.Ok || !config.HasSection("Accessibility")) return false;
 
-        GetNode<ColorblindCanvasLayer>("/root/ColorblindCanvasLayer").SetColorblindMode(
+        ColorblindCanvasLayer.Instance.SetColorblindMode(
             (int) config.GetValue("Accessibility", "ColorblindMode", DefaultColorblindMode)
         );
 
