@@ -141,6 +141,11 @@ expand_margin_top = 10.0
 expand_margin_right = 9.0
 expand_margin_bottom = 10.0
 
+[sub_resource type="DPITexture" id="DPITexture_nkonk"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\"><path fill=\"none\" stroke=\"#b2b2b2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-opacity=\".85\" stroke-width=\"2\" d=\"m2 4 4 4 4-4\"/></svg>
+"
+base_scale = 5.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1fv3y"]
 bg_color = Color(0, 0, 0, 1)
 border_width_left = 2
@@ -232,6 +237,7 @@ HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_ck2yl")
 HSlider/styles/slider = SubResource("StyleBoxFlat_k1vgm")
 LineEdit/font_sizes/font_size = 64
 OptionButton/font_sizes/font_size = 64
+OptionButton/icons/arrow = SubResource("DPITexture_nkonk")
 RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
 RichTextLabel/font_sizes/normal_font_size = 64
 TabContainer/constants/side_margin = 15
