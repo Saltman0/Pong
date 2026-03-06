@@ -34,10 +34,10 @@ public partial class SettingsInterface : Control
 	
 	private void OnResetButtonPressed()
 	{
-		/*_videoSettingsInterface.SaveVideoSettings();
-		_audioSettingsInterface.SaveAudioSettings();
-		_controlsSettingsInterface.SaveControlsSettings();
-		_accessibilitySettingsInterface.SaveAccessibilitySettings();*/
+		_videoSettingsInterface.ResetVideoSettings();
+		_audioSettingsInterface.ResetAudioSettings();
+		_controlsSettingsInterface.ResetControlsSettings();
+		_accessibilitySettingsInterface.ResetAccesibilitySettings();
 	}
 	
 	private void OnSaveButtonPressed()
