@@ -2,8 +2,14 @@
 
 [ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_6f88p"]
 [ext_resource type="Script" uid="uid://dhd61df57m1ng" path="res://scenes/main_menu_interface/MainMenuInterface.cs" id="1_a4xm4"]
+[ext_resource type="Shader" uid="uid://b54o6ofd57lhr" path="res://shaders/colorblind_shader.gdshader" id="1_ml8a6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2qali"]
+shader = ExtResource("1_ml8a6")
+shader_parameter/mode = 3
 
 [node name="MainMenuInterface" type="Control" unique_id=1026173754]
+material = SubResource("ShaderMaterial_2qali")
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
