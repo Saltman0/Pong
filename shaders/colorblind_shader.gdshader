@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform int mode : hint_range(0, 3) = 3; // 0: Normal, 1: Protanopia, 2: Deuteranopia, 3: Tritanopia
+uniform int mode : hint_range(0, 3) = 0; // 0: Normal, 1: Protanopia, 2: Deuteranopia, 3: Tritanopia
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
 void fragment() {
