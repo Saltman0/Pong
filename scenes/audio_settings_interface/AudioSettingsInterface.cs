@@ -25,4 +25,20 @@ public partial class AudioSettingsInterface : Control
 
 		SettingsManager.Instance.LoadAudio();
 	}
+	
+	public void ResetAudioSettings()
+	{
+		_masterSlider.Value = (float) SettingsManager.Instance.GetValue(
+			"Audio", "Master", SettingsManager.Instance.DefaultMasterVolume
+		);
+		_musicSlider.Value = (float) SettingsManager.Instance.GetValue(
+			"Audio", "Music", SettingsManager.Instance.DefaultMusicVolume
+		);
+		_sfxSlider.Value = (float) SettingsManager.Instance.GetValue(
+			"Audio", "SFX", SettingsManager.Instance.DefaultSfxVolume
+		);
+		_uiSlider.Value = (float) SettingsManager.Instance.GetValue(
+			"Audio", "UI", SettingsManager.Instance.DefaultUiVolume
+		);
+	}
 }
