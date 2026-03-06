@@ -88,9 +88,6 @@ public partial class SettingsManager : Node
         
         foreach (string video in config.GetSectionKeys("Video"))
         {
-            DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.MaximizeDisabled, false);
-            DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.ResizeDisabled, false);
-
             int value = (int)config.GetValue("Video", video);
             switch (video)
             {
@@ -108,9 +105,6 @@ public partial class SettingsManager : Node
                     break;
             }
         }
-        
-        DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.MaximizeDisabled, true);
-        DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.ResizeDisabled, true);
 
         return true;
     }
@@ -135,10 +129,7 @@ public partial class SettingsManager : Node
         ConfigFile config = new ConfigFile();
         if (config.Load(SavePath) != Error.Ok || !config.HasSection("Accessibility")) return false;
 
-        ShaderMaterial colorblindShaderMaterial = 
-            (ShaderMaterial) GetNode<ColorRect>("/root/Main/MainCanvasLayer/MainColorFilter").Material;
-        colorblindShaderMaterial.SetShaderParameter(
-            "mode", 
+        GetNode<ColorblindCanvasLayer>("/root/ColorblindCanvasLayer").SetColorblindMode(
             (int) config.GetValue("Accessibility", "ColorblindMode", DefaultColorblindMode)
         );
 
