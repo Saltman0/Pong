@@ -24,6 +24,7 @@ buses/default_bus_layout="uid://dqvk16l0f3nrv"
 SceneManager="*uid://doeg6vjy0npjf"
 SettingsManager="*uid://bh0ncaxvqsjvd"
 AudioManager="*uid://clx4hq37qa82s"
+ColorblindCanvasLayer="*uid://bq5kk6jj65sra"
 NetworkManager="*uid://lt8crsj7dic4"
 
 [debug]
