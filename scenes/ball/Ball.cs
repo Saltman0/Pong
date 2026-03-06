@@ -2,6 +2,7 @@ using Godot;
 
 public partial class Ball : CharacterBody2D
 {
+	[Export] private GpuParticles2D _gpuParticles2D;
 	[Export] private float _speed;
 	[Export] public Vector2 SyncPosition { get; set; }
 	[Export] public Vector2 SyncVelocity { get; set; }
@@ -28,6 +29,8 @@ public partial class Ball : CharacterBody2D
 				{
 					Velocity *= 1.05f;
 				}
+				
+				_gpuParticles2D.Emitting = true;
 			}
 
 			if (Multiplayer.HasMultiplayerPeer())

@@ -5,6 +5,28 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_oqv3d"]
 radius = 30.016663
 
+[sub_resource type="Gradient" id="Gradient_oqv3d"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nv6q1"]
+gradient = SubResource("Gradient_oqv3d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_stoaj"]
+emission_shape_scale = Vector3(30, 30, 30)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 1.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, 0, 0)
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = 199.99997
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 5.0
+color_ramp = SubResource("GradientTexture1D_nv6q1")
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oqv3d"]
 properties/0/path = NodePath(".:SyncPosition")
 properties/0/spawn = true
@@ -25,6 +47,14 @@ polygon = PackedVector2Array(26, -15, 29, -8, 30, 0, 29, 8, 26, 15, 23, 19, 21, 
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=8071062]
 shape = SubResource("CircleShape2D_oqv3d")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1152669683]
+emitting = false
+amount = 200
+lifetime = 0.09999999999999999
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_stoaj")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1332416832]
 replication_config = SubResource("SceneReplicationConfig_oqv3d")
