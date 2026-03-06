@@ -9,15 +9,15 @@ public partial class Main : Node
 	
 	public override void _Ready()
 	{
-		bool isVideoLoaded = SettingsManager.LoadVideo();
-		bool isAudioLoaded = SettingsManager.LoadAudio();
-		bool areControlsLoaded = SettingsManager.LoadControls();
-		bool isAccessibilityLoaded = SettingsManager.LoadAccessibility();
+		bool isVideoLoaded = SettingsManager.Instance.LoadVideo();
+		bool isAudioLoaded = SettingsManager.Instance.LoadAudio();
+		bool areControlsLoaded = SettingsManager.Instance.LoadControls();
+		bool isAccessibilityLoaded = SettingsManager.Instance.LoadAccessibility();
 		
-		if (!isVideoLoaded) { SettingsManager.SaveDefaultVideo(); }
-		if (!isAudioLoaded) { SettingsManager.SaveDefaultAudio(); }
-		if (!areControlsLoaded) { SettingsManager.SaveDefaultControls(); }
-		if (!isAccessibilityLoaded) { SettingsManager.SaveDefaultAccessibility(); }
+		if (!isVideoLoaded) { SettingsManager.Instance.SaveDefaultVideo(); }
+		if (!isAudioLoaded) { SettingsManager.Instance.SaveDefaultAudio(); }
+		if (!areControlsLoaded) { SettingsManager.Instance.SaveDefaultControls(); }
+		if (!isAccessibilityLoaded) { SettingsManager.Instance.SaveDefaultAccessibility(); }
 		
 		SceneManager.Instance.CurrentScene = GetNode<MainMenuInterface>("MainMenuInterface");
 
