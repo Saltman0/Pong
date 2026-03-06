@@ -21,9 +21,10 @@ buses/default_bus_layout="uid://dqvk16l0f3nrv"
 
 [autoload]
 
-NetworkManager="*uid://lt8crsj7dic4"
 SceneManager="*uid://doeg6vjy0npjf"
+SettingsManager="*uid://bh0ncaxvqsjvd"
 AudioManager="*uid://clx4hq37qa82s"
+NetworkManager="*uid://lt8crsj7dic4"
 
 [debug]
 
