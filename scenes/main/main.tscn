@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b738ccc8q2835" path="res://scenes/main/Main.cs" id="1_iuonh"]
 [ext_resource type="PackedScene" uid="uid://c2vydabr7qon4" path="res://scenes/main_menu_interface/main_menu_interface.tscn" id="2_k2fmo"]
+[ext_resource type="Shader" uid="uid://b54o6ofd57lhr" path="res://shaders/colorblind_shader.gdshader" id="3_k2fmo"]
 
 [sub_resource type="Environment" id="Environment_f1tf0"]
 background_mode = 3
@@ -9,10 +10,26 @@ glow_enabled = true
 glow_intensity = 3.0
 glow_bloom = 0.2
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l3cfh"]
+shader = ExtResource("3_k2fmo")
+shader_parameter/mode = 0
+
 [node name="Main" type="Node" unique_id=1273327175]
 script = ExtResource("1_iuonh")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1547483207]
 environment = SubResource("Environment_f1tf0")
+
+[node name="MainCanvasLayer" type="CanvasLayer" parent="." unique_id=1657972556]
+layer = 100
+
+[node name="MainColorFilter" type="ColorRect" parent="MainCanvasLayer" unique_id=788186569]
+material = SubResource("ShaderMaterial_l3cfh")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="MainMenuInterface" parent="." unique_id=1026173754 instance=ExtResource("2_k2fmo")]
