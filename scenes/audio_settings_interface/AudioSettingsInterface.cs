@@ -18,11 +18,11 @@ public partial class AudioSettingsInterface : Control
 	
 	public void SaveAudioSettings()
 	{
-		SettingsManager.SaveValue("Audio", "Master", (float)_masterSlider.Value);
-		SettingsManager.SaveValue("Audio", "Music", (float)_musicSlider.Value);
-		SettingsManager.SaveValue("Audio", "SFX", (float)_sfxSlider.Value);
-		SettingsManager.SaveValue("Audio", "UI", (float)_uiSlider.Value);
+		SettingsManager.Instance.SaveValue("Audio", "Master", (float)_masterSlider.Value);
+		SettingsManager.Instance.SaveValue("Audio", "Music", (float)_musicSlider.Value);
+		SettingsManager.Instance.SaveValue("Audio", "SFX", (float)_sfxSlider.Value);
+		SettingsManager.Instance.SaveValue("Audio", "UI", (float)_uiSlider.Value);
 
-		SettingsManager.LoadAudio();
+		SettingsManager.Instance.LoadAudio();
 	}
 }
