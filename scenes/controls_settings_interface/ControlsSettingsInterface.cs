@@ -65,10 +65,15 @@ public partial class ControlsSettingsInterface : Control
 	
 	public void SaveControlsSettings()
 	{
-		SettingsManager.Instance.SaveValue("Controls", "move_up", SettingsManager.Instance.DefaultMoveUpP1InputEvent);
-		SettingsManager.Instance.SaveValue("Controls", "move_down", SettingsManager.Instance.DefaultMoveDownP1InputEvent);
-		SettingsManager.Instance.SaveValue("Controls", "move_up_2", SettingsManager.Instance.DefaultMoveUpP2InputEvent);
-		SettingsManager.Instance.SaveValue("Controls", "move_down_2", SettingsManager.Instance.DefaultMoveDownP2InputEvent);
+		InputEvent moveUpP1InputEvent = InputMap.ActionGetEvents("move_up").First();
+		InputEvent moveDownP1InputEvent = InputMap.ActionGetEvents("move_down").First();
+		InputEvent moveUpP2InputEvent = InputMap.ActionGetEvents("move_up_2").First();
+		InputEvent moveDownP2InputEvent = InputMap.ActionGetEvents("move_down_2").First();
+		
+		SettingsManager.Instance.SaveValue("Controls", "move_up", moveUpP1InputEvent);
+		SettingsManager.Instance.SaveValue("Controls", "move_down", moveDownP1InputEvent);
+		SettingsManager.Instance.SaveValue("Controls", "move_up_2", moveUpP2InputEvent);
+		SettingsManager.Instance.SaveValue("Controls", "move_down_2", moveDownP2InputEvent);
 
 		SettingsManager.Instance.LoadControls();
 	}

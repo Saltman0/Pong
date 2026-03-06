@@ -51,7 +51,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.75
 text = "Move up :"
 
-[node name="MoveUpP1Button" type="Button" parent="ControlsContainer/MoveUpP1Container" unique_id=895744398 groups=["ControlsButtons"]]
+[node name="MoveUpP1Button" type="Button" parent="ControlsContainer/MoveUpP1Container" unique_id=895744398]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
@@ -68,7 +68,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.75
 text = "Move down :"
 
-[node name="MoveDownP1Button" type="Button" parent="ControlsContainer/MoveDownP1Container" unique_id=242450768 groups=["ControlsButtons"]]
+[node name="MoveDownP1Button" type="Button" parent="ControlsContainer/MoveDownP1Container" unique_id=242450768]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
@@ -93,7 +93,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.75
 text = "Move up :"
 
-[node name="MoveUpP2Button" type="Button" parent="ControlsContainer/MoveUpP2Container" unique_id=1850410749 groups=["ControlsButtons"]]
+[node name="MoveUpP2Button" type="Button" parent="ControlsContainer/MoveUpP2Container" unique_id=1850410749]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
@@ -110,7 +110,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.75
 text = "Move down :"
 
-[node name="MoveDownP2Button" type="Button" parent="ControlsContainer/MoveDownP2Container" unique_id=890883311 groups=["ControlsButtons"]]
+[node name="MoveDownP2Button" type="Button" parent="ControlsContainer/MoveDownP2Container" unique_id=890883311]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
