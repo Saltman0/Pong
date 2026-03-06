@@ -83,22 +83,18 @@ public partial class VideoSettingsInterface : Control
 	
 	public void ResetVideoSettings()
 	{
-		/*SettingsManager.Instance.LoadVideo();
-		DisplayServer.WindowSetMode((DisplayServer.WindowMode)_windowModeOptionButton.GetSelectedId());
-		DisplayServer.WindowSetSize(new Vector2I(640, 360) * _resolutionOptionButton.GetSelectedId());
-		
-		DisplayServer.VSyncMode vSyncMode = (DisplayServer.VSyncMode) _vsyncOptionButton.GetSelectedId();
-		DisplayServer.WindowSetVsyncMode(vSyncMode);
-		
-		int framerate = vSyncMode == DisplayServer.VSyncMode.Disabled ? (int) _framerateSlider.Value : 0;
-		Engine.SetMaxFps(framerate);
-		
-		SettingsManager.Instance.SaveValue("Video", "WindowMode", _windowModeOptionButton.GetSelectedId());
-		SettingsManager.Instance.SaveValue("Video", "Resolution", _resolutionOptionButton.GetSelectedId());
-		SettingsManager.Instance.SaveValue("Video", "Vsync", _vsyncOptionButton.GetSelectedId());
-		SettingsManager.Instance.SaveValue("Video", "Framerate", framerate);
-		
-		SettingsManager.Instance.LoadVideo();*/
+		_windowModeOptionButton.Selected = (int) SettingsManager.Instance.GetValue(
+			"Video", "WindowMode", (int) SettingsManager.Instance.DefaultWindowMode
+		);
+		_resolutionOptionButton.Selected = (int) SettingsManager.Instance.GetValue(
+			"Video", "Resolution", SettingsManager.Instance.GetMultiplierResolution()
+		);
+		_vsyncOptionButton.Selected = (int) SettingsManager.Instance.GetValue(
+			"Video", "Vsync", (int) SettingsManager.Instance.DefaultVsync
+		);
+		_framerateSlider.Value = (int) SettingsManager.Instance.GetValue(
+			"Video", "Framerate", SettingsManager.Instance.DefaultFramerate
+		);
 	}
 	
 	private void SelectOption(OptionButton optionButton, string section, string key, int defaultValue)
