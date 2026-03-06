@@ -69,6 +69,21 @@ public partial class VideoSettingsInterface : Control
 	
 	public void SaveVideoSettings()
 	{
+		DisplayServer.VSyncMode vSyncMode = (DisplayServer.VSyncMode) _vsyncOptionButton.GetSelectedId();
+		
+		int framerate = vSyncMode == DisplayServer.VSyncMode.Disabled ? (int) _framerateSlider.Value : 0;
+		
+		SettingsManager.Instance.SaveValue("Video", "WindowMode", _windowModeOptionButton.GetSelectedId());
+		SettingsManager.Instance.SaveValue("Video", "Resolution", _resolutionOptionButton.GetSelectedId());
+		SettingsManager.Instance.SaveValue("Video", "Vsync", (int) vSyncMode);
+		SettingsManager.Instance.SaveValue("Video", "Framerate", framerate);
+		
+		SettingsManager.Instance.LoadVideo();
+	}
+	
+	public void ResetVideoSettings()
+	{
+		/*SettingsManager.Instance.LoadVideo();
 		DisplayServer.WindowSetMode((DisplayServer.WindowMode)_windowModeOptionButton.GetSelectedId());
 		DisplayServer.WindowSetSize(new Vector2I(640, 360) * _resolutionOptionButton.GetSelectedId());
 		
@@ -83,7 +98,7 @@ public partial class VideoSettingsInterface : Control
 		SettingsManager.Instance.SaveValue("Video", "Vsync", _vsyncOptionButton.GetSelectedId());
 		SettingsManager.Instance.SaveValue("Video", "Framerate", framerate);
 		
-		SettingsManager.Instance.LoadVideo();
+		SettingsManager.Instance.LoadVideo();*/
 	}
 	
 	private void SelectOption(OptionButton optionButton, string section, string key, int defaultValue)
