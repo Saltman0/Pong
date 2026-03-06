@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_yardr"]
 [ext_resource type="Script" uid="uid://cohs2bu5pxxjq" path="res://scenes/accessibility_settings_interface/AccessibilitySettingsInterface.cs" id="2_jiydi"]
 
-[node name="AccessibilitySettingsInterface" type="Control" unique_id=1289949875]
+[node name="AccessibilitySettingsInterface" type="Control" unique_id=1289949875 node_paths=PackedStringArray("_colorblindModeOptionButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_yardr")
 script = ExtResource("2_jiydi")
+_colorblindModeOptionButton = NodePath("AccessibilityContainer/ColorblindModeContainer/ColorblindModeOptionButton")
 
 [node name="AccessibilityContainer" type="VBoxContainer" parent="." unique_id=1975133430]
 layout_mode = 1
@@ -40,6 +41,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
+selected = 0
 item_count = 4
 popup/item_0/text = "Normal"
 popup/item_0/id = 0

@@ -3,33 +3,40 @@ using Godot;
 
 namespace Pong.managers;
 
-public static class SettingsManager
+public partial class SettingsManager : Node
 {
     /** Default path **/
     private const string SavePath = "user://settings.cfg";
 
     /** Default video values **/
-    public static readonly DisplayServer.WindowMode DefaultWindowMode = DisplayServer.WindowMode.ExclusiveFullscreen;
-    public static readonly DisplayServer.VSyncMode DefaultVsync = DisplayServer.VSyncMode.Enabled;
-    public static readonly int DefaultFramerate = 0;
-    public static readonly Vector2I DefaultResolution = new Vector2I(640, 360);
+    public readonly DisplayServer.WindowMode DefaultWindowMode = DisplayServer.WindowMode.ExclusiveFullscreen;
+    public readonly DisplayServer.VSyncMode DefaultVsync = DisplayServer.VSyncMode.Enabled;
+    public readonly int DefaultFramerate = 0;
+    public readonly Vector2I DefaultResolution = new Vector2I(640, 360);
     
     /** Default audio values **/
-    public static readonly float DefaultMasterVolume = 1.0f;
-    public static readonly float DefaultMusicVolume = 1.0f;
-    public static readonly float DefaultSfxVolume = 1.0f;
-    public static readonly float DefaultUiVolume = 1.0f;
+    public readonly float DefaultMasterVolume = 1.0f;
+    public readonly float DefaultMusicVolume = 1.0f;
+    public readonly float DefaultSfxVolume = 1.0f;
+    public readonly float DefaultUiVolume = 1.0f;
     
     /** Default control values **/
-    public static readonly InputEvent DefaultMoveUpP1InputEvent = InputMap.ActionGetEvents("move_up").First();
-    public static readonly InputEvent DefaultMoveDownP1InputEvent = InputMap.ActionGetEvents("move_down").First();
-    public static readonly InputEvent DefaultMoveUpP2InputEvent = InputMap.ActionGetEvents("move_up_2").First();
-    public static readonly InputEvent DefaultMoveDownP2InputEvent = InputMap.ActionGetEvents("move_down_2").First();
+    public readonly InputEvent DefaultMoveUpP1InputEvent = InputMap.ActionGetEvents("move_up").First();
+    public readonly InputEvent DefaultMoveDownP1InputEvent = InputMap.ActionGetEvents("move_down").First();
+    public readonly InputEvent DefaultMoveUpP2InputEvent = InputMap.ActionGetEvents("move_up_2").First();
+    public readonly InputEvent DefaultMoveDownP2InputEvent = InputMap.ActionGetEvents("move_down_2").First();
     
     /** Default accessibility values **/
-    public static readonly int DefaultColorblindMode = 0;
+    public readonly int DefaultColorblindMode = 0;
     
-    public static bool LoadControls()
+    public static SettingsManager Instance { get; private set; }
+	
+    public override void _Ready()
+    {
+        Instance = this;
+    }
+    
+    public bool LoadControls()
     {
         ConfigFile config = new ConfigFile();
         if (config.Load(SavePath) != Error.Ok || !config.HasSection("Controls")) return false;
@@ -44,7 +51,7 @@ public static class SettingsManager
         return true;
     }
     
-    public static void SaveDefaultControls()
+    public void SaveDefaultControls()
     {
         SaveValue("Controls", "move_up", DefaultMoveUpP1InputEvent);
         SaveValue("Controls", "move_down", DefaultMoveDownP1InputEvent);
@@ -52,7 +59,7 @@ public static class SettingsManager
         SaveValue("Controls", "move_down_2", DefaultMoveDownP2InputEvent);
     }
     
-    public static bool LoadAudio()
+    public bool LoadAudio()
     {
         ConfigFile config = new ConfigFile();
         if (config.Load(SavePath) != Error.Ok || !config.HasSection("Audio")) return false;
@@ -66,7 +73,7 @@ public static class SettingsManager
         return true;
     }
     
-    public static void SaveDefaultAudio()
+    public void SaveDefaultAudio()
     {
         SaveValue("Audio", "Master", DefaultMasterVolume);
         SaveValue("Audio", "Music", DefaultMusicVolume);
@@ -74,7 +81,7 @@ public static class SettingsManager
         SaveValue("Audio", "UI", DefaultUiVolume);
     }
     
-    public static bool LoadVideo()
+    public bool LoadVideo()
     {
         ConfigFile config = new ConfigFile();
         if (config.Load(SavePath) != Error.Ok || !config.HasSection("Video")) return false;
@@ -108,14 +115,14 @@ public static class SettingsManager
         return true;
     }
 
-    public static int GetMultiplierResolution()
+    public int GetMultiplierResolution()
     {
         Vector2I screenSize = DisplayServer.ScreenGetSize(DisplayServer.WindowGetCurrentScreen());
         
         return screenSize.X / DefaultResolution.X;
     }
     
-    public static void SaveDefaultVideo()
+    public void SaveDefaultVideo()
     {
         SaveValue("Video", "WindowMode", (int) DefaultWindowMode);
         SaveValue("Video", "Resolution", GetMultiplierResolution());
@@ -123,23 +130,27 @@ public static class SettingsManager
         SaveValue("Video", "Framerate", DefaultFramerate);
     }
     
-    public static bool LoadAccessibility()
+    public bool LoadAccessibility()
     {
         ConfigFile config = new ConfigFile();
         if (config.Load(SavePath) != Error.Ok || !config.HasSection("Accessibility")) return false;
-		
-        int colorblindMode = (int) config.GetValue("Accessibility", "ColorblindMode");
-        // TODO Apply Shader with the colorblindMode variable
+
+        ShaderMaterial colorblindShaderMaterial = 
+            (ShaderMaterial) GetNode<ColorRect>("/root/Main/MainCanvasLayer/MainColorFilter").Material;
+        colorblindShaderMaterial.SetShaderParameter(
+            "mode", 
+            (int) config.GetValue("Accessibility", "ColorblindMode", DefaultColorblindMode)
+        );
 
         return true;
     }
     
-    public static void SaveDefaultAccessibility()
+    public void SaveDefaultAccessibility()
     {
         SaveValue("Accessibility", "ColorblindMode", DefaultColorblindMode);
     }
 
-    public static void SaveValue(string section, string key, Variant value)
+    public void SaveValue(string section, string key, Variant value)
     {
         ConfigFile config = new ConfigFile();
         config.Load(SavePath);
@@ -147,7 +158,7 @@ public static class SettingsManager
         config.Save(SavePath);
     }
     
-    public static Variant GetValue(string section, string key, Variant defaultValue)
+    public Variant GetValue(string section, string key, Variant defaultValue)
     {
         ConfigFile config = new ConfigFile();
         if (config.Load(SavePath) != Error.Ok || !config.HasSection(section)) return defaultValue;
