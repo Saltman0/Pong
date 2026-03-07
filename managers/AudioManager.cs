@@ -27,11 +27,11 @@ public partial class AudioManager : Node
 	public void PlaySfx(AudioStream sfxAudioStream)
 	{
 		AudioStreamPlayer audioStreamPlayer = new AudioStreamPlayer();
-		audioStreamPlayer.Name = "SfxPlayer";
-		audioStreamPlayer.Bus = "SFX";
 		audioStreamPlayer.Stream = sfxAudioStream;
-		AddChild(audioStreamPlayer);
+		audioStreamPlayer.Bus = "SFX";
+		audioStreamPlayer.Finished += () => QueueFree();
 		
+		AddChild(audioStreamPlayer);
 		audioStreamPlayer.Play();
 	}
 }
