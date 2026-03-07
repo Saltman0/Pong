@@ -78,7 +78,7 @@ public partial class VideoSettingsInterface : Control
 		SettingsManager.Instance.SaveValue("Video", "Vsync", (int) vSyncMode);
 		SettingsManager.Instance.SaveValue("Video", "Framerate", framerate);
 		
-		SettingsManager.Instance.LoadVideo();*/
+		SettingsManager.Instance.LoadVideo();
 	}
 	
 	public void ResetVideoSettings()
