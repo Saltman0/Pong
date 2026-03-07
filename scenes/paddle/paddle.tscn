@@ -2,6 +2,29 @@
 
 [ext_resource type="Script" uid="uid://ufi3ry3wq2y8" path="res://scenes/paddle/Paddle.cs" id="1_q5rgx"]
 [ext_resource type="Texture2D" uid="uid://bpa7x5fj10t8c" path="res://assets/Paddle.png" id="2_2sa55"]
+[ext_resource type="Texture2D" uid="uid://4ta1nfmy5gu3" path="res://assets/Ball.png" id="3_gboxc"]
+
+[sub_resource type="Gradient" id="Gradient_ptpmo"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1s5c6"]
+gradient = SubResource("Gradient_ptpmo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h5gnb"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(20, 100, 0)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 1.0
+emission_ring_cone_angle = 90.0
+radial_velocity_min = 9.999977
+radial_velocity_max = 9.999977
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.099999994
+color_ramp = SubResource("GradientTexture1D_1s5c6")
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_q5rgx"]
 properties/0/path = NodePath(".:Id")
@@ -11,11 +34,12 @@ properties/1/path = NodePath(".:SyncPosition")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Paddle" type="CharacterBody2D" unique_id=331370048]
+[node name="Paddle" type="CharacterBody2D" unique_id=331370048 node_paths=PackedStringArray("_gpuParticles2D")]
 collision_mask = 10
 motion_mode = 1
 script = ExtResource("1_q5rgx")
 Speed = 1000.0
+_gpuParticles2D = NodePath("GPUParticles2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1535184249]
 position = Vector2(-1.9073486e-06, 7.6293945e-06)
@@ -26,6 +50,17 @@ texture = ExtResource("2_2sa55")
 position = Vector2(-0.006950468, -0.008749604)
 scale = Vector2(0.50694436, 0.50875604)
 polygon = PackedVector2Array(0, -206, 5, -205, 8, -203, 11, -200, 14, -196, 18, -190, 21, -183, 24, -174, 26, -168, 29, -158, 31, -150, 33, -142, 35, -131, 36, -122, 38, -114, 40, -97, 42, -78, 43, -67, 44, -50, 45, -35, 46, 0, 45, 32, 44, 56, 43, 70, 42, 83, 41, 94, 39, 108, 37, 124, 35, 134, 33, 144, 31, 153, 29, 161, 26, 171, 23, 180, 20, 187, 17, 193, 13, 200, 10, 203, 7, 206, 4, 207, 2, 208, 0, 208, -3, 207, -6, 205, -9, 203, -11, 200, -14, 196, -16, 192, -18, 188, -20, 184, -22, 179, -24, 173, -26, 166, -28, 159, -29, 155, -30, 151, -31, 146, -32, 142, -33, 137, -34, 131, -35, 124, -36, 119, -37, 109, -38, 103, -39, 94, -40, 83, -41, 76, -42, 62, -43, 41, -44, 0, -43, -39, -42, -61, -40, -81, -38, -101, -37, -110, -35, -122, -33, -135, -31, -144, -28, -157, -25, -168, -22, -176, -20, -182, -17, -189, -14, -194, -11, -198, -7, -203, -3, -205)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1608529906]
+emitting = false
+amount = 200
+texture = ExtResource("3_gboxc")
+lifetime = 0.5
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_h5gnb")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1282578364]
 replication_config = SubResource("SceneReplicationConfig_q5rgx")

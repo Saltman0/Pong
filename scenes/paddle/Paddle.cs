@@ -11,6 +11,7 @@ public partial class Paddle : CharacterBody2D
 	[Export] public Color Color = Colors.White;
 	[Export] public long Id { get; set; }
 	[Export] public Ball TrackedBall;
+	[Export] private GpuParticles2D _gpuParticles2D;
 	
 	public override void _Ready()
 	{
@@ -86,5 +87,12 @@ public partial class Paddle : CharacterBody2D
 		float deadzone = 5.0f;
 
 		return Math.Abs(diff) > deadzone ? Math.Sign(diff) : 0.0f;
+	}
+
+	public void EmitParticles()
+	{
+		ParticleProcessMaterial particleProcessMaterial = (ParticleProcessMaterial)_gpuParticles2D.ProcessMaterial;
+		particleProcessMaterial.Color = Color;
+		_gpuParticles2D.Emitting = true;
 	}
 }
