@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bq5kk6jj65sra"]
+
+[ext_resource type="Script" uid="uid://i1y1nx6vegmx" path="res://scenes/colorblind_canvas_layer/ColorblindCanvasLayer.cs" id="1_jgvoo"]
+[ext_resource type="Shader" uid="uid://b54o6ofd57lhr" path="res://shaders/colorblind_shader.gdshader" id="1_tnm7t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jgvoo"]
+shader = ExtResource("1_tnm7t")
+shader_parameter/mode = 0
+
+[node name="ColorblindCanvasLayer" type="CanvasLayer" unique_id=641122376 node_paths=PackedStringArray("_colorblindColorRect")]
+script = ExtResource("1_jgvoo")
+_colorblindColorRect = NodePath("ColorblindColorRect")
+
+[node name="ColorblindColorRect" type="ColorRect" parent="." unique_id=1879419041]
+material = SubResource("ShaderMaterial_jgvoo")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

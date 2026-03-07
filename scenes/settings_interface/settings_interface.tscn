@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://d1yos2bfqfga8"]
+
+[ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_3jmfp"]
+[ext_resource type="Script" uid="uid://boy8ofs1mx4gr" path="res://scenes/settings_interface/SettingsInterface.cs" id="2_3jmfp"]
+[ext_resource type="PackedScene" uid="uid://o2e40cgd6dhp" path="res://scenes/video_settings_interface/video_settings_interface.tscn" id="3_0drv3"]
+[ext_resource type="PackedScene" uid="uid://vgroqw35wsdv" path="res://scenes/audio_settings_interface/audio_settings_interface.tscn" id="4_7xqc8"]
+[ext_resource type="PackedScene" uid="uid://kbxecaogcu5g" path="res://scenes/controls_settings_interface/controls_settings_interface.tscn" id="5_fe1ki"]
+[ext_resource type="PackedScene" uid="uid://d0m7c4petdf5r" path="res://scenes/accessibility_settings_interface/accessibility_settings_interface.tscn" id="6_avr5g"]
+
+[node name="SettingsInterface" type="Control" unique_id=631919379 node_paths=PackedStringArray("_videoSettingsInterface", "_audioSettingsInterface", "_controlsSettingsInterface", "_accessibilitySettingsInterface", "_returnButton", "_resetButton", "_saveButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_3jmfp")
+script = ExtResource("2_3jmfp")
+_videoSettingsInterface = NodePath("TabContainer/VideoSettingsTab/VideoSettingsInterface")
+_audioSettingsInterface = NodePath("TabContainer/AudioSettingsTab/AudioSettingsInterface")
+_controlsSettingsInterface = NodePath("TabContainer/ControlsSettingsTab/ControlsSettingsInterface")
+_accessibilitySettingsInterface = NodePath("TabContainer/AccessibilitySettingsTab/AccessibilitySettingsInterface")
+_returnButton = NodePath("ButtonsContainer/ReturnButton")
+_resetButton = NodePath("ButtonsContainer/ResetButton")
+_saveButton = NodePath("ButtonsContainer/SaveButton")
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=1985958558]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.015625
+anchor_top = 0.027777778
+anchor_right = 0.984375
+anchor_bottom = 0.9722222
+current_tab = 0
+tab_0/title = "Video"
+tab_1/title = "Audio"
+tab_2/title = "Controls"
+tab_3/title = "Accessibility"
+metadata/_edit_use_anchors_ = true
+
+[node name="VideoSettingsTab" type="TabBar" parent="TabContainer" unique_id=454353036]
+layout_mode = 2
+metadata/_tab_index = 0
+metadata/_tab_name = "Video"
+
+[node name="VideoSettingsInterface" parent="TabContainer/VideoSettingsTab" unique_id=474966587 instance=ExtResource("3_0drv3")]
+layout_mode = 1
+
+[node name="AudioSettingsTab" type="TabBar" parent="TabContainer" unique_id=1488762605]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+metadata/_tab_name = "Audio"
+
+[node name="AudioSettingsInterface" parent="TabContainer/AudioSettingsTab" unique_id=320330585 instance=ExtResource("4_7xqc8")]
+layout_mode = 1
+
+[node name="ControlsSettingsTab" type="TabBar" parent="TabContainer" unique_id=1904687965]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+metadata/_tab_name = "Controls"
+
+[node name="ControlsSettingsInterface" parent="TabContainer/ControlsSettingsTab" unique_id=1643221142 instance=ExtResource("5_fe1ki")]
+layout_mode = 1
+offset_bottom = -446.0
+
+[node name="AccessibilitySettingsTab" type="TabBar" parent="TabContainer" unique_id=28921559]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+metadata/_tab_name = "Accessibility"
+
+[node name="AccessibilitySettingsInterface" parent="TabContainer/AccessibilitySettingsTab" unique_id=1289949875 instance=ExtResource("6_avr5g")]
+layout_mode = 1
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="." unique_id=664791715]
+layout_mode = 0
+anchor_left = 0.04375
+anchor_top = 0.8902778
+anchor_right = 0.95039064
+anchor_bottom = 0.95416665
+size_flags_vertical = 10
+size_flags_stretch_ratio = 0.1
+metadata/_edit_use_anchors_ = true
+
+[node name="ReturnButton" type="Button" parent="ButtonsContainer" unique_id=236398393]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.5
+text = "Return"
+
+[node name="ResetButton" type="Button" parent="ButtonsContainer" unique_id=421000015]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.5
+text = "Reset"
+
+[node name="SaveButton" type="Button" parent="ButtonsContainer" unique_id=1185654853]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.5
+text = "Save"

@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://d0m7c4petdf5r"]
+
+[ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_yardr"]
+[ext_resource type="Script" uid="uid://cohs2bu5pxxjq" path="res://scenes/accessibility_settings_interface/AccessibilitySettingsInterface.cs" id="2_jiydi"]
+
+[node name="AccessibilitySettingsInterface" type="Control" unique_id=1289949875 node_paths=PackedStringArray("_colorblindModeOptionButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yardr")
+script = ExtResource("2_jiydi")
+_colorblindModeOptionButton = NodePath("AccessibilityContainer/ColorblindModeContainer/ColorblindModeOptionButton")
+
+[node name="AccessibilityContainer" type="VBoxContainer" parent="." unique_id=1975133430]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0125
+anchor_top = 0.022222223
+anchor_right = 0.9875
+anchor_bottom = 0.9777778
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorblindModeContainer" type="HBoxContainer" parent="AccessibilityContainer" unique_id=832551413]
+layout_mode = 2
+size_flags_stretch_ratio = 0.25
+
+[node name="ColorblindModeLabel" type="RichTextLabel" parent="AccessibilityContainer/ColorblindModeContainer" unique_id=351412631]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "Colorblind mode :"
+vertical_alignment = 1
+
+[node name="ColorblindModeOptionButton" type="OptionButton" parent="AccessibilityContainer/ColorblindModeContainer" unique_id=1673590886]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+selected = 0
+item_count = 4
+popup/item_0/text = "Normal"
+popup/item_0/id = 0
+popup/item_1/text = "Protanopia"
+popup/item_1/id = 1
+popup/item_2/text = "Deuteranopia"
+popup/item_2/id = 2
+popup/item_3/text = "Tritanopia"
+popup/item_3/id = 3

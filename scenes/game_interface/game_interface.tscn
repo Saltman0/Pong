@@ -26,8 +26,8 @@ _gameOverReturnToMainMenuButton = NodePath("GameOverContainer/ReturnToMainMenuBu
 
 [node name="HeaderContainer" type="MarginContainer" parent="." unique_id=275743190]
 layout_mode = 0
-offset_right = 1366.0
-offset_bottom = 40.0
+offset_right = 2560.0
+offset_bottom = 89.0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_right = 10
 
@@ -65,14 +65,14 @@ vertical_alignment = 1
 visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.38000003
-anchor_top = 0.284
-anchor_right = 0.62
-anchor_bottom = 0.716
-offset_left = -0.08001709
-offset_top = -0.11199951
-offset_right = 0.08001709
-offset_bottom = 0.11199951
+anchor_left = 0.23600002
+anchor_top = 0.117000006
+anchor_right = 0.76400006
+anchor_bottom = 0.883
+offset_left = -0.040008545
+offset_top = -0.11998749
+offset_right = 0.039978027
+offset_bottom = 0.11999512
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -107,14 +107,14 @@ text = "Return to main menu"
 visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.38000003
-anchor_top = 0.284
-anchor_right = 0.62
-anchor_bottom = 0.716
-offset_left = -0.08001709
-offset_top = -0.11199951
-offset_right = 0.08001709
-offset_bottom = 0.11199951
+anchor_left = 0.23600002
+anchor_top = 0.117000006
+anchor_right = 0.76400006
+anchor_bottom = 0.883
+offset_left = -0.040008545
+offset_top = -0.11998749
+offset_right = 0.039978027
+offset_bottom = 0.11999512
 grow_horizontal = 2
 grow_vertical = 2
 

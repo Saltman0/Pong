@@ -1,4 +1,5 @@
 using Godot;
+using Pong.managers;
 
 public partial class MainMenuInterface : Control
 {
@@ -24,7 +25,10 @@ public partial class MainMenuInterface : Control
 		};
 		mainContainer.GetNode<Button>("SettingsButton").Pressed += () =>
 		{
-			GD.Print("Settings button pressed !");
+			SceneManager.Instance.SwitchScene(
+				GD.Load<PackedScene>("res://scenes/settings_interface/settings_interface.tscn")
+					.Instantiate<SettingsInterface>()
+			);
 		};
 		mainContainer.GetNode<Button>("QuitButton").Pressed += () => { GetTree().Quit(); };
 	}
