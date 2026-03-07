@@ -125,9 +125,9 @@ public partial class Game : Node
 				winner = "none";
 			}
 			_gameInterface.DisplayGameOverContainer(winner);
-		} else {
-			_gameInterface.UpdateTimeLeft(_timeLeft);
 		}
+		
+		_gameInterface.UpdateTimeLeft(_timeLeft);
 	}
 	
 	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
