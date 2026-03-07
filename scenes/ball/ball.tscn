@@ -1,9 +1,22 @@
 [gd_scene format=3 uid="uid://db27khuarbhe8"]
 
 [ext_resource type="Script" uid="uid://c887n7426p6k3" path="res://scenes/ball/Ball.cs" id="1_oqv3d"]
+[ext_resource type="Texture2D" uid="uid://4ta1nfmy5gu3" path="res://assets/Ball.png" id="2_stoaj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oqv3d"]
-radius = 30.016663
+radius = 27.0
+
+[sub_resource type="Gradient" id="Gradient_nv6q1"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_stoaj"]
+gradient = SubResource("Gradient_nv6q1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jbgth"]
+gravity = Vector3(0, 0, 0)
+scale_min = 0.19999999
+scale_max = 0.19999999
+color_ramp = SubResource("GradientTexture1D_stoaj")
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oqv3d"]
 properties/0/path = NodePath(".:SyncPosition")
@@ -13,18 +26,25 @@ properties/1/path = NodePath(".:SyncVelocity")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Ball" type="CharacterBody2D" unique_id=683535454 node_paths=PackedStringArray("_gpuParticles2D")]
+[node name="Ball" type="CharacterBody2D" unique_id=683535454]
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_oqv3d")
-_gpuParticles2D = NodePath("")
 _speed = 1000.0
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=2033077120]
-polygon = PackedVector2Array(26, -15, 29, -8, 30, 0, 29, 8, 26, 15, 23, 19, 21, 21, 15, 26, 8, 29, 0, 30, -8, 29, -15, 26, -20, 22, -22, 20, -26, 15, -29, 8, -30, 0, -29, -8, -26, -15, -21, -21, -19, -23, -15, -26, -8, -29, 0, -30, 8, -29, 15, -26, 20, -22, 22, -20)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1246215927]
+scale = Vector2(0.28426397, 0.2842639)
+texture = ExtResource("2_stoaj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=8071062]
 shape = SubResource("CircleShape2D_oqv3d")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=661250371]
+amount = 20
+texture = ExtResource("2_stoaj")
+lifetime = 0.2
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_jbgth")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1332416832]
 replication_config = SubResource("SceneReplicationConfig_oqv3d")

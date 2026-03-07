@@ -28,6 +28,9 @@ public partial class Ball : CharacterBody2D
 				if (collision.GetCollider() is Paddle)
 				{
 					Velocity *= 1.05f;
+					
+					Paddle paddleCollided = (Paddle) collision.GetCollider();
+					paddleCollided.EmitParticles();
 				}
 				AudioManager.Instance.PlaySfx(GD.Load<AudioStreamWav>("res://assets/audio/Collision.wav"));
 				AudioManager.MusicStreamPlayer.PitchScale += 0.01f;
