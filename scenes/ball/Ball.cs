@@ -1,4 +1,5 @@
 using Godot;
+using Pong.managers;
 
 public partial class Ball : CharacterBody2D
 {
@@ -28,6 +29,8 @@ public partial class Ball : CharacterBody2D
 				{
 					Velocity *= 1.05f;
 				}
+				AudioManager.Instance.PlaySfx(GD.Load<AudioStreamWav>("res://assets/audio/Collision.wav"));
+				AudioManager.MusicStreamPlayer.PitchScale += 0.01f;
 			}
 
 			if (Multiplayer.HasMultiplayerPeer())
