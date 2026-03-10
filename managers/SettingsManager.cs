@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
@@ -7,6 +8,10 @@ public partial class SettingsManager : Node
 {
     /** Default path **/
     private const string SavePath = "user://settings.cfg";
+
+    /** Default general values **/
+    public readonly Dictionary<int, string> LanguagesDictionary = new Dictionary<int, string>();
+    public readonly int DefaultLanguage = 0;
 
     /** Default video values **/
     public readonly DisplayServer.WindowMode DefaultWindowMode = DisplayServer.WindowMode.ExclusiveFullscreen;
@@ -33,7 +38,26 @@ public partial class SettingsManager : Node
 	
     public override void _Ready()
     {
+        LanguagesDictionary.Add(0, "en");
+        LanguagesDictionary.Add(1, "fr");
+        LanguagesDictionary.Add(2, "es");
         Instance = this;
+    }
+    
+    public bool LoadGeneral()
+    {
+        ConfigFile config = new ConfigFile();
+        if (config.Load(SavePath) != Error.Ok || !config.HasSection("General")) return false;
+        
+        int selectedLanguage = (int) config.GetValue("General", "Language", DefaultLanguage);
+        TranslationServer.SetLocale(LanguagesDictionary[selectedLanguage]);
+
+        return true;
+    }
+    
+    public void SaveDefaultGeneral()
+    {
+        SaveValue("General", "Language", DefaultLanguage);
     }
     
     public bool LoadControls()
