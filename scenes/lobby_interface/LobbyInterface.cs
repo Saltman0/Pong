@@ -36,9 +36,9 @@ public partial class LobbyInterface : Control
 	{
 		if (NetworkManager.Instance != null)
 		{
-			NetworkManager.Instance.PlayerConnected += OnLobbyChanged;
-			NetworkManager.Instance.PlayerDisconnected += OnLobbyChanged;
-			NetworkManager.Instance.ServerDisconnected += OnServerDisconnected;
+			NetworkManager.Instance.PlayerConnected -= OnLobbyChanged;
+			NetworkManager.Instance.PlayerDisconnected -= OnLobbyChanged;
+			NetworkManager.Instance.ServerDisconnected -= OnServerDisconnected;
 		}
     
 		base._ExitTree();

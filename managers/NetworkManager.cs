@@ -60,7 +60,6 @@ public partial class NetworkManager : Node
         ENetMultiplayerPeer peer = new ENetMultiplayerPeer();
         
         Error error = peer.CreateClient(hostIp, DefaultPort);
-        GD.PushError(error);
         if (error == Error.Ok)
         {
             Multiplayer.MultiplayerPeer = peer;

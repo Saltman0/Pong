@@ -51,7 +51,7 @@ public partial class Paddle : CharacterBody2D
 			SetMultiplayerAuthority((int)Id);
 		}
 		
-		GD.PushError("SetProperties Paddle : " + Name + " - " + Id + " - " + Controller);
+		GD.PushWarning("SetProperties Paddle : " + Name + " - " + Id + " - " + Controller);
 	}
 	
 	private float GetInputDirection()

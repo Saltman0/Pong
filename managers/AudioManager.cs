@@ -15,6 +15,12 @@ public partial class AudioManager : Node
 	
 	public void PlayMusic(AudioStream musicAudioStream)
 	{
+		if (MusicStreamPlayer != null)
+		{
+			MusicStreamPlayer.Stop();
+			MusicStreamPlayer.QueueFree();
+		}
+		
 		MusicStreamPlayer = new AudioStreamPlayer();
 		MusicStreamPlayer.Name = "GlobalMusicPlayer";
 		MusicStreamPlayer.Bus = "Music";

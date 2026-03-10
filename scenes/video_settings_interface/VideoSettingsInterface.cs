@@ -99,10 +99,11 @@ public partial class VideoSettingsInterface : Control
 	
 	private void SelectOption(OptionButton optionButton, string section, string key, int defaultValue)
 	{
+		int savedValue = (int) SettingsManager.Instance.GetValue(section, key, defaultValue);
 		for (int i = 0; i < optionButton.ItemCount; i++)
 		{
 			int itemId = optionButton.GetItemId(i);
-			if (itemId == (int) SettingsManager.Instance.GetValue(section, key, defaultValue))
+			if (itemId == savedValue)
 			{
 				optionButton.Selected = optionButton.GetItemIndex(itemId);
 			}

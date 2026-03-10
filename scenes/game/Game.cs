@@ -144,10 +144,7 @@ public partial class Game : Node
 		_timeLeft = DefaultTimeLeft;
 		_leftScore = DefaultScore;
 		_rightScore = DefaultScore;
-		_paddleLeft.Position = _markerPaddleLeft.Position;
-		_paddleRight.Position = _markerPaddleRight.Position;
-		_ball.Position = _markerBall.Position;
-		_ball.Launch();
+		ResetPositions();
 	}
 
 	[Rpc(
