@@ -44,32 +44,32 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 theme = ExtResource("1_6f88p")
-text = "Singleplayer"
+text = "SINGLEPLAYER"
 
 [node name="MultiplayerLocalButton" type="Button" parent="MainContainer" unique_id=1098297239]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 theme = ExtResource("1_6f88p")
-text = "Multiplayer (Local)"
+text = "MULTIPLAYERLOCAL"
 
 [node name="MultiplayerOnlineButton" type="Button" parent="MainContainer" unique_id=1400903800]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 theme = ExtResource("1_6f88p")
-text = "Multiplayer (Online)"
+text = "MULTIPLAYERONLINE"
 
 [node name="SettingsButton" type="Button" parent="MainContainer" unique_id=1645772139]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 theme = ExtResource("1_6f88p")
-text = "Settings"
+text = "SETTINGS"
 
 [node name="QuitButton" type="Button" parent="MainContainer" unique_id=1068017435]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 theme = ExtResource("1_6f88p")
-text = "Quit"
+text = "QUIT"
