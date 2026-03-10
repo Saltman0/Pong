@@ -104,6 +104,8 @@ public partial class Game : Node
 			_gameInterface.UpdateScore(_leftScore, "left");
 		}
 		
+		AudioManager.MusicStreamPlayer.PitchScale = 1.0f;
+		
 		Rpc(nameof(ResetPositions));
 	}
 
@@ -123,11 +125,9 @@ public partial class Game : Node
 				winner = "none";
 			}
 			_gameInterface.DisplayGameOverContainer(winner);
-			AudioManager.MusicStreamPlayer.PitchScale = 1.0f;
-		} else {
-			_gameInterface.UpdateTimeLeft(_timeLeft);
-			AudioManager.MusicStreamPlayer.PitchScale += 0.01f;
 		}
+		
+		_gameInterface.UpdateTimeLeft(_timeLeft);
 	}
 	
 	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
