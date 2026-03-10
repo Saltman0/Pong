@@ -17,11 +17,10 @@ public partial class Ball : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		bool isAuthority = !Multiplayer.HasMultiplayerPeer() || Multiplayer.IsServer();
-
-		MoveAndHandleCollision(delta);
-
 		if (isAuthority)
 		{
+			MoveAndHandleCollision(delta);
+
 			if (Multiplayer.HasMultiplayerPeer())
 			{
 				SyncPosition = GlobalPosition;
@@ -31,6 +30,7 @@ public partial class Ball : CharacterBody2D
 		else
 		{
 			Velocity = SyncVelocity;
+			MoveAndHandleCollision(delta);
 			GlobalPosition = GlobalPosition.Lerp(SyncPosition, (float)delta * 5.0f);
 		}
 	}
