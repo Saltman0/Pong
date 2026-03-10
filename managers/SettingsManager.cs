@@ -9,6 +9,9 @@ public partial class SettingsManager : Node
     /** Default path **/
     private const string SavePath = "user://settings.cfg";
 
+    /** Cached config file to avoid redundant disk I/O **/
+    private ConfigFile _cachedConfig;
+
     /** Default general values **/
     public readonly Dictionary<int, string> LanguagesDictionary = new Dictionary<int, string>();
     public readonly int DefaultLanguage = 0;
@@ -42,14 +45,21 @@ public partial class SettingsManager : Node
         LanguagesDictionary.Add(1, "fr");
         LanguagesDictionary.Add(2, "es");
         Instance = this;
+        LoadConfigFromDisk();
+    }
+
+    private ConfigFile LoadConfigFromDisk()
+    {
+        _cachedConfig = new ConfigFile();
+        _cachedConfig.Load(SavePath);
+        return _cachedConfig;
     }
     
     public bool LoadGeneral()
     {
-        ConfigFile config = new ConfigFile();
-        if (config.Load(SavePath) != Error.Ok || !config.HasSection("General")) return false;
+        if (!_cachedConfig.HasSection("General")) return false;
         
-        int selectedLanguage = (int) config.GetValue("General", "Language", DefaultLanguage);
+        int selectedLanguage = (int) _cachedConfig.GetValue("General", "Language", DefaultLanguage);
         TranslationServer.SetLocale(LanguagesDictionary[selectedLanguage]);
 
         return true;
@@ -62,12 +72,11 @@ public partial class SettingsManager : Node
     
     public bool LoadControls()
     {
-        ConfigFile config = new ConfigFile();
-        if (config.Load(SavePath) != Error.Ok || !config.HasSection("Controls")) return false;
+        if (!_cachedConfig.HasSection("Controls")) return false;
         
-        foreach (string action in config.GetSectionKeys("Controls"))
+        foreach (string action in _cachedConfig.GetSectionKeys("Controls"))
         {
-            InputEvent inputEvent = (InputEvent)config.GetValue("Controls", action);
+            InputEvent inputEvent = (InputEvent)_cachedConfig.GetValue("Controls", action);
             InputMap.ActionEraseEvents(action);
             InputMap.ActionAddEvent(action, inputEvent);
         }
@@ -85,12 +94,11 @@ public partial class SettingsManager : Node
     
     public bool LoadAudio()
     {
-        ConfigFile config = new ConfigFile();
-        if (config.Load(SavePath) != Error.Ok || !config.HasSection("Audio")) return false;
+        if (!_cachedConfig.HasSection("Audio")) return false;
 		
-        foreach (string busName in config.GetSectionKeys("Audio"))
+        foreach (string busName in _cachedConfig.GetSectionKeys("Audio"))
         {
-            float volume = (float)config.GetValue("Audio", busName);
+            float volume = (float)_cachedConfig.GetValue("Audio", busName);
             AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex(busName), volume);
         }
 
@@ -107,12 +115,11 @@ public partial class SettingsManager : Node
     
     public bool LoadVideo()
     {
-        ConfigFile config = new ConfigFile();
-        if (config.Load(SavePath) != Error.Ok || !config.HasSection("Video")) return false;
+        if (!_cachedConfig.HasSection("Video")) return false;
         
-        foreach (string video in config.GetSectionKeys("Video"))
+        foreach (string video in _cachedConfig.GetSectionKeys("Video"))
         {
-            int value = (int)config.GetValue("Video", video);
+            int value = (int)_cachedConfig.GetValue("Video", video);
             switch (video)
             {
                 case "WindowMode":
@@ -150,11 +157,10 @@ public partial class SettingsManager : Node
     
     public bool LoadAccessibility()
     {
-        ConfigFile config = new ConfigFile();
-        if (config.Load(SavePath) != Error.Ok || !config.HasSection("Accessibility")) return false;
+        if (!_cachedConfig.HasSection("Accessibility")) return false;
 
         ColorblindCanvasLayer.Instance.SetColorblindMode(
-            (int) config.GetValue("Accessibility", "ColorblindMode", DefaultColorblindMode)
+            (int) _cachedConfig.GetValue("Accessibility", "ColorblindMode", DefaultColorblindMode)
         );
 
         return true;
@@ -167,17 +173,14 @@ public partial class SettingsManager : Node
 
     public void SaveValue(string section, string key, Variant value)
     {
-        ConfigFile config = new ConfigFile();
-        config.Load(SavePath);
-        config.SetValue(section, key, value);
-        config.Save(SavePath);
+        _cachedConfig.SetValue(section, key, value);
+        _cachedConfig.Save(SavePath);
     }
     
     public Variant GetValue(string section, string key, Variant defaultValue)
     {
-        ConfigFile config = new ConfigFile();
-        if (config.Load(SavePath) != Error.Ok || !config.HasSection(section)) return defaultValue;
+        if (!_cachedConfig.HasSection(section)) return defaultValue;
 
-        return config.GetValue(section, key, defaultValue);
+        return _cachedConfig.GetValue(section, key, defaultValue);
     }
 }

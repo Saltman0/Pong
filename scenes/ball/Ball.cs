@@ -17,19 +17,11 @@ public partial class Ball : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		bool isAuthority = !Multiplayer.HasMultiplayerPeer() || Multiplayer.IsServer();
+
+		MoveAndHandleCollision(delta);
+
 		if (isAuthority)
 		{
-			KinematicCollision2D collision = MoveAndCollide(Velocity * _speed * (float)delta);
-
-			if (collision != null)
-			{
-				Velocity = Velocity.Bounce(collision.GetNormal());
-				if (collision.GetCollider() is Paddle)
-				{
-					Velocity *= 1.05f;
-				}
-			}
-
 			if (Multiplayer.HasMultiplayerPeer())
 			{
 				SyncPosition = GlobalPosition;
@@ -39,18 +31,21 @@ public partial class Ball : CharacterBody2D
 		else
 		{
 			Velocity = SyncVelocity;
-			
-			KinematicCollision2D collision = MoveAndCollide(Velocity * _speed * (float)delta);
-			if (collision != null)
-			{
-				Velocity = Velocity.Bounce(collision.GetNormal());
-				if (collision.GetCollider() is Paddle)
-				{
-					Velocity *= 1.05f;
-				}
-			}
-			
 			GlobalPosition = GlobalPosition.Lerp(SyncPosition, (float)delta * 5.0f);
+		}
+	}
+
+	private void MoveAndHandleCollision(double delta)
+	{
+		KinematicCollision2D collision = MoveAndCollide(Velocity * _speed * (float)delta);
+
+		if (collision != null)
+		{
+			Velocity = Velocity.Bounce(collision.GetNormal());
+			if (collision.GetCollider() is Paddle)
+			{
+				Velocity *= 1.05f;
+			}
 		}
 	}
 
