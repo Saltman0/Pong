@@ -37,7 +37,7 @@ custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.75
-text = "Master :"
+text = "MASTER"
 vertical_alignment = 1
 
 [node name="MasterSlider" type="HSlider" parent="AudioContainer/MasterContainer" unique_id=1462764812]
@@ -57,7 +57,7 @@ custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.75
-text = "Music :"
+text = "MUSIC"
 vertical_alignment = 1
 
 [node name="MusicSlider" type="HSlider" parent="AudioContainer/MusicContainer" unique_id=604607889]
@@ -77,7 +77,7 @@ custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.75
-text = "SFX :"
+text = "SFX"
 vertical_alignment = 1
 
 [node name="SfxSlider" type="HSlider" parent="AudioContainer/SfxContainer" unique_id=503012299]
@@ -97,7 +97,7 @@ custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.75
-text = "UI :"
+text = "UI"
 vertical_alignment = 1
 
 [node name="UiSlider" type="HSlider" parent="AudioContainer/UiContainer" unique_id=1812220104]

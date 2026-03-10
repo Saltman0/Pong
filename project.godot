@@ -91,6 +91,11 @@ pause={
 ]
 }
 
+[internationalization]
+
+locale/translation_remaps={}
+locale/translations=PackedStringArray("res://localizations/localization.en.translation", "res://localizations/localization.fr.translation", "res://localizations/localization.es.translation")
+
 [layer_names]
 
 2d_physics/layer_1="Paddles"

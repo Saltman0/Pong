@@ -3,6 +3,7 @@ using Pong.managers;
 
 public partial class SettingsInterface : Control
 {
+	[Export] private GeneralSettingsInterface _generalSettingsInterface;
 	[Export] private VideoSettingsInterface _videoSettingsInterface;
 	[Export] private AudioSettingsInterface _audioSettingsInterface;
 	[Export] private ControlsSettingsInterface _controlsSettingsInterface;
@@ -18,6 +19,7 @@ public partial class SettingsInterface : Control
 		_resetButton.Pressed += OnResetButtonPressed;
 		_saveButton.Pressed += OnSaveButtonPressed;
 		
+		_generalSettingsInterface.UpdateGeneralSettings();
 		_videoSettingsInterface.UpdateVideoSettings();
 		_audioSettingsInterface.UpdateAudioSettings();
 		_controlsSettingsInterface.UpdateControlSettings();
@@ -34,6 +36,7 @@ public partial class SettingsInterface : Control
 	
 	private void OnResetButtonPressed()
 	{
+		_generalSettingsInterface.ResetGeneralSettings();
 		_videoSettingsInterface.ResetVideoSettings();
 		_audioSettingsInterface.ResetAudioSettings();
 		_controlsSettingsInterface.ResetControlsSettings();
@@ -42,6 +45,7 @@ public partial class SettingsInterface : Control
 	
 	private void OnSaveButtonPressed()
 	{
+		_generalSettingsInterface.SaveGeneralSettings();
 		_videoSettingsInterface.SaveVideoSettings();
 		_audioSettingsInterface.SaveAudioSettings();
 		_controlsSettingsInterface.SaveControlsSettings();

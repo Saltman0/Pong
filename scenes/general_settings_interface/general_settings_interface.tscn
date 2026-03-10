@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://4ou5ggprkch8"]
+
+[ext_resource type="Theme" uid="uid://lsy85n1nuhcx" path="res://themes/default.tres" id="1_mxx2y"]
+[ext_resource type="Script" uid="uid://dga2315u5sxwf" path="res://scenes/general_settings_interface/GeneralSettingsInterface.cs" id="2_nu3i0"]
+
+[node name="GeneralSettingsInterface" type="Control" unique_id=1289949875 node_paths=PackedStringArray("_languageOptionButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_mxx2y")
+script = ExtResource("2_nu3i0")
+_languageOptionButton = NodePath("GeneralContainer/LanguageContainer/LanguageOptionButton")
+
+[node name="GeneralContainer" type="VBoxContainer" parent="." unique_id=1975133430]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0125
+anchor_top = 0.022222223
+anchor_right = 0.9875
+anchor_bottom = 0.9777778
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="LanguageContainer" type="HBoxContainer" parent="GeneralContainer" unique_id=832551413]
+layout_mode = 2
+size_flags_stretch_ratio = 0.25
+
+[node name="LanguageLabel" type="RichTextLabel" parent="GeneralContainer/LanguageContainer" unique_id=351412631]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+text = "LANGUAGE"
+vertical_alignment = 1
+
+[node name="LanguageOptionButton" type="OptionButton" parent="GeneralContainer/LanguageContainer" unique_id=1673590886]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+selected = 0
+item_count = 3
+popup/item_0/text = "ENGLISH"
+popup/item_0/id = 0
+popup/item_1/text = "FRENCH"
+popup/item_1/id = 1
+popup/item_2/text = "SPANISH"
+popup/item_2/id = 2

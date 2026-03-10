@@ -9,11 +9,13 @@ public partial class Main : Node
 	
 	public override void _Ready()
 	{
+		bool isGeneralLoaded = SettingsManager.Instance.LoadGeneral();
 		bool isVideoLoaded = SettingsManager.Instance.LoadVideo();
 		bool isAudioLoaded = SettingsManager.Instance.LoadAudio();
 		bool areControlsLoaded = SettingsManager.Instance.LoadControls();
 		bool isAccessibilityLoaded = SettingsManager.Instance.LoadAccessibility();
 		
+		if (!isGeneralLoaded) { SettingsManager.Instance.SaveDefaultGeneral(); }
 		if (!isVideoLoaded) { SettingsManager.Instance.SaveDefaultVideo(); }
 		if (!isAudioLoaded) { SettingsManager.Instance.SaveDefaultAudio(); }
 		if (!areControlsLoaded) { SettingsManager.Instance.SaveDefaultControls(); }
