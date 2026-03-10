@@ -1,0 +1,40 @@
+keys,en,fr,es
+SINGLEPLAYER,Singleplayer,Solo,Solo
+MULTIPLAYERLOCAL,Multiplayer (Local),Multijoueur (Local),Multijugador (Local)
+MULTIPLAYERONLINE,Multiplayer (Online),Multijoueur (En ligne),Multijugador (en línea)
+SETTINGS,Settings,Paramètres,Configuración
+QUIT,Quit,Quitter,Salir
+RETURN,Return,Retour,Volver
+RESET,Reset,Réinitialiser,Reiniciar
+SAVE,Save,Sauvegarder,Guardar
+GENERAL,General,Général,General
+LANGUAGE,Language,Langue,Idioma
+ENGLISH,English,Anglais,Inglés
+FRENCH,French,Français,Francés
+SPANISH,Spanish,Espagnol,Español
+VIDEO,Video,Vidéo,Vídeo
+WINDOWMODE,Window mode,Mode fenêtre,Modo ventana
+FULLSCREEN,Fullscreen,Plein écran,Pantalla completa
+BORDERLESS,Borderless,Plein écran fenêtré,Pantalla completa sin bordes
+WINDOWED,Windowed,Fenếtré,Con ventana
+RESOLUTION,Resolution,Résolution,Resolución
+VSYNC,Vsync,Vsync,Vsync
+DISABLED,Disabled,Désactivé,Desactivado
+ENABLED,Enabled,Activé,Activado
+ADAPTATIVE,Adaptative,Adaptatif,Adaptativo
+FPS,Fps,Fps,Fps
+AUDIO,Audio,Audio,Audio
+MASTER,Master,Maître,Maestro
+MUSIC,Music,Musique,Música
+SFX,SFX,SFX,SFX
+UI,UI,UI,UI
+CONTROLS,Controls,Contrôles,Controles
+PLAYER,Player,Joueur,Jugador
+UP,Up,Haut,Arriba
+DOWN,Down,Bas,Abajo
+ACCESSIBILITY,Accessibility,Accessibilité,Accesibilidad
+COLORBLIND_MODE,Colorblind mode,Mode daltonien,Modo daltónico
+NORMAL,Normal,Normal,Normal
+PROTANOPIA,Protanopia,Protanopia,Protanopia
+DEUTERANOPIA,Deuteranopia,Deuteranopia,Deuteranopia
+TRITANOPIA,Tritanopia,Tritanopia,Tritanopia
